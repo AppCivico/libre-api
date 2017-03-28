@@ -1,0 +1,8 @@
+blib/*
+inc/*
+log/*
+.build/*
+Makefile
+MYMETA*
+envfile.sh
+pm_to_blib
