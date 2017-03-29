@@ -1,3 +1,7 @@
 export API_PORT=""
 export API_WORKERS=""
 
+export SMTP_SERVER=""
+export SMTP_PORT=""
+export SMTP_USERNAME=""
+export SMTP_PASSWORD=""
