@@ -38,6 +38,9 @@ my %WriteMakefileArgs = (
     "Server::Starter" => 0,
     "Starman" => 0,
     "namespace::autoclean" => 0
+    "Business::BR::CNPJ" => 0,
+    "Business::BR::CPF" => 0,
+    "Business::BR::RG"  => 0
   },
   "TEST_REQUIRES" => {
     "Carp" => 0,
@@ -99,7 +102,10 @@ my %FallbackPrereqs = (
   "common::sense" => 0,
   "namespace::autoclean" => 0,
   "strict" => 0,
-  "warnings" => 0
+  "warnings" => 0,
+  "Business::BR::CNPJ" => 0,
+  "Business::BR::CPF" => 0,
+  "Business::BR::RG"  => 0
 );
 
 

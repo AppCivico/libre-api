@@ -10,6 +10,9 @@ use CatalystX::Eta::Test::REST;
 use Data::Printer;
 use JSON::MaybeXS;
 use Data::Fake qw(Core Company Dates Internet Names Text);
+use Business::BR::CPF qw(random_cpf);
+use Business::BR::CNPJ qw(random_cnpj format_cnpj);
+use Business::BR::RG qw(random_rg);
 
 # ugly hack
 sub import {
@@ -101,6 +104,33 @@ sub api_auth_as {
     }
 
     $obj->fixed_headers([ 'x-api-key' => $auth_user->{api_key} ]);
+}
+
+sub create_journalist {
+    my (%opts) = @_;
+
+    my $name        = fake_name()->();
+
+    my %params = (
+        email                   => fake_email()->(),
+        password                => "foobarpass",
+        name                    => fake_name()->(),
+        cpf                     => random_cpf(),
+        rg                      => random_rg(),
+        adress_state            => 'São Paulo',
+        adress_city             => 'São Paulo',
+        adress_zipcode          => '02351-000',
+        adress_street           => "Rua Flores do Piauí",
+        adress_residence_number => 1 + int(rand(2000)),
+        %opts
+    ); 
+
+    return $obj->rest_post(
+        '/api/register/journalist',
+        name    => 'add journalist'
+        stash   => 'journalist',
+        [ %params ],
+    );
 }
 
 1;
