@@ -1,12 +1,12 @@
 use utf8;
-package Saveh::Schema::Result::UserSession;
+package Libre::Schema::Result::User;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-Saveh::Schema::Result::UserSession
+Libre::Schema::Result::User
 
 =cut
 
@@ -34,11 +34,11 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "PassphraseColumn");
 
-=head1 TABLE: C<user_session>
+=head1 TABLE: C<user>
 
 =cut
 
-__PACKAGE__->table("user_session");
+__PACKAGE__->table("user");
 
 =head1 ACCESSORS
 
@@ -47,22 +47,21 @@ __PACKAGE__->table("user_session");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'user_session_id_seq'
+  sequence: 'user_id_seq'
 
-=head2 user_id
+=head2 email
 
-  data_type: 'integer'
-  is_foreign_key: 1
+  data_type: 'text'
   is_nullable: 0
 
-=head2 api_key
+=head2 password
 
   data_type: 'text'
   is_nullable: 0
 
 =head2 created_at
 
-  data_type: 'timestamp'
+  data_type: 'timestamp with time zone'
   default_value: current_timestamp
   is_nullable: 0
   original: {default_value => \"now()"}
@@ -75,15 +74,15 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "user_session_id_seq",
+    sequence          => "user_id_seq",
   },
-  "user_id",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "api_key",
+  "email",
+  { data_type => "text", is_nullable => 0 },
+  "password",
   { data_type => "text", is_nullable => 0 },
   "created_at",
   {
-    data_type     => "timestamp",
+    data_type     => "timestamp with time zone",
     default_value => \"current_timestamp",
     is_nullable   => 0,
     original      => { default_value => \"now()" },
@@ -104,38 +103,63 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
-=head2 C<user_session_api_key_key>
+=head2 C<user_email_key>
 
 =over 4
 
-=item * L</api_key>
+=item * L</email>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint("user_session_api_key_key", ["api_key"]);
+__PACKAGE__->add_unique_constraint("user_email_key", ["email"]);
 
 =head1 RELATIONS
 
-=head2 user
+=head2 user_roles
 
-Type: belongs_to
+Type: has_many
 
-Related object: L<Saveh::Schema::Result::User>
+Related object: L<Libre::Schema::Result::UserRole>
 
 =cut
 
-__PACKAGE__->belongs_to(
-  "user",
-  "Saveh::Schema::Result::User",
-  { id => "user_id" },
-  { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
+__PACKAGE__->has_many(
+  "user_roles",
+  "Libre::Schema::Result::UserRole",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 user_sessions
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-28 14:57:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zZuTDyoj4mX/QySzXNU3Jg
+Type: has_many
+
+Related object: L<Libre::Schema::Result::UserSession>
+
+=cut
+
+__PACKAGE__->has_many(
+  "user_sessions",
+  "Libre::Schema::Result::UserSession",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 roles
+
+Type: many_to_many
+
+Composing rels: L</user_roles> -> role
+
+=cut
+
+__PACKAGE__->many_to_many("roles", "user_roles", "role");
+
+
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-29 10:17:39
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OHoY4afDz2CCdRMUN7Gvag
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

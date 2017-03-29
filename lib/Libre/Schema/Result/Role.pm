@@ -1,12 +1,12 @@
 use utf8;
-package Saveh::Schema::Result::Role;
+package Libre::Schema::Result::Role;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-Saveh::Schema::Result::Role
+Libre::Schema::Result::Role
 
 =cut
 
@@ -79,13 +79,13 @@ __PACKAGE__->set_primary_key("id");
 
 Type: has_many
 
-Related object: L<Saveh::Schema::Result::UserRole>
+Related object: L<Libre::Schema::Result::UserRole>
 
 =cut
 
 __PACKAGE__->has_many(
   "user_roles",
-  "Saveh::Schema::Result::UserRole",
+  "Libre::Schema::Result::UserRole",
   { "foreign.role_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -101,8 +101,8 @@ Composing rels: L</user_roles> -> user
 __PACKAGE__->many_to_many("users", "user_roles", "user");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-28 14:57:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aWYZcfL+37/vKYdJnJy/8g
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-29 10:17:39
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:K3mTDu+Y3JpnJdcuR8ucfw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -1,5 +1,5 @@
 use utf8;
-package Saveh::Schema;
+package Libre::Schema;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
@@ -11,8 +11,8 @@ extends 'DBIx::Class::Schema';
 __PACKAGE__->load_namespaces;
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-28 14:57:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QXwRbqRdC1vAtYeyyHeZ8g
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-29 10:17:23
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KKPlVaM5TAcn4X2RgHVaRQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
