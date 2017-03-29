@@ -126,8 +126,8 @@ sub create_journalist {
     ); 
 
     return $obj->rest_post(
-        '/api/register/journalist',
-        name    => 'add journalist'
+        '/v1/register/journalist',
+        name    => 'add journalist',
         stash   => 'journalist',
         [ %params ],
     );
