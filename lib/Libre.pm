@@ -28,8 +28,6 @@ extends 'Catalyst';
 
 our $VERSION = '0.01';
 
-use Libre::SchemaConnected qw(get_connect_info);
-
 # Configure the application.
 #
 # Note that settings in libre.conf (or other external
@@ -47,12 +45,6 @@ __PACKAGE__->config(
     disable_component_resolution_regex_fallback => 1,
     enable_catalyst_header => 0, # Send X-Catalyst header
 );
-
-before "setup_components" => sub {
-    my $app = shift;
-
-    $app->config->{"Model::DB"}->{connect_info} = get_connect_info();
-};
 
 # Start the application
 __PACKAGE__->setup();

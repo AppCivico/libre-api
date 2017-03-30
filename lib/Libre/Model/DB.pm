@@ -3,8 +3,12 @@ package Libre::Model::DB;
 use strict;
 use base 'Catalyst::Model::DBIC::Schema';
 
+use Saveh::SchemaConnected qw(get_connect_info);
+
 __PACKAGE__->config(
     schema_class => 'Libre::Schema',
+
+    connect_info => get_connect_info(),
 );
 
 =head1 NAME
