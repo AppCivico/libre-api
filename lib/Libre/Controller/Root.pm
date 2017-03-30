@@ -2,7 +2,7 @@ package Libre::Controller::Root;
 use Moose;
 use namespace::autoclean;
 
-BEGIN { extends 'Catalyst::Controller' }
+BEGIN { extends "CatalystX::Eta::Controller::REST" }
 
 #
 # Sets the actions in this controller to be registered with no prefix
@@ -22,19 +22,6 @@ Libre::Controller::Root - Root Controller for Libre
 
 =head1 METHODS
 
-=head2 index
-
-The root page (/)
-
-=cut
-
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
-
-    # Hello World
-    $c->response->body( $c->welcome_message );
-}
-
 =head2 default
 
 Standard 404 error page
@@ -43,17 +30,9 @@ Standard 404 error page
 
 sub default :Path {
     my ( $self, $c ) = @_;
-    $c->response->body( 'Page not found' );
-    $c->response->status(404);
+
+    return $self->status_not_found($c, message => "Endpoint not found.");
 }
-
-=head2 end
-
-Attempt to render a view, if needed.
-
-=cut
-
-sub end : ActionClass('RenderView') {}
 
 =head1 AUTHOR
 
