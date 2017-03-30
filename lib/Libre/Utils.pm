@@ -5,7 +5,7 @@ use common::sense;
 
 =head1 NAME
 
-Saveh::Utils
+Libre::Utils
 
 =cut
 
