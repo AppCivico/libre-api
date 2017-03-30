@@ -19,8 +19,6 @@ Catalyst Controller.
 
 sub root :Chained('/api/root') :PathPart('') :CaptureArgs(0) {
     my ($self, $c) = @_;
-
-    $c->stash->{collection} = $c->model('DB::Journalist');
 }
 
 sub base :Chained('root') :PathPart('register') :CaptureArgs(0) { }
