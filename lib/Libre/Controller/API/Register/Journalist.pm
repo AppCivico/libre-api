@@ -17,7 +17,15 @@ Catalyst Controller.
 
 =cut
 
-sub register :Chained('register/base') :PathPart('') :Args(0) :ActionClass('REST') { }
+sub root :Chained('/api/register/base') :PathPart('') :CaptureArgs(0) { }
+
+sub base :Chained('root') :PathPart('journalist') :CaptureArgs(0) { }
+
+sub register :Chained('base') :PathPart('') :Args(0) :ActionClass('REST') { 
+    my ($self, $c) = @_;
+
+    $c->stash->{collection} = $c->model('DB::Journalist');
+}
 
 sub register_POST {
     my ($self, $c) = @_;

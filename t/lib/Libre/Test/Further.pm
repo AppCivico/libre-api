@@ -117,6 +117,7 @@ sub create_journalist {
         name                    => fake_name()->(),
         cpf                     => random_cpf(),
         rg                      => random_rg(),
+        cellphone_number        => '11 94562-1234',
         adress_state            => 'São Paulo',
         adress_city             => 'São Paulo',
         adress_zipcode          => '02351-000',
