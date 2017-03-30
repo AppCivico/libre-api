@@ -25,7 +25,7 @@ sub get_connect_info {
     my $dbname   = $ENV{POSTGRESQL_DBNAME};
 
     return {
-        dsn            => "dbi:Pg:dbname=$dbname;host=$host;port=5432",
+        dsn            => "dbi:Pg:dbname=$dbname;host=$host;port=$port",
         user           => $user,
         password       => $password,
         AutoCommit     => 1,
