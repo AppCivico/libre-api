@@ -1,6 +1,12 @@
 export API_PORT=""
 export API_WORKERS=""
 
+export POSTGRESQL_HOST=""
+export POSTGRESQL_PORT=""
+export POSTGRESQL_DBNAME=""
+export POSTGRESQL_USER=""
+export POSTGRESQL_PASSWORD=""
+
 export SMTP_SERVER=""
 export SMTP_PORT=""
 export SMTP_USERNAME=""
