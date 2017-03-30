@@ -1,0 +1,78 @@
+#!/usr/bin/env perl
+package Libre::Daemon::Emailsd;
+use common::sense;
+use FindBin qw($RealBin $Script);
+use lib "$RealBin/../../lib";
+
+use AnyEvent;
+use Config::General;
+use Daemon::Generic;
+use Log::Log4perl qw(:easy);
+
+use Libre::SchemaConnected;
+use Libre::Worker::Email;
+
+our $verbose = 0;
+#our %config  = undef;
+
+newdaemon(
+    options => {
+        'verbose!' => \$verbose,
+    },
+    pidfile => "/tmp/$Script.pid",
+);
+
+sub gd_preconfig {
+    my $self = shift;
+
+    # Config.
+    #my $config = new Config::General("$RealBin/../../libre.conf");
+    #%config    = $config->getall;
+
+    $0 = "Libre::Daemon::Emailsd";
+    $|++;
+
+    # Logger.
+    my @l4p = ({
+        file   => "STDOUT",
+        layout => '[%d] [%p] %m%n',
+        level  => $DEBUG,
+        utf8   => 1,
+    });
+
+    if (!$self->{gd_foreground}) {
+        $l4p[0]->{layout} = '%m%n';
+        $l4p[0]->{level}  = $INFO;
+        push @l4p, {
+            file   => ">>$RealBin/../../log/$Script.log",
+            layout => '[%d] %m%n',
+            level  => $verbose ? $DEBUG : $INFO,
+            utf8   => 1,
+        };
+    }
+    Log::Log4perl->easy_init(@l4p);
+
+    return ();
+}
+
+sub gd_run {
+    my $self = shift;
+
+    my $cv = AnyEvent->condvar;
+
+    my $worker = Libre::Worker::Email->new(
+        schema => get_schema(),
+        logger => get_logger(),
+        #config => \%config,
+    );
+
+    my $w = AnyEvent->timer(
+        after    => 0.0,
+        interval => $worker->timer,
+        cb       => sub { $worker->listen_queue() },
+    );
+
+    $cv->recv;
+}
+
+1;
