@@ -3,7 +3,7 @@ package Libre::Model::DB;
 use strict;
 use base 'Catalyst::Model::DBIC::Schema';
 
-use Saveh::SchemaConnected qw(get_connect_info);
+use Libre::SchemaConnected qw(get_connect_info);
 
 __PACKAGE__->config(
     schema_class => 'Libre::Schema',

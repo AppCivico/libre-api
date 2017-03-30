@@ -6,4 +6,4 @@ echo "doing cpanm --installdeps on $DIR"
 cpanm Module::Install::Catalyst App::Sqitch App::ForkProve -n
 sqitch deploy -t local
 cpanm -n --installdeps .
-TRACE=1 forkprove -MSaveh -j 1  -lvr t/
+TRACE=1 forkprove -MLibre -j 1  -lvr t/
