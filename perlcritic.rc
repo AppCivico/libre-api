@@ -1,0 +1,6 @@
+[TestingAndDebugging::RequireUseStrict]
+equivalent_modules = common::sense
+
+[TestingAndDebugging::RequireUseWarnings]
+equivalent_modules = common::sense
+

@@ -5,13 +5,6 @@ use base 'Catalyst::Model::DBIC::Schema';
 
 __PACKAGE__->config(
     schema_class => 'Libre::Schema',
-    
-    connect_info => {
-        dsn => 'dbi:Pg:dbname=libre_dev;host=localhost',
-        user => 'postgres',
-        password => 'trustable',
-        quote_names => q{1},
-    }
 );
 
 =head1 NAME
