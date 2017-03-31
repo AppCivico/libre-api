@@ -112,12 +112,13 @@ sub create_journalist {
     my $name        = fake_name()->();
 
     my %params = (
-        email                   => fake_email()->(),
-        password                => "foobarpass",
-        name                    => fake_name()->(),
-        cpf                     => random_cpf(),
-        rg                      => random_rg(),
-        cellphone_number        => '11 94562-1234',
+        email                    => fake_email()->(),
+        password                 => "foobarpass",
+        name                     => fake_name()->(),
+        surname                  => "fakesurname",
+        cpf                      => random_cpf(),
+        rg                       => random_rg(),
+        cellphone_number         => '11 94562-1234',
         address_state            => 'São Paulo',
         address_city             => 'São Paulo',
         address_zipcode          => '02351-000',
