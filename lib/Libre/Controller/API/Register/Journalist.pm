@@ -39,14 +39,15 @@ sub register_POST {
         },
     );
 
-    # Enviando e-mail de confirmação
-    $journalist->send_email_registration();
-
     $self->status_created(
         $c,
-        location => $c->uri_for($c->controller('API::Journalist')->action_for('journalist'), [$journalist->id]),
+        location => $c->uri_for($c->controller("API::Register")->action_for('journalist'), [ $journalist->id ]),
         entity   => { id => $journalist->id }
     );
+
+    # Enviando e-mail de confirmação
+    # $journalist->send_email_registration();
+
 }
 
 

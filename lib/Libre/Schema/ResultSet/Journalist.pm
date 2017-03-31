@@ -13,6 +13,7 @@ with 'Libre::Role::Verification::TransactionalActions::DBIC';
 use Libre::Types qw(CPF EmailAddress RG);
 
 use Data::Verifier;
+use Number::Phone::BR;
 
 
 sub verifiers_specs {
@@ -75,6 +76,8 @@ sub verifiers_specs {
                         $self->search({
                             rg => $r->get_value('rg'),
                         })->count and die \["rg", "alredy exists"];
+
+                        return 1;
                     },
                 },
                 address_state => {
@@ -122,8 +125,12 @@ sub verifiers_specs {
                     type       => 'Str',
                 },
                 cellphone_number => {
-                    required    => 0,
-                    type        => 'Str',
+                    required   => 0,
+                    type       => "Str",
+                    post_check => sub {
+                        my $phone = $_[0]->get_value("cellphone_number");
+                        Number::Phone::BR->new($phone);
+                    },
                 },
             },
         ),
@@ -146,7 +153,7 @@ sub action_specs {
             $user->add_to_roles({ id => 3 });
 
             my $journalist = $self->create({
-                ( map { $_ => $values{$_} } qw(name cpf rg address_state address_city address_zipcode address_street address_residence_number) ),
+                ( map { $_ => $values{$_} } qw(name surname cpf rg address_state address_city address_zipcode address_street address_residence_number) ),
                 user_id => $user->id,
             });
 
