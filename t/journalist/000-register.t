@@ -8,12 +8,12 @@ db_transaction {
     # Registrando jornalista.
     create_journalist;
 
-    stash_test 'journalist.get', sub {
-        my $me = @_;
+    #stash_test 'journalist.get', sub {
+    #    my $me = @_;
 
-        ok($me->{journalist}->{id} > 0, 'journalist id');
-        is($me->{journalist}->{status}, "pending", 'journalist status pending');    
-    };
+    #    ok($me->{journalist}->{id} > 0, 'journalist id');
+    #    is($me->{journalist}->{status}, "pending", 'journalist status pending');    
+    #};
 
     # Não pode registrar jornalista sem RG, CPF e endereço
     my $email   = lc(fake_email()->());
@@ -27,9 +27,9 @@ db_transaction {
             email                   => $email,
             password                => "foobarpass",
             name                    => "Lucas",
+            surname                 => "Ansei",
         },
     ;
-
 };
 
 done_testing();
