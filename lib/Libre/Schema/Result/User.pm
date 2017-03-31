@@ -132,6 +132,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 journalists
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::Journalist>
+
+=cut
+
+__PACKAGE__->has_many(
+  "journalists",
+  "Libre::Schema::Result::Journalist",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user_roles
 
 Type: has_many
@@ -173,8 +188,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-30 15:45:55
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hosRci1QkOe11mRhU5RNZw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-31 11:00:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8C8eJMWkrY4UIwYK4dtFmQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

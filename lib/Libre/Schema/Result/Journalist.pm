@@ -76,32 +76,32 @@ __PACKAGE__->table("journalist");
   data_type: 'text'
   is_nullable: 1
 
-=head2 adress_state
+=head2 address_state
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 adress_city
+=head2 address_city
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 adress_zipcode
+=head2 address_zipcode
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 adress_street
+=head2 address_street
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 adress_residence_number
+=head2 address_residence_number
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 adress_complement
+=head2 address_complement
 
   data_type: 'text'
   is_nullable: 1
@@ -148,17 +148,17 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 0 },
   "cpf",
   { data_type => "text", is_nullable => 1 },
-  "adress_state",
+  "address_state",
   { data_type => "text", is_nullable => 0 },
-  "adress_city",
+  "address_city",
   { data_type => "text", is_nullable => 0 },
-  "adress_zipcode",
+  "address_zipcode",
   { data_type => "text", is_nullable => 0 },
-  "adress_street",
+  "address_street",
   { data_type => "text", is_nullable => 0 },
-  "adress_residence_number",
+  "address_residence_number",
   { data_type => "text", is_nullable => 0 },
-  "adress_complement",
+  "address_complement",
   { data_type => "text", is_nullable => 1 },
   "cellphone_number",
   { data_type => "text", is_nullable => 1 },
@@ -234,8 +234,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-30 14:29:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gjS7Oz6yWs3j1tKJPqpzYw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-31 13:43:56
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MmsBxmZD9xw0VFx1srhObA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
