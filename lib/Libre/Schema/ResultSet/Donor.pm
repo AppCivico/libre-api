@@ -11,6 +11,7 @@ with 'Libre::Role::Verification::TransactionalActions::DBIC';
 use Libre::Types qw(EmailAddress);
 
 use Data::Verifier;
+use Number::Phone::BR;
 
 sub verifiers_specs {
     my $self = shift;
@@ -40,8 +41,12 @@ sub verifiers_specs {
                     type     => "Str",
                 },
                 phone => {
-                    required => 0,
-                    type     => "Str",
+                    required   => 0,
+                    type       => "Str",
+                    post_check => sub {
+                        my $phone = $_[0]->get_value("phone");
+                        Number::Phone::BR->new($phone);
+                    },
                 },
             },
         ),

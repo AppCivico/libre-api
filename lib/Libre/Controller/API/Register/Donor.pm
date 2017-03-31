@@ -15,9 +15,7 @@ __PACKAGE__->config(
 
 sub root : Chained('/api/register/base') : PathPart('') : CaptureArgs(0) { }
 
-sub base : Chained('root') : PathPart('donor') : CaptureArgs(0) {
-    my ($self, $c) = @_;
-}
+sub base : Chained('root') : PathPart('donor') : CaptureArgs(0) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 

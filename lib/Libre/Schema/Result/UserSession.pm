@@ -67,6 +67,11 @@ __PACKAGE__->table("user_session");
   is_nullable: 0
   original: {default_value => \"now()"}
 
+=head2 valid_until
+
+  data_type: 'timestamp'
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -88,6 +93,8 @@ __PACKAGE__->add_columns(
     is_nullable   => 0,
     original      => { default_value => \"now()" },
   },
+  "valid_until",
+  { data_type => "timestamp", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -134,8 +141,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-29 10:17:39
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:K0Gbeej+b8RUuUCGCzbaSg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-31 14:03:56
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:96ZXpagzWIQKMu1pr/qjwg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
