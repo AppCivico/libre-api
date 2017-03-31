@@ -4,7 +4,7 @@ use common::sense;
 use MooseX::Types -declare => [
     qw(
         NotTooBigString Int CEP
-        CPF CNPJ PositiveInt
+        CPF CNPJ RG PositiveInt
         EmailAddress
     )
 ];
@@ -19,6 +19,7 @@ use MooseX::Types::DateTime::MoreCoercions qw( DateTime );
 use Business::BR::CEP qw(test_cep);
 use Business::BR::CPF qw(test_cpf);
 use Business::BR::CNPJ qw(test_cnpj);
+use Business::BR::RG qw(test_rg);
 
 use DateTime;
 use DateTime::Format::Pg;
@@ -35,6 +36,12 @@ subtype CNPJ, as NonEmptyStr, where {
     my $cnpj = $_;
     $cnpj =~ s/\D+//g;
     $cnpj !~ /^0+$/ && test_cnpj($cnpj);
+};
+
+subtype RG, as NonEmptyStr, where {
+    my $rg = $_;
+    $rg =~ s/\D+//g;
+    $rg !~ /^0+$/ && test_rg($rg);
 };
 
 subtype CEP, as Str, where {
