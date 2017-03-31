@@ -10,7 +10,7 @@ with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
 # use Business::BR::CEP qw(teste_cep);
-use Libre::Types qw(CPF EmailAddress);
+use Libre::Types qw(CPF EmailAddress RG);
 
 use Data::Verifier;
 
@@ -49,6 +49,10 @@ sub verifiers_specs {
                         scalar(split(m{ }, $name)) > 1;
                     },
                 },
+                surname => {
+                    required => 1,
+                    type     => "Str",
+                },
                 cpf => {
                     required    => 1,
                     type        => CPF,
@@ -57,9 +61,20 @@ sub verifiers_specs {
 
                         $self->search({
                             cpf => $r->get_value('cpf'),
-                        })->count and die \["cpf", "alredy existis"];
+                        })->count and die \["cpf", "alredy exists"];
 
                         return 1;
+                    },
+                },
+                rg  => {
+                    required    => 1,
+                    type        => RG,
+                    post_check  => sub {
+                        my $r = shift;
+
+                        $self->search({
+                            rg => $r->get_value('rg'),
+                        })->count and die \["rg", "alredy exists"];
                     },
                 },
                 address_state => {
@@ -116,7 +131,7 @@ sub verifiers_specs {
 }
 
 sub action_specs {
-    my $self = @_;
+    my ($self) = @_;
 
     return {
         create => sub {
@@ -125,17 +140,15 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            # Criando usuário
-            my %user;
-            $user{$_} = delete $values{$_} for qw(email password);
+            my $user = $self->result_source->schema->resultset("User")->create({
+                map { $_ => $values{$_} } qw(email password)
+            });
+            $user->add_to_roles({ id => 3 });
 
-            $user{email} = $user{email};
-
-            my $user = $self->result_source->schema->resultset('User')->create(\%user);
-            # $user->add_to_roles({ id =>  });
-
-            # Criando jornalista
-            my $journalist = $user->journalist->create(\%values);
+            my $journalist = $self->create({
+                ( map { $_ => $values{$_} } qw(name cpf rg address_state address_city address_zipcode address_street address_residence_number) ),
+                user_id => $user->id,
+            });
 
             return $journalist;
         },
