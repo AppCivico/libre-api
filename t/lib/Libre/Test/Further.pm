@@ -118,11 +118,11 @@ sub create_journalist {
         cpf                     => random_cpf(),
         rg                      => random_rg(),
         cellphone_number        => '11 94562-1234',
-        adress_state            => 'São Paulo',
-        adress_city             => 'São Paulo',
-        adress_zipcode          => '02351-000',
-        adress_street           => "Rua Flores do Piauí",
-        adress_residence_number => 1 + int(rand(2000)),
+        address_state            => 'São Paulo',
+        address_city             => 'São Paulo',
+        address_zipcode          => '02351-000',
+        address_street           => "Rua Flores do Piauí",
+        address_residence_number => 1 + int(rand(2000)),
         %opts
     ); 
 
