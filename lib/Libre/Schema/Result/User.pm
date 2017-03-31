@@ -175,7 +175,46 @@ __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 # Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-30 15:45:55
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hosRci1QkOe11mRhU5RNZw
+__PACKAGE__->remove_column("password");
+__PACKAGE__->add_column(
+    password => {
+        data_type        => "text",
+        passphrase       => 'crypt',
+        passphrase_class => "BlowfishCrypt",
+        passphrase_args  => {
+            cost        => 8,
+            salt_random => 1,
+        },
+        passphrase_check_method => "check_password",
+        is_nullable             => 0,
+    },
+);
 
+use Libre::Utils;
+
+sub new_session {
+    my ($self, %args) = @_;
+
+    my $schema = $self->result_source->schema;
+
+    my $session = $schema->resultset('UserSession')->search({
+        user_id      => $self->id,
+        valid_until  => { '>=' => \"NOW()" },
+    })->next;
+
+    if (!defined($session)) {
+        $session = $self->user_sessions->create({
+            api_key      => random_string(128),
+            valid_until  => \"(NOW() + '1 days'::interval)",
+        });
+    }
+
+    return {
+        user_id => $self->id,
+        roles   => [ map { $_->name } $self->roles ],
+        api_key => $session->api_key,
+    };
+}
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;

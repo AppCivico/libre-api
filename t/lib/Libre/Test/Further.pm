@@ -103,5 +103,24 @@ sub api_auth_as {
     $obj->fixed_headers([ 'x-api-key' => $auth_user->{api_key} ]);
 }
 
+sub create_donor {
+    my (%args) = @_;
+
+    return $obj->rest_post(
+        "/v1/register/donor",
+        name   => "create donor",
+        automatic_load_item => 0,
+        stash  => "donor",
+        params => {
+            email    => fake_email()->(),
+            password => "fooquxbar1",
+            name     => fake_first_name()->(),
+            surname  => fake_surname()->(),
+            phone    => fake_digits("+551198#######")->(),
+            %args,
+        },
+    );
+}
+
 1;
 
