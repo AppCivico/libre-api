@@ -19,7 +19,7 @@ db_transaction {
     my $email   = lc(fake_email()->());
     $email      =~ s/\s+/_/g;
 
-    rest_post '/api/register/journalist',
+    rest_post '/v1/register/journalist',
         name                => "Jornalista sem RG, CPF e endereço",
         is_fail             => 1,
         automatic_load_item => 0,
