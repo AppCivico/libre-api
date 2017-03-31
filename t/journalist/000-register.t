@@ -20,9 +20,10 @@ db_transaction {
     $email      =~ s/\s+/_/g;
 
     rest_post '/api/register/journalist',
-        name        => "Jornalista sem RG, CPF e endereço",
-        is_fail     => 1,
-        params      => {
+        name                => "Jornalista sem RG, CPF e endereço",
+        is_fail             => 1,
+        automatic_load_item => 0,
+        params              => {
             email                   => $email,
             password                => "foobarpass",
             name                    => "Lucas",
