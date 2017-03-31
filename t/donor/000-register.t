@@ -10,7 +10,7 @@ db_transaction {
     my $email = fake_email()->();
 
     rest_post "/v1/register/donor",
-        stash               => "r1",
+        stash               => "d1",
         automatic_load_item => 0,
         params              => {
             email    => $email,
@@ -20,6 +20,12 @@ db_transaction {
             phone    => fake_digits("+551198#######")->(),
         },
     ;
+
+    is (
+        $schema->resultset("Donor")->find(stash "d1.id")->user->email,
+        $email,
+        "created user and donor",
+    );
 
     # Não deve ser possível cadastrar o mesmo email.
     rest_post "/v1/register/donor",
