@@ -106,7 +106,6 @@ sub api_auth_as {
     $obj->fixed_headers([ 'x-api-key' => $auth_user->{api_key} ]);
 }
 
-<<<<<<< HEAD
 sub create_journalist {
     my (%opts) = @_;
 
@@ -116,10 +115,10 @@ sub create_journalist {
         email                    => fake_email()->(),
         password                 => "foobarpass",
         name                     => fake_name()->(),
-        surname                  => "fakesurname",
+        surname                  => fake_surname->(),
         cpf                      => random_cpf(),
         rg                       => random_rg(1),
-        cellphone_number         => '11 94562-1234',
+        cellphone_number         => fake_digits("+551198#######")->(),
         address_state            => 'São Paulo',
         address_city             => 'São Paulo',
         address_zipcode          => '02351-000',
@@ -131,6 +130,7 @@ sub create_journalist {
     return $obj->rest_post(
         '/v1/register/journalist',
         name    => 'add journalist',
+        automatic_load_item => 0,
         stash   => 'journalist',
         [ %params ],
     );
@@ -152,7 +152,6 @@ sub create_donor {
             phone    => fake_digits("+551198#######")->(),
             %args,
         },
->>>>>>> origin/master
     );
 }
 
