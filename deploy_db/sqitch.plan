@@ -3,3 +3,4 @@
 
 0000-appschema 2017-03-28T17:49:59Z junior,,, <junior@fvox> # appschema
 0001-email-queue [0000-appschema] 2017-03-29T19:10:38Z Junior Moraes <juniorfvox@gmail.com> # email-queue
+0002-donor [0001-email-queue] 2017-03-30T18:46:01Z Junior Moraes <juniorfvox@gmail.com> # donor

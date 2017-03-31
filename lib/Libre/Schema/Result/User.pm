@@ -117,17 +117,17 @@ __PACKAGE__->add_unique_constraint("user_email_key", ["email"]);
 
 =head1 RELATIONS
 
-=head2 journalists
+=head2 donors
 
 Type: has_many
 
-Related object: L<Libre::Schema::Result::Journalist>
+Related object: L<Libre::Schema::Result::Donor>
 
 =cut
 
 __PACKAGE__->has_many(
-  "journalists",
-  "Libre::Schema::Result::Journalist",
+  "donors",
+  "Libre::Schema::Result::Donor",
   { "foreign.user_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -173,8 +173,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-30 14:29:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:C5h9QnCJL1l5DMqr9jStzw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-30 15:45:55
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hosRci1QkOe11mRhU5RNZw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
