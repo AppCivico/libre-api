@@ -109,8 +109,6 @@ sub api_auth_as {
 sub create_journalist {
     my (%opts) = @_;
 
-    my $name        = fake_name()->();
-
     my %params = (
         email                    => fake_email()->(),
         password                 => "foobarpass",
