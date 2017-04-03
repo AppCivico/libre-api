@@ -3,6 +3,24 @@
 
 BEGIN;
 
+CREATE TABLE bank_institution
+(
+    id          integer     PRIMARY KEY,
+    code        integer     NOT NULL,
+    name        text
+);
+
+CREATE TABLE user_bank_account
+(
+    id                      integer     PRIMARY KEY,
+    user_id                 integer     NOT NULL REFERENCES "user"(id),
+    bank_institution_id     integer     NOT NULL REFERENCES bank_institution(id),
+    agency                  text        NOT NULL,
+    agency_digit            text        NOT NULL,
+    account                 text        NOT NULL,
+    account_digit           text        NOT NULL
+);
+
 CREATE TABLE journalist
 (
     id                          SERIAL                      PRIMARY KEY,
@@ -22,24 +40,6 @@ CREATE TABLE journalist
     active                      boolean                     NOT NULL DEFAULT FALSE,
     verified                    boolean                     NOT NULL DEFAULT FALSE,
     verified_at                 timestamp without time zone
-);
-
-CREATE TABLE bank_institution
-(
-    id          integer     PRIMARY KEY,
-    code        integer     NOT NULL,
-    name        text
-);
-
-CREATE TABLE user_bank_account
-(
-    id                      integer     PRIMARY KEY,
-    user_id                 integer     NOT NULL REFERENCES "user"(id),
-    bank_institution_id     integer     NOT NULL REFERENCES bank_institution(id),
-    agency                  text        NOT NULL,
-    agency_digit            text        NOT NULL,
-    account                 text        NOT NULL,
-    account_digit           text        NOT NULL
 );
 
 COMMIT;
