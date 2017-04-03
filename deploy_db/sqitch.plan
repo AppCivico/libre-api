@@ -8,3 +8,4 @@
 0004-city [0003-state] 2017-03-30T18:46:01Z Junior Moraes <juniorfvox@gmail.com> # city
 0005-user-session-valid-until [0004-city] 2017-03-31T17:03:42Z Junior Moraes <juniorfvox@gmail.com> # user-session-valid-until
 0006-journalist [0005-user-session-valid-until] 2017-04-03T20:05:32Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Adding the journalist, bank institutions and user bank account tables
+0007-journalist-bank-account-nullable [0006-journalist] 2017-04-03T20:17:53Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Setting the user_bank_account column to nullable
