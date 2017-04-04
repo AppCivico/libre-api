@@ -71,11 +71,6 @@ __PACKAGE__->table("journalist");
   data_type: 'text'
   is_nullable: 0
 
-=head2 rg
-
-  data_type: 'text'
-  is_nullable: 0
-
 =head2 cpf
 
   data_type: 'text'
@@ -144,8 +139,6 @@ __PACKAGE__->add_columns(
   "name",
   { data_type => "text", is_nullable => 0 },
   "surname",
-  { data_type => "text", is_nullable => 0 },
-  "rg",
   { data_type => "text", is_nullable => 0 },
   "cpf",
   { data_type => "text", is_nullable => 1 },
@@ -233,8 +226,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 10:13:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Zdf+RsOKSi4EVXOR2x1D0g
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 10:48:11
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SOkXR5gMBmYXX2TrhRLVUw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

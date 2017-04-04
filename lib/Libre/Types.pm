@@ -19,7 +19,6 @@ use MooseX::Types::DateTime::MoreCoercions qw( DateTime );
 use Business::BR::CEP qw(test_cep);
 use Business::BR::CPF qw(test_cpf);
 use Business::BR::CNPJ qw(test_cnpj);
-use Business::BR::RG qw(test_rg);
 
 use DateTime;
 use DateTime::Format::Pg;
@@ -38,9 +37,6 @@ subtype CNPJ, as NonEmptyStr, where {
     $cnpj !~ /^0+$/ && test_cnpj($cnpj);
 };
 
-subtype RG, as NonEmptyStr, where {
-    test_rg($_);
-};
 
 subtype CEP, as Str, where {
     my $cep = $_;

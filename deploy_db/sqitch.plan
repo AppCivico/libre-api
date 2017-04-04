@@ -10,3 +10,4 @@
 0006-journalist [0005-user-session-valid-until] 2017-04-03T20:05:32Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Adding the journalist, bank institutions and user bank account tables
 0007-journalist-bank-account-nullable [0006-journalist] 2017-04-03T20:17:53Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Setting the user_bank_account column to nullable
 0008-user-verified [0007-journalist-bank-account-nullable] 2017-04-04T13:06:47Z Junior Moraes <juniorfvox@gmail.com> # user-verified
+0009-remove-rg [0008-user-verified] 2017-04-04T13:46:39Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Removing the RG

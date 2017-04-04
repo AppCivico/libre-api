@@ -12,7 +12,6 @@ use JSON::MaybeXS;
 use Data::Fake qw(Core Company Dates Internet Names Text);
 use Business::BR::CPF qw(random_cpf);
 use Business::BR::CNPJ qw(random_cnpj format_cnpj);
-use Business::BR::RG qw(random_rg);
 
 # ugly hack
 sub import {
@@ -115,7 +114,6 @@ sub create_journalist {
         name                     => fake_name()->(),
         surname                  => fake_surname->(),
         cpf                      => random_cpf(),
-        rg                       => random_rg(1),
         cellphone_number         => fake_digits("+551198#######")->(),
         address_state            => 'São Paulo',
         address_city             => 'São Paulo',

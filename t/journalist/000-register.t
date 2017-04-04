@@ -19,43 +19,6 @@ db_transaction {
     my $email   = lc(fake_email()->());
     $email      =~ s/\s+/_/g;
 
-    # Não pode registrar jornalista sem RG
-    rest_post '/v1/register/journalist',
-        name                => "Jornalista sem RG",
-        is_fail             => 1,
-        params              => {
-            email                    => $email,
-            password                 => "foobarpass",
-            name                     => fake_name()->(),
-            surname                  => "Foobarson",
-            cpf                      => random_cpf(),
-            address_state            => "Rio de Janeiro",
-            address_city             => "Rio de Janeiro",
-            address_zipcode          => '02351-000',
-            address_street           => "Rua Flores do Piauí",
-            address_residence_number => 1 + int(rand(2000)),
-        },
-    ;
-
-    # O RG cadastrado deve ser válido
-    rest_post '/v1/register/journalist',
-        name                => "Jornalista com RG invalido",
-        is_fail             => 1,
-        params              => {
-            email                    => $email,
-            password                 => "foobarpass",
-            name                     => fake_name()->(),
-            surname                  => "Foobarson",
-            rg                       => random_rg(0),
-            cpf                      => random_cpf(),
-            address_state            => "Rio de Janeiro",
-            address_city             => "Rio de Janeiro",
-            address_zipcode          => '02351-000',
-            address_street           => "Rua Flores do Piauí",
-            address_residence_number => 1 + int(rand(2000)),
-        },
-    ;
-
     # Não pode registrar jornalista sem CPF
     rest_post '/v1/register/journalist',
         name                => "Jornalista sem CPF",
@@ -65,7 +28,6 @@ db_transaction {
             password                 => "foobarpass",
             name                     => fake_name()->(),
             surname                  => "foobarson",
-            rg                       => random_rg(1),
             address_state            => "Rio de Janeiro",
             address_city             => "Rio de Janeiro",
             address_zipcode          => '02351-000',
@@ -84,7 +46,6 @@ db_transaction {
             name                     => fake_name()->(),
             surname                  => "Foobarson",
             cpf                      => random_cpf(0),
-            rg                       => random_rg(1),
             address_state            => "Rio de Janeiro",
             address_city             => "Rio de Janeiro",
             address_zipcode          => '02351-000',
@@ -103,7 +64,6 @@ db_transaction {
             name                     => fake_name()->(),
             surname                  => "Foobarson",
             cpf                      => random_cpf(),
-            rg                       => random_rg(1),
         },
     ;
 
@@ -117,7 +77,6 @@ db_transaction {
             name                     => fake_first_name()->(),
             surname                  => fake_surname()->(),
             cpf                      => random_cpf(),
-            rg                       => random_rg(1),
             address_state            => "Rio de Janeiro",
             address_city             => "Rio de Janeiro",
             address_zipcode          => '02351-000',
@@ -136,7 +95,6 @@ db_transaction {
             surname                  => fake_surname()->(),
             cellphone_number         => "+551398200 23",
             cpf                      => random_cpf(),
-            rg                       => random_rg(1),
             address_state            => "Rio de Janeiro",
             address_city             => "Rio de Janeiro",
             address_zipcode          => '02351-000',

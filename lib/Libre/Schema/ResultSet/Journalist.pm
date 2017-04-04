@@ -10,7 +10,7 @@ with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
 # use Business::BR::CEP qw(teste_cep);
-use Libre::Types qw(CPF EmailAddress RG);
+use Libre::Types qw(CPF EmailAddress);
 
 use Data::Verifier;
 use Number::Phone::BR;
@@ -58,19 +58,6 @@ sub verifiers_specs {
                         $self->search({
                             cpf => $r->get_value('cpf'),
                         })->count and die \["cpf", "alredy exists"];
-
-                        return 1;
-                    },
-                },
-                rg  => {
-                    required    => 1,
-                    type        => RG,
-                    post_check  => sub {
-                        my $r = shift;
-
-                        $self->search({
-                            rg => $r->get_value('rg'),
-                        })->count and die \["rg", "alredy exists"];
 
                         return 1;
                     },
@@ -151,7 +138,7 @@ sub action_specs {
             $user->add_to_roles({ id => 2 });
 
             my $journalist = $self->create({
-                ( map { $_ => $values{$_} } qw(name surname cpf rg address_state address_city address_zipcode address_street address_residence_number) ),
+                ( map { $_ => $values{$_} } qw(name surname cpf address_state address_city address_zipcode address_street address_residence_number) ),
                 user_id => $user->id,
             });
 
