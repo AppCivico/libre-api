@@ -39,9 +39,7 @@ subtype CNPJ, as NonEmptyStr, where {
 };
 
 subtype RG, as NonEmptyStr, where {
-    my $rg = $_;
-    $rg =~ s/\D+//g;
-    test_rg($rg);
+    test_rg($_);
 };
 
 subtype CEP, as Str, where {
