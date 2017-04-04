@@ -11,3 +11,6 @@ export SMTP_SERVER=""
 export SMTP_PORT=""
 export SMTP_USERNAME=""
 export SMTP_PASSWORD=""
+
+export CONTACT_EMAIL_TO=""
+export DEFAULT_EMAIL_FROM=""
