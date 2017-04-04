@@ -66,6 +66,11 @@ __PACKAGE__->table("journalist");
   data_type: 'text'
   is_nullable: 0
 
+=head2 surname
+
+  data_type: 'text'
+  is_nullable: 0
+
 =head2 rg
 
   data_type: 'text'
@@ -117,21 +122,10 @@ __PACKAGE__->table("journalist");
   default_value: false
   is_nullable: 0
 
-=head2 verified
-
-  data_type: 'boolean'
-  default_value: false
-  is_nullable: 0
-
 =head2 verified_at
 
   data_type: 'timestamp'
   is_nullable: 1
-
-=head2 surname
-
-  data_type: 'text'
-  is_nullable: 0
 
 =cut
 
@@ -148,6 +142,8 @@ __PACKAGE__->add_columns(
   "user_bank_account_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "name",
+  { data_type => "text", is_nullable => 0 },
+  "surname",
   { data_type => "text", is_nullable => 0 },
   "rg",
   { data_type => "text", is_nullable => 0 },
@@ -169,12 +165,8 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 1 },
   "active",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
-  "verified",
-  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "verified_at",
   { data_type => "timestamp", is_nullable => 1 },
-  "surname",
-  { data_type => "text", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -241,8 +233,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-31 17:06:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R9MVVK3a059T+tnr9JhoDA
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 10:13:38
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Zdf+RsOKSi4EVXOR2x1D0g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

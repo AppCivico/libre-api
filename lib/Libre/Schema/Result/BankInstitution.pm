@@ -51,7 +51,7 @@ __PACKAGE__->table("bank_institution");
 
 =head2 code
 
-  data_type: 'integer'
+  data_type: 'text'
   is_nullable: 0
 
 =head2 name
@@ -70,7 +70,7 @@ __PACKAGE__->add_columns(
     sequence          => "bank_institution_id_seq",
   },
   "code",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "text", is_nullable => 0 },
   "name",
   { data_type => "text", is_nullable => 1 },
 );
@@ -105,8 +105,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-03-30 14:29:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7tnaohSS1bOo17SJbvL8rA
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 10:13:38
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aDtPmXeXLOMn/vmRi479Yg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
