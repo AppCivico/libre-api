@@ -49,7 +49,7 @@ sub contact : Chained('base') : Args(0) : PathPart('') {
 
     my $email = Libre::Mailer::Template->new(
         to       => $ENV{CONTACT_EMAIL_TO},
-        from     => $ENV{DEFAULT_EMAIL_FROM},
+        from     => $ENV{CONTACT_EMAIL_FROM},
         subject  => "Libre - Contato",
         template => get_data_section('contact.tt'),
         vars     => {
