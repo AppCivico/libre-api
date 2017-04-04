@@ -31,7 +31,10 @@ sub login_POST {
         },
     );
 
-    my $authenticate = $c->authenticate({ map { $_ => $c->req->params->{$_} } qw(email password) });
+    my $authenticate = $c->authenticate({
+        ( map { $_ => $c->req->params->{$_} } qw(email password) ),
+        verified => 1,
+    });
 
     if ($authenticate) {
         my $ipAddr = $c->req->header("CF-Connecting-IP") || $c->req->header("X-Forwarded-For") || $c->req->address;

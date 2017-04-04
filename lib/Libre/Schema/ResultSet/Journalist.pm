@@ -143,8 +143,11 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             my $user = $self->result_source->schema->resultset("User")->create({
-                map { $_ => $values{$_} } qw(email password)
+                ( map { $_ => $values{$_} } qw(email password) ),
+                verified    => 1,
+                verified_at => \"now()",
             });
+
             $user->add_to_roles({ id => 2 });
 
             my $journalist = $self->create({

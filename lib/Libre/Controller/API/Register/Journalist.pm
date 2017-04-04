@@ -33,10 +33,7 @@ sub register_POST {
     my $journalist = $c->stash->{collection}->execute(
         $c,
         for   => 'create',
-        with  => {
-            %{ $c->req->params },
-            status => "pending",
-        },
+        with  => $c->req->params,
     );
 
     $self->status_created(
