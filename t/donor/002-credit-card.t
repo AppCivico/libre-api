@@ -27,8 +27,8 @@ db_transaction {
     stash_test "c1" => sub {
         my $res = shift;
 
-        like($res->{href}, qr/callback-for-token/, "callback for token");
-        is($res->{method}, "POST", "method post");
+        like ($res->{href}, qr/callback-for-token/, "callback for token");
+        is ($res->{method}, "POST", "method post");
 
         my $furl = Furl->new(timeout => 20);
 
@@ -64,7 +64,16 @@ db_transaction {
         stash => "l1",
     ;
 
-    p [ stash 'l1'];
+    stash_test "l1" => sub {
+        my $res = shift;
+
+        is_deeply(
+            $res->{credit_cards},
+            [ decode_json($content) ],
+        );
+    };
+
+
 };
 
 done_testing();

@@ -42,6 +42,32 @@ sub list_POST {
     return $self->status_ok($c, entity => $res);
 }
 
+sub list_GET {
+    my ($self, $c) = @_;
+
+    return $self->status_ok(
+        $c,
+        entity => {
+            credit_cards => [
+                map {
+                    my $r = $_;
+                    +{
+                        map { $_ => $r->$_ }
+                          qw(
+                            id
+                            validity
+                            conjecture_brand
+                            mask
+                            verified_by_any_merchant
+                            created_at
+                          )
+                      }
+                } $c->stash->{flotum_customer}->list_credit_cards
+            ]
+        }
+    );
+}
+
 sub _load_customer {
     my ($self, $c) = @_;
 
