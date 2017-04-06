@@ -17,7 +17,12 @@ Catalyst Controller.
 
 =cut
 
+sub root :Chained('api/register/donor/base') :PathPart('') :CaptureArgs(0) { }
+ 
+sub base :Chained('root') :PathPart('plan') :CaptureArgs(0) { }
 
+sub register :Chained('base') :PathPart {
+}
 
 =encoding utf8
 
