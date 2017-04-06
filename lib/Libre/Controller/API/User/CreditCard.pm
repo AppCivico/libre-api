@@ -48,7 +48,7 @@ sub _load_customer {
     my $user = $c->stash->{user};
 
     if ($user->donor->flotum_id) {
-        return $c->stash->{flotum}->load_customer(id => $user->flotum_id);
+        return $c->stash->{flotum}->load_customer(id => $user->donor->flotum_id);
     }
     else {
         my $customer = $c->stash->{flotum}->new_customer(
