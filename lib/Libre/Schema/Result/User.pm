@@ -76,6 +76,11 @@ __PACKAGE__->table("user");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 cpf
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -101,6 +106,8 @@ __PACKAGE__->add_columns(
   { data_type => "boolean", is_nullable => 0 },
   "verified_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "cpf",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -202,8 +209,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 15:04:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ZtrE9deNNIsmlN0oYd8RNw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-05 22:45:41
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/fsviGHQL2sVGZYSjDIjug
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {

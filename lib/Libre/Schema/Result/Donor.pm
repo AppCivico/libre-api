@@ -63,6 +63,16 @@ __PACKAGE__->table("donor");
   data_type: 'text'
   is_nullable: 1
 
+=head2 flotum_id
+
+  data_type: 'text'
+  is_nullable: 1
+
+=head2 flotum_preferred_credit_card
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -73,6 +83,10 @@ __PACKAGE__->add_columns(
   "surname",
   { data_type => "text", is_nullable => 0 },
   "phone",
+  { data_type => "text", is_nullable => 1 },
+  "flotum_id",
+  { data_type => "text", is_nullable => 1 },
+  "flotum_preferred_credit_card",
   { data_type => "text", is_nullable => 1 },
 );
 
@@ -106,8 +120,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 15:04:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:37lqZ+I2/Jehie7WGauZDw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-05 22:45:41
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UqFiGddNHllTLK02o40uBQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -15,7 +15,7 @@ use Data::Section::Simple qw(get_data_section);
 use vars qw(@ISA @EXPORT);
 
 @ISA    = (qw(Exporter));
-@EXPORT = qw(is_test random_string get_data_section);
+@EXPORT = qw(is_test random_string get_data_section get_libre_api_url_for);
 
 =head1 METHODS
 
@@ -30,6 +30,14 @@ sub is_test {
         return 1;
     }
     return 0;
+}
+
+sub get_libre_api_url_for {
+    my $args = shift;
+
+    $args = "/$args" unless $args =~ m{^\/};
+
+    return ( ( is_test() ? "http://localhost" : $ENV{LIBRE_URL} ) . $args );
 }
 
 =head1 AUTHOR
