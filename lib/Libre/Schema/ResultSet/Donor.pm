@@ -71,12 +71,10 @@ sub action_specs {
 
             $user->add_to_roles({ id => 3 });
 
-            my $donor = $self->create({
+            return $self->create({
                 ( map { $_ => $values{$_} } qw(name surname phone) ),
                 user_id => $user->id,
             });
-
-            return $donor;
         },
     };
 }

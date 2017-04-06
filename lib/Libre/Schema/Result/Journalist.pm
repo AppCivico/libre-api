@@ -42,13 +42,6 @@ __PACKAGE__->table("journalist");
 
 =head1 ACCESSORS
 
-=head2 id
-
-  data_type: 'integer'
-  is_auto_increment: 1
-  is_nullable: 0
-  sequence: 'journalist_id_seq'
-
 =head2 user_id
 
   data_type: 'integer'
@@ -125,13 +118,6 @@ __PACKAGE__->table("journalist");
 =cut
 
 __PACKAGE__->add_columns(
-  "id",
-  {
-    data_type         => "integer",
-    is_auto_increment => 1,
-    is_nullable       => 0,
-    sequence          => "journalist_id_seq",
-  },
   "user_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "user_bank_account_id",
@@ -166,13 +152,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</id>
+=item * L</user_id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("id");
+__PACKAGE__->set_primary_key("user_id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -226,8 +212,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 10:48:11
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SOkXR5gMBmYXX2TrhRLVUw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 15:05:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IE/xFbiya1ZvlirXNsAM5w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

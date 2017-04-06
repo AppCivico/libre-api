@@ -131,31 +131,31 @@ __PACKAGE__->add_unique_constraint("user_email_key", ["email"]);
 
 =head1 RELATIONS
 
-=head2 donors
+=head2 donor
 
-Type: has_many
+Type: might_have
 
 Related object: L<Libre::Schema::Result::Donor>
 
 =cut
 
-__PACKAGE__->has_many(
-  "donors",
+__PACKAGE__->might_have(
+  "donor",
   "Libre::Schema::Result::Donor",
   { "foreign.user_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 journalists
+=head2 journalist
 
-Type: has_many
+Type: might_have
 
 Related object: L<Libre::Schema::Result::Journalist>
 
 =cut
 
-__PACKAGE__->has_many(
-  "journalists",
+__PACKAGE__->might_have(
+  "journalist",
   "Libre::Schema::Result::Journalist",
   { "foreign.user_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
@@ -202,8 +202,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 10:13:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7/QHjbNticv6quyFOLhdsg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-04 15:04:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ZtrE9deNNIsmlN0oYd8RNw
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {

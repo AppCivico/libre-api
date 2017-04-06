@@ -39,10 +39,10 @@ db_transaction {
     ok (
         my $user_session = $schema->resultset("UserSession")->search(
             {
-                "donors.id" => stash "donor.id",
+                "user.id"   => stash "donor.id",
                 valid_until => { ">=" => \"NOW()" }
             },
-            { join => { "user" => "donors" } },
+            { join => "user" },
         )->next,
         "created user session",
     );
