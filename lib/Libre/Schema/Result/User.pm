@@ -76,6 +76,11 @@ __PACKAGE__->table("user");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 cpf
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -101,6 +106,8 @@ __PACKAGE__->add_columns(
   { data_type => "boolean", is_nullable => 0 },
   "verified_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "cpf",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY

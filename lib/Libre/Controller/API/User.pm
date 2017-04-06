@@ -21,6 +21,8 @@ sub base : Chained('root') : PathPart('user') : CaptureArgs(0) { }
 
 sub object : Chained('base') : PathPart('') : CaptureArgs(1) { }
 
+sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
+
 __PACKAGE__->meta->make_immutable;
 
 1;

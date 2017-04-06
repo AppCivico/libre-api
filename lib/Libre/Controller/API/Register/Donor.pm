@@ -6,7 +6,6 @@ use namespace::autoclean;
 BEGIN { extends "CatalystX::Eta::Controller::REST" }
 
 with "CatalystX::Eta::Controller::AutoBase";
-with "CatalystX::Eta::Controller::AutoListPOST";
 
 __PACKAGE__->config(
     result  => "DB::Donor",
@@ -19,4 +18,18 @@ sub base : Chained('root') : PathPart('donor') : CaptureArgs(0) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub list_POST { }
+sub list_POST {
+    my ($self, $c) = @_;
+
+    my $user = $c->stash->{collection}->execute(
+        $c,
+        for => "create",
+        with => $c->req->params,
+    );
+
+    return $self->status_created(
+        $c,
+        location => $c->uri_for($c->controller("API::User")->action_for('result'), [ $user->id ]),
+        entity   => { id => $user->id },
+    );
+}
