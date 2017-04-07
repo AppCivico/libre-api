@@ -16,9 +16,9 @@ sub root : Chained('/api/register/base') : PathPart('') : CaptureArgs(0) { }
 
 sub base : Chained('root') : PathPart('donor') : CaptureArgs(0) { }
 
-sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
+sub create : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub list_POST {
+sub create_POST {
     my ($self, $c) = @_;
 
     my $user = $c->stash->{collection}->execute(
@@ -33,3 +33,7 @@ sub list_POST {
         entity   => { id => $user->id },
     );
 }
+
+__PACKAGE__->meta->make_immutable;
+
+1;
