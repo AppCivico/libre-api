@@ -14,7 +14,10 @@ sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     # Somente doadores podem cadastrar cartão de crédito.
-    $c->assert_user_roles("donor");
+    eval { $c->assert_user_roles(qw/donor/) };
+    if ($@) {
+        $c->forward("/api/forbidden");
+    }
 }
 
 sub base : Chained('root') : PathPart('credit-card') : CaptureArgs(0) {
