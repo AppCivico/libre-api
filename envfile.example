@@ -13,3 +13,5 @@ export SMTP_USERNAME=""
 export SMTP_PASSWORD=""
 
 export LIBRE_URL=""
+
+export FLOTUM_MERCHANT_API_KEY=""

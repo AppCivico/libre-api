@@ -6,18 +6,15 @@ use Net::Flotum;
 use Libre::Utils;
 
 has instance => (
-    is      => 'rw',
-    lazy    => 1,
-    builder => '_builder_flotum',
-    isa     => 'Net::Flotum',
+    is         => "rw",
+    isa        => "Net::Flotum",
+    lazy_build => 1,
 );
 
-sub _builder_flotum {
-    my $self = shift;
+BEGIN { $ENV{FLOTUM_MERCHANT_API_KEY} or die "missing 'FLOTUM_MERCHANT_API_KEY'" }
 
-    if (is_test() && !$ENV{FLOTUM_MERCHANT_API_KEY}) {
-        $ENV{FLOTUM_MERCHANT_API_KEY} = 'm-homol-personow-20h4+2kkd3';
-    }
+sub _build_instance {
+    my $self = shift;
 
     Net::Flotum->new(merchant_api_key => $ENV{FLOTUM_MERCHANT_API_KEY});
 }
