@@ -12,6 +12,9 @@ export SMTP_PORT=""
 export SMTP_USERNAME=""
 export SMTP_PASSWORD=""
 
+export CONTACT_EMAIL_TO=""
+export CONTACT_EMAIL_FROM=""
+
 export LIBRE_URL=""
 
 export FLOTUM_MERCHANT_API_KEY=""
