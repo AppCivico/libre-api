@@ -229,7 +229,7 @@ __PACKAGE__->add_column(
 use Libre::Utils;
 
 sub new_session {
-    my ($self, %args) = @_;
+    my ($self) = @_;
 
     my $schema = $self->result_source->schema;
 

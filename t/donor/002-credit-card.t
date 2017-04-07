@@ -46,7 +46,7 @@ db_transaction {
 
         ok ($request->is_success, "post success");
         $content  = $request->decoded_content;
-        $callback = URI->new($res->{href})->query_param('callback') 
+        $callback = URI->new($res->{href})->query_param('callback');
     };
 
     # Simulando o callback.
