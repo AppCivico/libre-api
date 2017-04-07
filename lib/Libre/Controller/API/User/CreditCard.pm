@@ -24,6 +24,12 @@ sub base : Chained('root') : PathPart('credit-card') : CaptureArgs(0) {
     $c->stash->{flotum_customer} = $self->_load_customer($c);
 }
 
+sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
+    my ($self, $c, $cc_id) = @_;
+
+    $c->stash->{cc_id} = $cc_id;
+}
+
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub list_POST {
@@ -66,6 +72,29 @@ sub list_GET {
             ]
         }
     );
+}
+
+sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
+
+sub result_DELETE {
+    my ($self, $c) = @_;
+
+    my $cc = Net::Flotum::Object::CreditCard->new(
+        flotum               => $c->stash->{flotum},
+        id                   => $c->stash->{cc_id},
+        merchant_customer_id => $c->stash->{flotum_customer}->id
+    );
+
+    eval { $cc->remove() };
+    if ($@) {
+        $c->error->log($@);
+
+        $self->status_bad_request($c, error => "Cannot remove credit-card.");
+    }
+
+    $c->stash->{user}->donor->update({ flotum_preferred_credit_card => undef });
+
+    $self->status_no_content($c);
 }
 
 sub _load_customer {

@@ -57,22 +57,58 @@ db_transaction {
         data    => $content,
     ;
 
-    # Neste ponto o cartão de crédito já deve ter sido cadastrado.
-    # Listando.
+    ok (my $user = $schema->resultset("Donor")->find($donor_id));
+
+    my $content_as_json = decode_json $content;
+    is_deeply(
+        decode_json($user->flotum_preferred_credit_card),
+        {
+            map { $_ => $content_as_json->{$_} }
+              qw(conjecture_brand created_at id mask validity)
+        },
+        "flotum preferred creditcard"
+    );
+
+    # Listagem.
     rest_get [ "/v1/user", $donor_id, "credit-card" ],
         name  => "list credit card",
         stash => "l1",
     ;
 
+    my $credit_card_id;
     stash_test "l1" => sub {
         my $res = shift;
 
         is_deeply(
             $res->{credit_cards},
-            [ decode_json($content) ],
+            [ $content_as_json ],
         );
+
+        $credit_card_id = $res->{credit_cards}->[0]->{id};
     };
 
+    # Deletando cartão de crédito.
+    rest_delete [ "/v1/user", $donor_id, "credit-card", $credit_card_id ],
+        name => "delete credit card",
+        code => 204,
+    ;
+
+    is(
+        $user->discard_changes->flotum_preferred_credit_card,
+        undef,
+        "user has no preferred credit card",
+    );
+
+    rest_get [ "/v1/user", $donor_id, "credit-card" ],
+        name  => "list credit card again",
+        stash => "l2",
+    ;
+
+    is_deeply(
+        stash "l2",
+        { credit_cards => [] },
+        "empty credit card list",
+    );
 
 };
 
