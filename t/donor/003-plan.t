@@ -8,15 +8,12 @@ my $schema = Libre->model("DB");
 
 db_transaction {
 
-    my $email = fake_email()->();
-    my $password = "foobarquux1";
+    create_donor;
+    api_auth_as user_id => stash "donor.id";
+    
+    my $donor_id = stash "donor.id";
 
-    create_donor(
-        email    => $email,
-        password => $password,
-    );
-
-    rest_post "/v1/user/plan/",
+    rest_post "/v1/donor/plan",
         name    => "Plano de um doador",
         code    => 200,
         params  => {

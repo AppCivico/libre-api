@@ -10,6 +10,7 @@ with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
 use Data::Verifier;
+use Libre::Types qw(PositiveInt);
 
 sub verifiers_specs {
     my $self = shift;
@@ -17,17 +18,23 @@ sub verifiers_specs {
     return {
         create => Data::Verifier->new(
             filters => [ qw(trim) ],
-            amount => {
-                required    => 1,
-                type        => "Num",
-                post_check  => sub {
-                    my $amount = $_[0]->get_value('amount');
+            profile => {
+                amount => {
+                    required    => 1,
+                    type        => PositiveInt,
+                    post_check  => sub {
+                        my $r = shift;
 
-                    if ($amount < 20) {
-                        return 0;
+                        my $amount = $_[0]->get_value('amount');
+
+                        if ($amount < 20) {
+                            return 0;
+                        }
+                        else {
+                            return 1;
+                        }
                     }
-                    return 1;
-                }
+                },
             }
         )
     }
@@ -43,7 +50,7 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $user = $self->result_source->schema->resultset("User")->create({
+            my $user = $self->result_source->schema->resultset("User")->search({
                 ( map { $_ => $values{$_} } qw(email password) ),
                 verified    => 1,
                 verified_at => \"now()",

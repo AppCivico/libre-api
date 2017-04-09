@@ -3,27 +3,26 @@ use common::sense;
 use Moose;
 use namespace::autoclean;
 
-BEGIN { extends 'CatalystX::Eta::Controller::REST' }
+BEGIN { extends "CatalystX::Eta::Controller::REST" }
 
-sub root :Chained('/api/root') :PathPart('user') :CaptureArgs(0) { 
-    my $c = @_;
+sub root :Chained('/api/root') :PathPart('donor') :CaptureArgs(0) { 
+    my ($self, $c) = @_;
 
-    $c->assert_user_roles("donor");
-        eval { $c->assert_user_roles(qw/donor/) };
-        if ($@) {
-            $c->forward("/api/forbidden");
-        }
+    eval { $c->assert_user_roles(qw/donor/) };
+    if ($@) {
+        $c->forward("/api/forbidden");
+    }
 }
  
 sub base :Chained('root') :PathPart('plan') :CaptureArgs(0) { }
 
-sub list :Chained('base') :PathPart('') :Args(0) ActionClass('REST') {
+sub register :Chained('base') :PathPart('') :Args(0) ActionClass('REST') {
     my ($self, $c) = @_;
 
     $c->stash->{collection} = $c->model('DB::UserPlan');
 }
 
-sub list_POST { 
+sub register_POST { 
     my ($self, $c) = @_;
 
     my $user_plan = $c->stash->{collection}->execute(
@@ -38,21 +37,6 @@ sub list_POST {
         entity   => { id => $user_plan->id },
     );
 }
-
-
-
-=encoding utf8
-
-=head1 AUTHOR
-
-eokoe-lucas,,,
-
-=head1 LICENSE
-
-This library is free software. You can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut
 
 __PACKAGE__->meta->make_immutable;
 
