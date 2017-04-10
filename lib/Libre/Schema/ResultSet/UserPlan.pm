@@ -25,24 +25,32 @@ sub verifiers_specs {
                     post_check  => sub {
                         my $r = shift;
 
-                        my $amount = $_[0]->get_value('amount');
+                        my $amount = $r->get_value('amount');
 
                         if ($amount < 20) {
                             return 0;
                         }
-                        else {
-                            return 1;
-                        }
+                        return 1;
                     }
                 },
-            }
-        )
-    }
+                user_id => {
+                    required    => 1,
+                    type        => "Int",
+                    post_check  => sub {
+                        my $r = shift;
+
+                        my $user_id = $r->get_value('user_id');
+                        $self->result_source->schema->resultset('User')->search({ id => $user_id })->count;
+                    }
+                },
+            },
+        ),
+    };
 }
 
 sub action_specs {
-    my $self = @_;
-
+    my ($self) = @_;
+    
     return {
         create => sub {
             my $r = shift;
@@ -50,17 +58,10 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $user = $self->result_source->schema->resultset("User")->search({
-                ( map { $_ => $values{$_} } qw(email password) ),
-                verified    => 1,
-                verified_at => \"now()",
-            });
-
-            $user->add_to_roles({ id => 3 });
-
             my $user_plan = $self->create({
-                ( map { $_ => $values{$_} } qw(amount) ),
-                user_id => $user->id,
+                ( map { $_ => $values{$_} } qw(amount user_id) ),                
+                created_at  => \"now()",
+                valid_until => \"(now() + '30 days'::interval)",
             });
 
             return $user_plan;

@@ -5,7 +5,7 @@ use namespace::autoclean;
 
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
-sub root :Chained('/api/user/object') :PathPart('') :CaptureArgs(0) { 
+sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) { 
     my ($self, $c) = @_;
 
     eval { $c->assert_user_roles(qw/donor/) };
@@ -14,9 +14,10 @@ sub root :Chained('/api/user/object') :PathPart('') :CaptureArgs(0) {
     }
 }
  
-sub base :Chained('root') :PathPart('plan') :CaptureArgs(0) { }
+sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) { }
 
-sub register :Chained('base') :PathPart('') :Args(0) ActionClass('REST') {
+
+sub register : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
     my ($self, $c) = @_;
 
     $c->stash->{collection} = $c->model('DB::UserPlan');
@@ -31,13 +32,25 @@ sub register_POST {
         with => $c->req->params,
     );
 
-    return $self->status_created(
+    $self->status_ok(
         $c,
-        location => $c->uri_for($c->controller("API::User::Plan")->action_for('result'), [ $user_plan->id ]),
+        #location => $c->uri_for($c->controller("API::User::Plan")->action_for('result'), [ $user_plan->id ]),
         entity   => { id => $user_plan->id },
     );
 }
 
+sub list : Chained('base') : PathPart('list') : Args(0) : ActionClass('REST') { }
+
+sub list_GET {
+    my ($self, $c) = @_;
+
+    return $self->status_ok(
+        $c,
+        entity => {
+            user_plan => $c->stash->{collection}->all_with_placeholder_as_arrayref(),
+        },
+    );
+}
 
 
 =encoding utf8
