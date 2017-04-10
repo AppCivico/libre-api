@@ -224,8 +224,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-06 11:57:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yKH3oKo/XInKUCktzMsyGQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-10 10:16:15
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/7Z/1TQt1N0/7acuoLTR3A
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {

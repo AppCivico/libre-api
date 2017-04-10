@@ -48,11 +48,11 @@ __PACKAGE__->table("user_plan");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 plan
+=head2 amount
 
-  data_type: 'integer'
-  is_foreign_key: 1
+  data_type: 'numeric'
   is_nullable: 0
+  size: [8,2]
 
 =head2 created_at
 
@@ -69,8 +69,8 @@ __PACKAGE__->table("user_plan");
 __PACKAGE__->add_columns(
   "user_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "plan",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "amount",
+  { data_type => "numeric", is_nullable => 0, size => [8, 2] },
   "created_at",
   { data_type => "timestamp", is_nullable => 0 },
   "valid_until",
@@ -89,22 +89,21 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("user_id");
 
-=head1 RELATIONS
+=head1 UNIQUE CONSTRAINTS
 
-=head2 plan
+=head2 C<user_plan_amount_key>
 
-Type: belongs_to
+=over 4
 
-Related object: L<Libre::Schema::Result::Plan>
+=item * L</amount>
+
+=back
 
 =cut
 
-__PACKAGE__->belongs_to(
-  "plan",
-  "Libre::Schema::Result::Plan",
-  { id => "plan" },
-  { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
-);
+__PACKAGE__->add_unique_constraint("user_plan_amount_key", ["amount"]);
+
+=head1 RELATIONS
 
 =head2 user
 
@@ -122,8 +121,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-06 11:57:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uba8hQMJXU6W7OB+QCdNUg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-10 09:51:01
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8OCaOV+zTR+qvXunmSwd5w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
