@@ -18,3 +18,5 @@ export CONTACT_EMAIL_FROM=""
 export LIBRE_URL=""
 
 export FLOTUM_MERCHANT_API_KEY=""
+
+export SQITCH_DEPLOY=""
