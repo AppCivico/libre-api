@@ -5,6 +5,20 @@ use namespace::autoclean;
 
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
+with "CatalystX::Eta::Controller::AutoBase";
+with "CatalystX::Eta::Controller::AutoListGET";
+
+__PACKAGE__->config(
+    # AutoBase
+    result => "DB::UserPlan",
+
+    # AutoListGET
+    list_key       => "user_plan",
+    build_list_row => sub {
+        return { $_[0]->get_columns() }
+    },
+);
+
 sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) { 
     my ($self, $c) = @_;
 
@@ -41,17 +55,7 @@ sub register_POST {
 
 sub list : Chained('base') : PathPart('list') : Args(0) : ActionClass('REST') { }
 
-sub list_GET {
-    my ($self, $c) = @_;
-
-    return $self->status_ok(
-        $c,
-        entity => {
-            user_plan => $c->stash->{collection}->all_with_placeholder_as_arrayref(),
-        },
-    );
-}
-
+sub list_GET { }
 
 =encoding utf8
 

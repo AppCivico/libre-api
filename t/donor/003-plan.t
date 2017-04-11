@@ -33,10 +33,10 @@ db_transaction {
         }
     ;
 
-    #rest_get "v1/user/$donor_id/plan/list",
-    #    name  => "Listando plano de um doador",
-    #    stash => "p1",
-    #;
+    rest_get "v1/user/$donor_id/plan/list",
+        name  => "Listando plano de um doador",
+        stash => "p1",
+    ;
 
 };
 
