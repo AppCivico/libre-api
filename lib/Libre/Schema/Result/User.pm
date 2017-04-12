@@ -168,6 +168,21 @@ __PACKAGE__->might_have(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 user_plans
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::UserPlan>
+
+=cut
+
+__PACKAGE__->has_many(
+  "user_plans",
+  "Libre::Schema::Result::UserPlan",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user_roles
 
 Type: has_many
@@ -209,8 +224,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-05 22:45:41
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/fsviGHQL2sVGZYSjDIjug
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-10 15:27:22
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JqAvrw6EvJcDLgS9WnNjoQ
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {
