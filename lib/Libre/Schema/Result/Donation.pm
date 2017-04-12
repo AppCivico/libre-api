@@ -1,12 +1,12 @@
 use utf8;
-package Libre::Schema::Result::UserPlan;
+package Libre::Schema::Result::Donation;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-Libre::Schema::Result::UserPlan
+Libre::Schema::Result::Donation
 
 =cut
 
@@ -34,11 +34,11 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "PassphraseColumn");
 
-=head1 TABLE: C<user_plan>
+=head1 TABLE: C<donation>
 
 =cut
 
-__PACKAGE__->table("user_plan");
+__PACKAGE__->table("donation");
 
 =head1 ACCESSORS
 
@@ -47,7 +47,7 @@ __PACKAGE__->table("user_plan");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'user_plan_id_seq'
+  sequence: 'donation_id_seq'
 
 =head2 user_id
 
@@ -55,18 +55,13 @@ __PACKAGE__->table("user_plan");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 amount
+=head2 journalist_id
 
-  data_type: 'numeric'
+  data_type: 'integer'
+  is_foreign_key: 1
   is_nullable: 0
-  size: [8,2]
 
 =head2 created_at
-
-  data_type: 'timestamp'
-  is_nullable: 0
-
-=head2 valid_until
 
   data_type: 'timestamp'
   is_nullable: 0
@@ -79,15 +74,13 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "user_plan_id_seq",
+    sequence          => "donation_id_seq",
   },
   "user_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "amount",
-  { data_type => "numeric", is_nullable => 0, size => [8, 2] },
+  "journalist_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "created_at",
-  { data_type => "timestamp", is_nullable => 0 },
-  "valid_until",
   { data_type => "timestamp", is_nullable => 0 },
 );
 
@@ -103,40 +96,41 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
-=head1 UNIQUE CONSTRAINTS
+=head1 RELATIONS
 
-=head2 C<user_plan_amount_key>
+=head2 journalist
 
-=over 4
+Type: belongs_to
 
-=item * L</amount>
-
-=back
+Related object: L<Libre::Schema::Result::Journalist>
 
 =cut
 
-__PACKAGE__->add_unique_constraint("user_plan_amount_key", ["amount"]);
-
-=head1 RELATIONS
+__PACKAGE__->belongs_to(
+  "journalist",
+  "Libre::Schema::Result::Journalist",
+  { user_id => "journalist_id" },
+  { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
+);
 
 =head2 user
 
 Type: belongs_to
 
-Related object: L<Libre::Schema::Result::User>
+Related object: L<Libre::Schema::Result::Donor>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "user",
-  "Libre::Schema::Result::User",
-  { id => "user_id" },
+  "Libre::Schema::Result::Donor",
+  { user_id => "user_id" },
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-12 14:11:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2HSe9q58wFvepsuLxVjPDQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-12 14:14:37
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JVn9qAVVuS5I9LidovJDbg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
