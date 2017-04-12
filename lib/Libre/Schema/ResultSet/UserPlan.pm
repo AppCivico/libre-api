@@ -33,16 +33,6 @@ sub verifiers_specs {
                         return 1;
                     }
                 },
-                user_id => {
-                    required    => 1,
-                    type        => "Int",
-                    post_check  => sub {
-                        my $r = shift;
-
-                        my $user_id = $r->get_value('user_id');
-                        $self->result_source->schema->resultset('User')->search({ id => $user_id })->count;
-                    }
-                },
             },
         ),
     };
@@ -59,7 +49,7 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             my $user_plan = $self->create({
-                ( map { $_ => $values{$_} } qw(amount user_id) ),                
+                amount      => $values{amount},
                 created_at  => \"now()",
                 valid_until => \"(now() + '30 days'::interval)",
             });

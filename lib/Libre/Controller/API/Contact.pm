@@ -59,16 +59,8 @@ sub contact : Chained('base') : Args(0) : PathPart('') {
         }
     )->build_email();
 
-    my $bcc = ['bruno.benjamin@avina.net'];
-    if ($c->req->params->{subject} =~ m{^\[Dúvidas sobre o site}) {
-        push @{ $bcc }, 'kogan.ariel@gmail.com';
-    }
-
     my $queued = $c->model('DB::EmailQueue')->create(
-        {
-            body => $email->as_string,
-            bcc  => $bcc,
-        }
+        { body => $email->as_string }
     );
 
     return $self->status_ok($c, entity => { id => $queued->id });

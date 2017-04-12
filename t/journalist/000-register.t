@@ -8,14 +8,6 @@ db_transaction {
     # Registrando jornalista.
     create_journalist;
 
-    #stash_test 'journalist.get', sub {
-    #    my $me = @_;
-
-    #    ok($me->{journalist}->{id} > 0, 'journalist id');
-    #    is($me->{journalist}->{status}, "pending", 'journalist status pending');    
-    #};
-
-    
     my $email   = lc(fake_email()->());
     $email      =~ s/\s+/_/g;
 

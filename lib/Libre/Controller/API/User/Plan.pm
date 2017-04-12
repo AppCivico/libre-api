@@ -39,7 +39,7 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
 sub list_POST { 
     my ($self, $c) = @_;
 
-    my $user_plan = $c->stash->{collection}->execute(
+    my $user_plan = $c->stash->{user}->user_plans->execute(
         $c,
         for  => "create",
         with => $c->req->params,
@@ -47,7 +47,7 @@ sub list_POST {
 
     $self->status_ok(
         $c,
-        entity   => { id => $user_plan->id },
+        entity => { id => $user_plan->id },
     );
 }
 

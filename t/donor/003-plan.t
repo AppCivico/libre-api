@@ -21,14 +21,14 @@ db_transaction {
     stash_test "l1" => sub {
         my $res = shift;
 
-        is ($res->{user_plan}, [], "donor has no plan yet");
+        is_deeply ($res->{user_plan}, [], "donor has no plan yet");
     };
 
     rest_post "/v1/user/$donor_id/plan",
         name    => "Plano de um doador",
         code    => 200,
         params  => {
-            amount  => fake_int(30, 100)->(),
+            amount => fake_int(30, 100)->(),
         }
     ;
 

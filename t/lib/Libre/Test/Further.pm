@@ -121,7 +121,7 @@ sub create_journalist {
         address_street           => "Rua Flores do Piauí",
         address_residence_number => 1 + int(rand(2000)),
         %opts
-    ); 
+    );
 
     return $obj->rest_post(
         '/v1/register/journalist',

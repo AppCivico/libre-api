@@ -14,7 +14,10 @@ sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     # Somente doadores podem cadastrar cartão de crédito.
-    $c->assert_user_roles("donor");
+    eval { $c->assert_user_roles(qw/donor/) };
+    if ($@) {
+        $c->forward("/api/forbidden");
+    }
 }
 
 sub base : Chained('root') : PathPart('credit-card') : CaptureArgs(0) {
@@ -22,6 +25,12 @@ sub base : Chained('root') : PathPart('credit-card') : CaptureArgs(0) {
 
     $c->stash->{flotum}          = $c->model("Flotum")->instance;
     $c->stash->{flotum_customer} = $self->_load_customer($c);
+}
+
+sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
+    my ($self, $c, $cc_id) = @_;
+
+    $c->stash->{cc_id} = $cc_id;
 }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
@@ -40,6 +49,55 @@ sub list_POST {
     });
 
     return $self->status_ok($c, entity => $res);
+}
+
+sub list_GET {
+    my ($self, $c) = @_;
+
+    return $self->status_ok(
+        $c,
+        entity => {
+            credit_cards => [
+                map {
+                    my $r = $_;
+                    +{
+                        map { $_ => $r->$_ }
+                          qw(
+                            id
+                            validity
+                            conjecture_brand
+                            mask
+                            verified_by_any_merchant
+                            created_at
+                          )
+                      }
+                } $c->stash->{flotum_customer}->list_credit_cards
+            ]
+        }
+    );
+}
+
+sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
+
+sub result_DELETE {
+    my ($self, $c) = @_;
+
+    my $cc = Net::Flotum::Object::CreditCard->new(
+        flotum               => $c->stash->{flotum},
+        id                   => $c->stash->{cc_id},
+        merchant_customer_id => $c->stash->{flotum_customer}->id
+    );
+
+    eval { $cc->remove() };
+    if ($@) {
+        $c->error->log($@);
+
+        $self->status_bad_request($c, error => "Cannot remove credit-card.");
+    }
+
+    $c->stash->{user}->donor->update({ flotum_preferred_credit_card => undef });
+
+    $self->status_no_content($c);
 }
 
 sub _load_customer {

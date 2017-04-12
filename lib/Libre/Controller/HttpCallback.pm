@@ -26,7 +26,7 @@ sub http_callback_POST {
     my $rs     = $schema->resultset("HttpCallbackToken")->search( { token => $token, executed_at => undef } );
     my $config = $rs->next;
     unless ($config) {
-        select undef, undef, undef, 0.25;
+        select undef, undef, undef, 0.25;   ## no critic
         $config = $rs->first;
     }
 
