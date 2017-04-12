@@ -16,3 +16,5 @@
 0012-http-callback-token [0011-user-flotum] 2017-04-06T02:01:26Z junior,,, <junior@fvox> # tp-callback-token
 0013-user-plan [0012-http-callback-token] 2017-04-11T13:48:41Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Ading user-plan table
 0014-userid-not-null-user-plan [0013-user-plan] 2017-04-12T13:05:11Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Changing the user_id column to not null
+0015-donation [0014-userid-not-null-user-plan] 2017-04-12T18:35:36Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Creating the donation table
+0016-user-plan-fix [0015-donation] 2017-04-12T20:03:22Z Junior Moraes <juniorfvox@gmail.com> # user-plan-fix

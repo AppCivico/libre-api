@@ -19,7 +19,7 @@ __PACKAGE__->config(
     },
 );
 
-sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) { 
+sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     eval { $c->assert_user_roles(qw/donor/) };
@@ -27,20 +27,19 @@ sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
         $c->forward("/api/forbidden");
     }
 }
- 
+
 sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) { }
 
-
-sub register : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
+sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
     my ($self, $c) = @_;
 
     $c->stash->{collection} = $c->model('DB::UserPlan');
 }
 
-sub register_POST { 
+sub list_POST {
     my ($self, $c) = @_;
 
-    my $user_plan = $c->stash->{collection}->execute(
+    my $user_plan = $c->stash->{user}->user_plans->execute(
         $c,
         for  => "create",
         with => $c->req->params,
@@ -48,12 +47,9 @@ sub register_POST {
 
     $self->status_ok(
         $c,
-        #location => $c->uri_for($c->controller("API::User::Plan")->action_for('result'), [ $user_plan->id ]),
-        entity   => { id => $user_plan->id },
+        entity => { id => $user_plan->id },
     );
 }
-
-sub list : Chained('base') : PathPart('list') : Args(0) : ActionClass('REST') { }
 
 sub list_GET { }
 
