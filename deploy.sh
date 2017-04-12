@@ -1,6 +1,8 @@
 #!/bin/bash
 GIT_DIR=$(git rev-parse --show-toplevel)
 
+source ~/perl5/perlbrew/etc/bashrc
+
 if [ -f $GIT_DIR/envfile.sh ]; then
     source $GIT_DIR/envfile.sh
 fi
