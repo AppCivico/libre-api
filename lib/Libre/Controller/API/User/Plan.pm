@@ -19,7 +19,7 @@ __PACKAGE__->config(
     },
 );
 
-sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) { 
+sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     eval { $c->assert_user_roles(qw/donor/) };
@@ -27,7 +27,7 @@ sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
         $c->forward("/api/forbidden");
     }
 }
- 
+
 sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
@@ -36,7 +36,7 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
     $c->stash->{collection} = $c->model('DB::UserPlan');
 }
 
-sub list_POST { 
+sub list_POST {
     my ($self, $c) = @_;
 
     my $user_plan = $c->stash->{user}->user_plans->execute(

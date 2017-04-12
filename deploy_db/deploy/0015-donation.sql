@@ -9,6 +9,6 @@ CREATE TABLE  donation
     user_id         integer                         NOT NULL REFERENCES donor(user_id),
     journalist_id   integer                         NOT NULL REFERENCES journalist(user_id),
     created_at      timestamp without time zone     NOT NULL
-)
+);
 
 COMMIT;

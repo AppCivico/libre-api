@@ -40,7 +40,7 @@ sub verifiers_specs {
 
 sub action_specs {
     my ($self) = @_;
-    
+
     return {
         create => sub {
             my $r = shift;
@@ -51,7 +51,6 @@ sub action_specs {
             my $user_plan = $self->create({
                 amount      => $values{amount},
                 created_at  => \"now()",
-                valid_until => \"(now() + '30 days'::interval)",
             });
 
             return $user_plan;
