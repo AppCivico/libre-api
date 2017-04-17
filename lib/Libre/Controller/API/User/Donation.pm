@@ -13,7 +13,7 @@ __PACKAGE__->config(
     no_user => 1,
 
     # AutoListGET
-    list_key       => "user_plan",
+    list_key       => "donation",
     build_list_row => sub {
         return { $_[0]->get_columns() }
     },
@@ -35,12 +35,15 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 sub list_POST {
     my ($self, $c) = @_;
 
-    my $donation = $c->stash->{donor}->donations->execute(
+    my $donation = $c->stash->{collection}->execute(
         $c,
         for  => "create",
-        with => $c->req->params,
+        with => {
+            donor_user_id      => $c->user->id,
+            journalist_user_id => $c->req->param('journalist_user_id'),
+        },
     );
-
+    
     return $self->status_ok(
         $c,
         entity   => { id => $donation->id },

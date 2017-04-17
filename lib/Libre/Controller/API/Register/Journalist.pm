@@ -5,41 +5,32 @@ use namespace::autoclean;
 
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
-=head1 NAME
+with "CatalystX::Eta::Controller::AutoBase";
 
-Libre::Controller::API::Register::Journalist - Catalyst Controller
-
-=head1 DESCRIPTION
-
-Catalyst Controller.
-
-=head1 METHODS
-
-=cut
+__PACKAGE__->config(
+    result  => "DB::Journalist",
+    no_user => 1,
+);
 
 sub root :Chained('/api/register/base') :PathPart('') :CaptureArgs(0) { }
 
 sub base :Chained('root') :PathPart('journalist') :CaptureArgs(0) { }
 
-sub register :Chained('base') :PathPart('') :Args(0) :ActionClass('REST') {
-    my ($self, $c) = @_;
-
-    $c->stash->{collection} = $c->model('DB::Journalist');
-}
+sub register :Chained('base') :PathPart('') :Args(0) :ActionClass('REST') { }
 
 sub register_POST {
     my ($self, $c) = @_;
 
-    my $journalist = $c->stash->{collection}->execute(
+    my $user = $c->stash->{collection}->execute(
         $c,
         for   => 'create',
         with  => $c->req->params,
     );
 
-    $self->status_created(
+    return $self->status_created(
         $c,
-        location => $c->uri_for($c->controller("API::Register")->action_for('journalist'), [ $journalist->id ]),
-        entity   => { id => $journalist->id }
+        location => $c->uri_for($c->controller("API::User")->action_for('result'), [ $user->id ]),
+        entity   => { id => $user->id }
     );
 
     # Enviando e-mail de confirmação

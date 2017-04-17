@@ -18,12 +18,20 @@ sub verifiers_specs {
         create => Data::Verifier->new(
             filters => [ qw(trim) ],
             profile => {
-                journalist_id => {
+                donor_user_id => {
                     required  => 1,
                     type      => "Int",
                     postcheck => sub {
-                        my $journalist_id = $_[0]->get_value("journalist_id");
-                        $self->result_source->schema->resultset("User")->search({ id => $journalist_id })->count;
+                        my $donor_user_id = $_[0]->get_value("donor_user_id");
+                        $self->result_source->schema->resultset("User")->search({ id => $donor_user_id })->count;
+                    } 
+                },
+                journalist_user_id => {
+                    required  => 1,
+                    type      => "Int",
+                    postcheck => sub {
+                        my $journalist_user_id = $_[0]->get_value("journalist_user_id");
+                        $self->result_source->schema->resultset("User")->search({ id => $journalist_user_id })->count;
                     }
                 },
             },
@@ -41,7 +49,33 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $donation = $self->create({           
+            if ($values{'donor_user_id'} == $values{'journalist_user_id'}) {
+                die \["donor_user_id", "equal to journalist_user_id"];
+            }
+
+            $self->result_source->schema->resultset("User")->search(
+                {
+                    'me.id'     => $values{donor_user_id},
+                    'role.name' => "donor",
+                },
+                {
+                    join => { "user_roles" => "role" }
+                }
+            )->count or die \["donor_user_id", "user is not a donor"];
+
+            use DDP;
+            p $self->result_source->schema->resultset("User")->search(
+                {
+                    'me.id'     => $values{donor_user_id},
+                    'role.name' => "journalist",
+                },
+                {
+                    join => { "user_roles" => "role" }
+                }
+            )->count;
+
+            my $donation = $self->create({
+                ( map { $_ => $values{$_} } qw(donor_user_id journalist_user_id) ),           
                 created_at  => \"now()",
             });
 
