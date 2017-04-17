@@ -35,7 +35,7 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 sub list_POST {
     my ($self, $c) = @_;
 
-    my $donation = $c->stash->{collection}->execute(
+    my $donation = $c->stash->{donor}->donations->execute(
         $c,
         for  => "create",
         with => $c->req->params,

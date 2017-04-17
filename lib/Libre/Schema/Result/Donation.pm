@@ -49,21 +49,21 @@ __PACKAGE__->table("donation");
   is_nullable: 0
   sequence: 'donation_id_seq'
 
-=head2 user_id
-
-  data_type: 'integer'
-  is_foreign_key: 1
-  is_nullable: 0
-
-=head2 journalist_id
-
-  data_type: 'integer'
-  is_foreign_key: 1
-  is_nullable: 0
-
 =head2 created_at
 
   data_type: 'timestamp'
+  is_nullable: 0
+
+=head2 donor_user_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 0
+
+=head2 journalist_user_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
   is_nullable: 0
 
 =cut
@@ -76,12 +76,12 @@ __PACKAGE__->add_columns(
     is_nullable       => 0,
     sequence          => "donation_id_seq",
   },
-  "user_id",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "journalist_id",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "created_at",
   { data_type => "timestamp", is_nullable => 0 },
+  "donor_user_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "journalist_user_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -98,39 +98,39 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 journalist
+=head2 donor_user
 
 Type: belongs_to
 
-Related object: L<Libre::Schema::Result::Journalist>
+Related object: L<Libre::Schema::Result::User>
 
 =cut
 
 __PACKAGE__->belongs_to(
-  "journalist",
-  "Libre::Schema::Result::Journalist",
-  { user_id => "journalist_id" },
+  "donor_user",
+  "Libre::Schema::Result::User",
+  { id => "donor_user_id" },
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
-=head2 user
+=head2 journalist_user
 
 Type: belongs_to
 
-Related object: L<Libre::Schema::Result::Donor>
+Related object: L<Libre::Schema::Result::User>
 
 =cut
 
 __PACKAGE__->belongs_to(
-  "user",
-  "Libre::Schema::Result::Donor",
-  { user_id => "user_id" },
+  "journalist_user",
+  "Libre::Schema::Result::User",
+  { id => "journalist_user_id" },
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-12 14:14:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JVn9qAVVuS5I9LidovJDbg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-17 11:21:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:U5mP/73cNlntWiJthPfKyA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

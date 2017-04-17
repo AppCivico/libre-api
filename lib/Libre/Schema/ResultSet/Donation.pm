@@ -18,14 +18,6 @@ sub verifiers_specs {
         create => Data::Verifier->new(
             filters => [ qw(trim) ],
             profile => {
-                user_id  => {
-                    required  => 1,
-                    type      => "Int",
-                    postcheck => sub {
-                        my $user_id = $_[0]->get_value("user_id");
-                        $self->result_source->schema->resultset("User")->search({ id => $user_id })->count;
-                    }
-                },
                 journalist_id => {
                     required  => 1,
                     type      => "Int",
@@ -49,8 +41,7 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $donation = $self->create({
-                ( map { $_ => $values{$_} } qw(user_id journalist_id) ),                
+            my $donation = $self->create({           
                 created_at  => \"now()",
             });
 
