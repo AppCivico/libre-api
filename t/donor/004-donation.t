@@ -21,7 +21,6 @@ db_transaction {
         name    => "Doação",
         code    => 200,
         params  => {
-            donor_user_id       => $donor_user_id,
             journalist_user_id  => $journalist_user_id,
         }
     ;
@@ -36,7 +35,6 @@ db_transaction {
         name    => "Doação invalida",
         is_fail => 1,
         params  => {
-            donor_user_id       => $donor_user_id,
             journalist_user_id  => $donor_user_id,
         }
     ;
@@ -46,8 +44,7 @@ db_transaction {
         name    => "Doação",
         is_fail => 1,
         params  => {
-            donor_user_id       => $journalist_user_id,
-            journalist_user_id  => $journalist_user_id,
+            journalist_user_id  => $donor_user_id,
         }
     ;
 
