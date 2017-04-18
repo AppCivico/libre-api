@@ -33,7 +33,6 @@ my %WriteMakefileArgs = (
     "Catalyst::Runtime" => "5.80",
     "CatalystX::Eta::Controller::AutoBase" => 0,
     "CatalystX::Eta::Controller::AutoListGET" => 0,
-    "CatalystX::Eta::Controller::AutoObject" => 0,
     "CatalystX::Eta::Controller::REST" => 0,
     "CatalystX::Eta::Controller::TypesValidation" => 0,
     "Config::General" => 0,
@@ -103,7 +102,7 @@ my %WriteMakefileArgs = (
     "blib" => "1.01",
     "lib" => 0
   },
-  "VERSION" => 20170417,
+  "VERSION" => 20170418,
   "test" => {
     "TESTS" => "t/*.t t/donor/*.t t/journalist/*.t t/misc/*.t t/worker/*.t"
   }
@@ -129,7 +128,6 @@ my %FallbackPrereqs = (
   "Catalyst::Test" => 0,
   "CatalystX::Eta::Controller::AutoBase" => 0,
   "CatalystX::Eta::Controller::AutoListGET" => 0,
-  "CatalystX::Eta::Controller::AutoObject" => 0,
   "CatalystX::Eta::Controller::REST" => 0,
   "CatalystX::Eta::Controller::TypesValidation" => 0,
   "CatalystX::Eta::Test::REST" => 0,
