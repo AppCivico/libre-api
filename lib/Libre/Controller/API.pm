@@ -16,7 +16,7 @@ Catalyst Controller.
 
 =cut
 
-sub root : Chained('/') : PathPart('v1') : CaptureArgs(0) {
+sub root : Chained('/') : PathPart('api') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     $c->response->headers->header(charset => "utf-8");

@@ -14,13 +14,13 @@ db_transaction {
     my $journalist_user_id = stash "journalist.id";
     my $donor_user_id      = stash "donor.id";
 
-    rest_post "/v1/journalist/$journalist_user_id/donation",
+    rest_post "/api/journalist/$journalist_user_id/donation",
         name => "donate to a journalist",
         code => 200,
     ;
 
     # Não deve ser possível efetuar uma doação para um usuário que não seja um jornalista.
-    rest_post "/v1/journalist/$donor_user_id/donation",
+    rest_post "/api/journalist/$donor_user_id/donation",
         name    => "donate to a donor --fail",
         is_fail => 1,
         code    => 403,

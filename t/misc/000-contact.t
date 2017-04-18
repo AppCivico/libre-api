@@ -7,7 +7,7 @@ use Libre::Test::Further;
 my $schema = Libre->model('DB');
 
 db_transaction {
-    rest_post '/v1/contact',
+    rest_post '/api/contact',
         name   => "contact",
         stash  => 'c1',
         code   => 200,

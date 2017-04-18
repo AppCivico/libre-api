@@ -16,7 +16,7 @@ db_transaction {
     );
 
     # Se eu entrar com um email e senha inválidos, deve dar erro.
-    rest_post "/v1/login",
+    rest_post "/api/login",
         name    => "wrong login",
         is_fail => 1,
         [
@@ -25,7 +25,7 @@ db_transaction {
         ],
     ;
 
-    rest_post "/v1/login",
+    rest_post "/api/login",
         name  => "login",
         code  => 200,
         stash => "l1",

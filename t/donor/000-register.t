@@ -9,7 +9,7 @@ my $schema = Libre->model("DB");
 db_transaction {
     my $email = fake_email()->();
 
-    rest_post "/v1/register/donor",
+    rest_post "/api/register/donor",
         stash               => "d1",
         automatic_load_item => 0,
         params              => {
@@ -28,7 +28,7 @@ db_transaction {
     );
 
     # Não deve ser possível cadastrar o mesmo email.
-    rest_post "/v1/register/donor",
+    rest_post "/api/register/donor",
         is_fail => 1,
         params  => {
             email    => $email,
@@ -40,7 +40,7 @@ db_transaction {
     ;
 
     # Telefone deve ser opcional, mas não pode ser inválido.
-    rest_post "/v1/register/donor",
+    rest_post "/api/register/donor",
         automatic_load_item => 0,
         params              => {
             email    => fake_email()->(),
@@ -51,7 +51,7 @@ db_transaction {
         },
     ;
 
-    rest_post "/v1/register/donor",
+    rest_post "/api/register/donor",
         is_fail => 1,
         params  => {
             email    => fake_email()->(),

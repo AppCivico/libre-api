@@ -124,7 +124,7 @@ sub create_journalist {
     );
 
     return $obj->rest_post(
-        '/v1/register/journalist',
+        '/api/register/journalist',
         name    => 'add journalist',
         automatic_load_item => 0,
         stash   => 'journalist',
@@ -136,7 +136,7 @@ sub create_donor {
     my (%args) = @_;
 
     return $obj->rest_post(
-        "/v1/register/donor",
+        "/api/register/donor",
         name   => "create donor",
         automatic_load_item => 0,
         stash  => "donor",

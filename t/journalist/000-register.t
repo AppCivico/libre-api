@@ -12,7 +12,7 @@ db_transaction {
     $email      =~ s/\s+/_/g;
 
     # Não pode registrar jornalista sem CPF
-    rest_post '/v1/register/journalist',
+    rest_post '/api/register/journalist',
         name                => "Jornalista sem CPF",
         is_fail             => 1,
         params              => {
@@ -29,7 +29,7 @@ db_transaction {
     ;
 
     # O CPF registrado deve ser válido
-    rest_post '/v1/register/journalist',
+    rest_post '/api/register/journalist',
         name                => "Jornalista com CPF invalido",
         is_fail             => 1,
         params              => {
@@ -47,7 +47,7 @@ db_transaction {
     ;
 
     # Não pode ser registrado um jornalista sem endereço
-    rest_post '/v1/register/journalist',
+    rest_post '/api/register/journalist',
         name                => "Jornalista sem endereço",
         is_fail             => 1,
         params              => {
@@ -61,7 +61,7 @@ db_transaction {
 
 
     # Telefone deve ser opcional, mas não pode ser inválido.
-    rest_post "/v1/register/journalist",
+    rest_post "/api/register/journalist",
         automatic_load_item => 0,
         params              => {
             email                    => fake_email()->(),
@@ -78,7 +78,7 @@ db_transaction {
         },
     ;
 
-    rest_post "/v1/register/journalist",
+    rest_post "/api/register/journalist",
         is_fail => 1,
         params  => {
             email                    => fake_email()->(),
