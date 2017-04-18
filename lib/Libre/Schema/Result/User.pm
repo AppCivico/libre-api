@@ -297,6 +297,17 @@ sub new_session {
     };
 }
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+sub is_donor {
+    my ($self) = @_;
+
+    return $self->user_roles->search({ role_id => 3 })->count;
+}
+
+sub is_journalist {
+    my ($self) = @_;
+
+    return $self->user_roles->search({ role_id => 2 })->count;
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

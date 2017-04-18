@@ -29,7 +29,7 @@ sub create_POST {
 
     return $self->status_created(
         $c,
-        location => $c->uri_for($c->controller("API::User")->action_for('result'), [ $user->id ]),
+        location => $c->uri_for($c->controller("API::Donor")->action_for('result'), [ $user->id ]),
         entity   => { id => $user->id },
     );
 }

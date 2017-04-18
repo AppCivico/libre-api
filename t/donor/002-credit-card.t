@@ -15,7 +15,7 @@ db_transaction {
     my $donor_id = stash "donor.id";
 
     # Obtendo a callback url.
-    rest_post "/v1/user/$donor_id/credit-card",
+    rest_post "/v1/donor/$donor_id/credit-card",
         name  => "get callback url",
         code  => 200,
         stash => "c1",
@@ -70,7 +70,7 @@ db_transaction {
     );
 
     # Listagem.
-    rest_get [ "/v1/user", $donor_id, "credit-card" ],
+    rest_get [ "/v1/donor", $donor_id, "credit-card" ],
         name  => "list credit card",
         stash => "l1",
     ;
@@ -88,7 +88,7 @@ db_transaction {
     };
 
     # Deletando cartão de crédito.
-    rest_delete [ "/v1/user", $donor_id, "credit-card", $credit_card_id ],
+    rest_delete [ "/v1/donor", $donor_id, "credit-card", $credit_card_id ],
         name => "delete credit card",
         code => 204,
     ;
@@ -99,7 +99,7 @@ db_transaction {
         "user has no preferred credit card",
     );
 
-    rest_get [ "/v1/user", $donor_id, "credit-card" ],
+    rest_get [ "/v1/donor", $donor_id, "credit-card" ],
         name  => "list credit card again",
         stash => "l2",
     ;

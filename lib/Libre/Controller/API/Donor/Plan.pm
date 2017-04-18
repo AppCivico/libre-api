@@ -1,4 +1,4 @@
-package Libre::Controller::API::User::Plan;
+package Libre::Controller::API::Donor::Plan;
 use common::sense;
 use Moose;
 use namespace::autoclean;
@@ -19,7 +19,7 @@ __PACKAGE__->config(
     },
 );
 
-sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
+sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     eval { $c->assert_user_roles(qw/donor/) };
@@ -39,7 +39,7 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
 sub list_POST {
     my ($self, $c) = @_;
 
-    my $user_plan = $c->stash->{user}->user_plans->execute(
+    my $user_plan = $c->stash->{donor}->user_plans->execute(
         $c,
         for  => "create",
         with => $c->req->params,

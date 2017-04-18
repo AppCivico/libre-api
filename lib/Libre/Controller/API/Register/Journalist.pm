@@ -29,13 +29,9 @@ sub register_POST {
 
     return $self->status_created(
         $c,
-        location => $c->uri_for($c->controller("API::User")->action_for('result'), [ $user->id ]),
+        location => $c->uri_for($c->controller("API::Journalist")->action_for('result'), [ $user->id ]),
         entity   => { id => $user->id }
     );
-
-    # Enviando e-mail de confirmação
-    # $journalist->send_email_registration();
-
 }
 
 

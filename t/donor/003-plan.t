@@ -12,7 +12,7 @@ db_transaction {
 
     my $donor_id = stash "donor.id";
 
-    rest_get "v1/user/$donor_id/plan",
+    rest_get "v1/donor/$donor_id/plan",
         name  => "list without plan",
         stash => "l1",
     ;
@@ -23,7 +23,7 @@ db_transaction {
         is_deeply ($res->{user_plan}, [], "donor has no plan yet");
     };
 
-    rest_post "/v1/user/$donor_id/plan",
+    rest_post "/v1/donor/$donor_id/plan",
         name    => "Plano de um doador",
         code    => 200,
         params  => {
@@ -32,7 +32,7 @@ db_transaction {
     ;
 
     # O doador não pode escolher um valor de plano menor que 20
-    rest_post "/v1/user/$donor_id/plan",
+    rest_post "/v1/donor/$donor_id/plan",
         name    => "Plano de um  doador",
         is_fail => 1,
         params  => {
@@ -40,7 +40,7 @@ db_transaction {
         }
     ;
 
-    rest_get "v1/user/$donor_id/plan",
+    rest_get "v1/donor/$donor_id/plan",
         name  => "Listando plano de um doador",
         stash => "l2",
     ;

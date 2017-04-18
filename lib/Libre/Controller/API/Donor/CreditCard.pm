@@ -1,4 +1,4 @@
-package Libre::Controller::API::User::CreditCard;
+package Libre::Controller::API::Donor::CreditCard;
 use common::sense;
 use Moose;
 use namespace::autoclean;
@@ -10,7 +10,7 @@ with "CatalystX::Eta::Controller::TypesValidation";
 use Libre::Utils;
 use Libre::Types qw(CPF);
 
-sub root : Chained('/api/user/object') : PathPart('') : CaptureArgs(0) {
+sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     # Somente doadores podem cadastrar cartão de crédito.
@@ -42,7 +42,7 @@ sub list_POST {
     $c->model("DB")->txn_do(sub{
         my $token = $c->model('DB')->resultset("HttpCallbackToken")->create_for_action(
             'credit-card-added',
-            { user_id => $c->stash->{user}->id }
+            { user_id => $c->stash->{donor}->id }
         );
 
         $res = $c->stash->{flotum_customer}->add_credit_card(callback => get_libre_api_url_for("/callback-for-token/$token"));
@@ -95,7 +95,7 @@ sub result_DELETE {
         $self->status_bad_request($c, error => "Cannot remove credit-card.");
     }
 
-    $c->stash->{user}->donor->update({ flotum_preferred_credit_card => undef });
+    $c->stash->{donor}->donor->update({ flotum_preferred_credit_card => undef });
 
     $self->status_no_content($c);
 }
@@ -103,7 +103,7 @@ sub result_DELETE {
 sub _load_customer {
     my ($self, $c) = @_;
 
-    my $user = $c->stash->{user};
+    my $user = $c->stash->{donor};
 
     if ($user->donor->flotum_id) {
         return $c->stash->{flotum}->load_customer(id => $user->donor->flotum_id);
