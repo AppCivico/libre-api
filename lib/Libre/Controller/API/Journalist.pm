@@ -21,8 +21,7 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
 
     my $user = $c->stash->{collection}->find($user_id);
     if (!$user || !$user->is_journalist()) {
-        $c->forward("/api/forbidden");
-        $c->detach();
+        $c->detach("/error_404");
     }
 
     $c->stash->{journalist} = $user;

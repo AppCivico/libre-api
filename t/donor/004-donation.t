@@ -23,7 +23,7 @@ db_transaction {
     rest_post "/api/journalist/$donor_user_id/donation",
         name    => "donate to a donor --fail",
         is_fail => 1,
-        code    => 403,
+        code    => 404,
     ;
 };
 

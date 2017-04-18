@@ -31,6 +31,12 @@ Standard 404 error page
 sub default :Path {
     my ( $self, $c ) = @_;
 
+    return $c->detach("/error_404");
+}
+
+sub error_404 : Private {
+    my ($self, $c) = @_;
+
     return $self->status_not_found($c, message => "Endpoint not found.");
 }
 
