@@ -150,6 +150,14 @@ sub action_specs {
                 die \["User", "Must have either CPF or CNPJ"];
             }
 
+            if ($values{vehicle} == 1 && $values{cpf}) {
+                die \["Vehicle", "Mustn't have CPF"];
+            }
+
+            if ($values{vehicle} == 0 && $values{cnpj}) {
+                die \["Journalist", "Mustn't have CNPJ"];
+            }
+
             my $user = $self->result_source->schema->resultset("User")->create({
                 ( map { $_ => $values{$_} } qw(email password) ),
                 verified    => 1,
