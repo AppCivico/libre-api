@@ -29,7 +29,7 @@ db_transaction {
         },
     ;
 
-    # O CPF registrado deve ser válido
+    # O CPF registrado deve ser válido.
     rest_post '/api/register/journalist',
         name                => "Jornalista com CPF invalido",
         is_fail             => 1,
@@ -44,7 +44,7 @@ db_transaction {
             address_zipcode          => '02351-000',
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
-            vehicle                  => fake_pick(0, 1)->(),
+            vehicle                  => 0,
         },
     ;
 
@@ -58,7 +58,7 @@ db_transaction {
             name                     => fake_name()->(),
             surname                  => "Foobarson",
             cpf                      => random_cpf(),
-            vehicle                  => fake_pick(0, 1)->(),
+            vehicle                  => 0,
         },
     ;
 
@@ -78,7 +78,7 @@ db_transaction {
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
             cellphone_number         => fake_digits("+551198#######")->(),
-            vehicle                  => fake_pick(0, 1)->(),
+            vehicle                  => 0,
         },
     ;
 
@@ -96,7 +96,119 @@ db_transaction {
             address_zipcode          => '02351-000',
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
-            vehicle                  => fake_pick(0, 1)->(),
+            vehicle                  => 0,
+        },
+    ;
+
+    # Criando um veículo de notícias.
+    rest_post "/api/register/journalist",
+        automatic_load_item => 0,
+        params              => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            surname                  => fake_surname()->(),
+            cnpj                     => random_cnpj(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => 1,
+        },
+    ;
+
+    # O usuário deve ter CPF ou CNPJ, nunca os dois ou nenhum.
+    rest_post "/api/register/journalist",
+        is_fail => 1,
+        params  => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            surname                  => fake_surname()->(),
+            cnpj                     => random_cnpj(),
+            cpf                      => random_cpf(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => 1,
+        },
+    ;
+
+    rest_post "/api/register/journalist",
+        is_fail => 1,
+        params  => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            surname                  => fake_surname()->(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => 1,
+        },
+    ;
+
+    # É obrigatório o paramêtro de identificação de veículo de notícias.
+    rest_post "/api/register/journalist",
+        is_fail => 1,
+        params  => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            surname                  => fake_surname()->(),
+            cnpj                     => random_cnpj(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+        },
+    ;
+
+    # Um veículo não pode ter CPF.
+    rest_post "/api/register/journalist",
+        is_fail => 1,
+        params  => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            surname                  => fake_surname()->(),
+            cpf                      => random_cpf(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => 1,
+        },
+    ;
+
+    # Um jornalista não pode ter CNPJ.
+    rest_post "/api/register/journalist",
+        is_fail => 1,
+        params  => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            surname                  => fake_surname()->(),
+            cnpj                     => random_cnpj(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => 0,
         },
     ;
 };

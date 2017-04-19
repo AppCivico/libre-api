@@ -10,7 +10,7 @@ with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
 # use Business::BR::CEP qw(teste_cep);
-use Libre::Types qw(CPF EmailAddress);
+use Libre::Types qw(CPF CNPJ EmailAddress);
 
 use Data::Verifier;
 use Number::Phone::BR;
@@ -50,7 +50,7 @@ sub verifiers_specs {
                     type     => "Str",
                 },
                 cpf => {
-                    required    => 1,
+                    required    => 0,
                     type        => CPF,
                     post_check  => sub {
                         my $r = shift;
@@ -58,6 +58,19 @@ sub verifiers_specs {
                         $self->search({
                             cpf => $r->get_value('cpf'),
                         })->count and die \["cpf", "alredy exists"];
+
+                        return 1;
+                    },
+                },
+                cnpj => {
+                    required => 0,
+                    type     => CNPJ,
+                    post_check  => sub {
+                        my $r = shift;
+
+                        $self->search({
+                            cnpj => $r->get_value('cnpj'),
+                        })->count and die \["cnpj", "alredy exists"];
 
                         return 1;
                     },
@@ -114,9 +127,9 @@ sub verifiers_specs {
                         Number::Phone::BR->new($phone);
                     },
                 },
-                vehicle => {
-                    type     => "Bool",
+                vehicle      => {
                     required => 1,
+                    type     => "Bool",
                 },
             },
         ),
@@ -133,6 +146,18 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
+            if ((!$values{cpf} && !$values{cnpj}) || ($values{cpf} && $values{cnpj})) {
+                die \["User", "Must have either CPF or CNPJ"];
+            }
+
+            if ($values{vehicle} == 1 && $values{cpf}) {
+                die \["Vehicle", "Mustn't have CPF"];
+            }
+
+            if ($values{vehicle} == 0 && $values{cnpj}) {
+                die \["Journalist", "Mustn't have CNPJ"];
+            }
+
             my $user = $self->result_source->schema->resultset("User")->create({
                 ( map { $_ => $values{$_} } qw(email password) ),
                 verified    => 1,
@@ -142,12 +167,7 @@ sub action_specs {
             $user->add_to_roles({ id => 2 });
 
             my $journalist = $self->create({
-                (
-                    map { $_ => $values{$_} } qw(
-                        name surname cpf address_state address_city address_zipcode address_street
-                        address_residence_number vehicle
-                    )
-                  ),
+                ( map { $_ => $values{$_} } qw(name surname cpf cnpj address_state address_city address_zipcode address_street address_residence_number vehicle) ),
                 user_id => $user->id,
             });
 
