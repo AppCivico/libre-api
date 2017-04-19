@@ -147,15 +147,15 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             if ((!$values{cpf} && !$values{cnpj}) || ($values{cpf} && $values{cnpj})) {
-                die \["User", "Must have either CPF or CNPJ"];
+                die \["cpf", "Must have either CPF or CNPJ"];
             }
 
             if ($values{vehicle} == 1 && $values{cpf}) {
-                die \["Vehicle", "Mustn't have CPF"];
+                die \["cpf", "not allowed"];
             }
 
-            if ($values{vehicle} == 0 && $values{cnpj}) {
-                die \["Journalist", "Mustn't have CNPJ"];
+            if (!$values{vehicle} && $values{cnpj}) {
+                die \["cnpj", "not allowed"];
             }
 
             my $user = $self->result_source->schema->resultset("User")->create({
@@ -167,7 +167,12 @@ sub action_specs {
             $user->add_to_roles({ id => 2 });
 
             my $journalist = $self->create({
-                ( map { $_ => $values{$_} } qw(name surname cpf cnpj address_state address_city address_zipcode address_street address_residence_number vehicle) ),
+                (
+                    map { $_ => $values{$_} } qw(
+                        name surname cpf cnpj address_state address_city address_zipcode address_street
+                        address_residence_number vehicle
+                    )
+                ),
                 user_id => $user->id,
             });
 
