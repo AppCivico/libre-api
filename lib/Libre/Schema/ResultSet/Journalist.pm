@@ -114,6 +114,10 @@ sub verifiers_specs {
                         Number::Phone::BR->new($phone);
                     },
                 },
+                vehicle => {
+                    type     => "Bool",
+                    required => 1,
+                },
             },
         ),
     };
@@ -138,7 +142,12 @@ sub action_specs {
             $user->add_to_roles({ id => 2 });
 
             my $journalist = $self->create({
-                ( map { $_ => $values{$_} } qw(name surname cpf address_state address_city address_zipcode address_street address_residence_number) ),
+                (
+                    map { $_ => $values{$_} } qw(
+                        name surname cpf address_state address_city address_zipcode address_street
+                        address_residence_number vehicle
+                    )
+                  ),
                 user_id => $user->id,
             });
 

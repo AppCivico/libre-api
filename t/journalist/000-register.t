@@ -25,6 +25,7 @@ db_transaction {
             address_zipcode          => '02351-000',
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
+            vehicle                  => fake_pick(0, 1)->(),
         },
     ;
 
@@ -43,6 +44,7 @@ db_transaction {
             address_zipcode          => '02351-000',
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
+            vehicle                  => fake_pick(0, 1)->(),
         },
     ;
 
@@ -56,6 +58,7 @@ db_transaction {
             name                     => fake_name()->(),
             surname                  => "Foobarson",
             cpf                      => random_cpf(),
+            vehicle                  => fake_pick(0, 1)->(),
         },
     ;
 
@@ -75,6 +78,7 @@ db_transaction {
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
             cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => fake_pick(0, 1)->(),
         },
     ;
 
@@ -92,6 +96,7 @@ db_transaction {
             address_zipcode          => '02351-000',
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
+            vehicle                  => fake_pick(0, 1)->(),
         },
     ;
 };
