@@ -120,6 +120,7 @@ sub create_journalist {
         address_zipcode          => '02351-000',
         address_street           => "Rua Flores do Piauí",
         address_residence_number => 1 + int(rand(2000)),
+        vehicle                  => 0,
         %opts
     );
 
