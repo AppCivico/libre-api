@@ -54,13 +54,13 @@ __PACKAGE__->table("donation");
   data_type: 'timestamp'
   is_nullable: 0
 
-=head2 donor_user_id
+=head2 donor_id
 
   data_type: 'integer'
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 journalist_user_id
+=head2 journalist_id
 
   data_type: 'integer'
   is_foreign_key: 1
@@ -78,9 +78,9 @@ __PACKAGE__->add_columns(
   },
   "created_at",
   { data_type => "timestamp", is_nullable => 0 },
-  "donor_user_id",
+  "donor_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "journalist_user_id",
+  "journalist_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
 );
 
@@ -98,7 +98,7 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 donor_user
+=head2 donor
 
 Type: belongs_to
 
@@ -107,13 +107,13 @@ Related object: L<Libre::Schema::Result::User>
 =cut
 
 __PACKAGE__->belongs_to(
-  "donor_user",
+  "donor",
   "Libre::Schema::Result::User",
-  { id => "donor_user_id" },
+  { id => "donor_id" },
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
-=head2 journalist_user
+=head2 journalist
 
 Type: belongs_to
 
@@ -122,15 +122,15 @@ Related object: L<Libre::Schema::Result::User>
 =cut
 
 __PACKAGE__->belongs_to(
-  "journalist_user",
+  "journalist",
   "Libre::Schema::Result::User",
-  { id => "journalist_user_id" },
+  { id => "journalist_id" },
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-17 11:21:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:U5mP/73cNlntWiJthPfKyA
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-20 17:30:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ul194uz/wKOptIdg91Swew
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

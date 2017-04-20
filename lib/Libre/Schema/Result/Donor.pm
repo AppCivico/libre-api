@@ -124,6 +124,18 @@ __PACKAGE__->belongs_to(
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mKj1VBDK4mU/lYaHqWC8pw
 use Libre::Utils;
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+use Data::Printer;
+
+sub end_cycle {
+    my ($self) = @_;
+
+    # Obtendo todas as doações e contabilizando como créditos aos jornalista.
+    my $rs = $self->user->donation_donors;
+
+    my $dbh = $self->result_source->schema->storage->dbh();
+
+    return 0;
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

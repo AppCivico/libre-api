@@ -138,7 +138,7 @@ __PACKAGE__->add_unique_constraint("user_email_key", ["email"]);
 
 =head1 RELATIONS
 
-=head2 donation_donor_users
+=head2 donation_donors
 
 Type: has_many
 
@@ -147,13 +147,13 @@ Related object: L<Libre::Schema::Result::Donation>
 =cut
 
 __PACKAGE__->has_many(
-  "donation_donor_users",
+  "donation_donors",
   "Libre::Schema::Result::Donation",
-  { "foreign.donor_user_id" => "self.id" },
+  { "foreign.donor_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 donation_journalist_users
+=head2 donation_journalists
 
 Type: has_many
 
@@ -162,9 +162,9 @@ Related object: L<Libre::Schema::Result::Donation>
 =cut
 
 __PACKAGE__->has_many(
-  "donation_journalist_users",
+  "donation_journalists",
   "Libre::Schema::Result::Donation",
-  { "foreign.journalist_user_id" => "self.id" },
+  { "foreign.journalist_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -254,8 +254,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-17 11:21:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:efr71qIO/VyvuQWVKJxKNQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-20 17:30:36
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OREpwjZV8RLsXzmuoNetMQ
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {
