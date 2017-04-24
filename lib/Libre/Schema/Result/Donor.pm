@@ -134,6 +134,30 @@ sub end_cycle {
 
     my $dbh = $self->result_source->schema->storage->dbh();
 
+    $dbh->do(<<'SQL_QUERY');
+WITH tmp AS (
+  SELECT *
+  FROM donation
+  WHERE donor_id = ?
+    AND NOT IN (
+      SELECT id
+      FROM credit
+    )
+)
+INSERT INTO credit
+  (donation_id, paid)
+SELECT 
+    
+SQL_QUERY
+
+#    $dbh->do(<<'SQL_QUERY');
+#INSERT INTO credit
+#(donor_id, journalist_id, paid)
+#VALUES
+#SELECT
+#    
+#SQL_QUERY
+
     return 0;
 }
 
