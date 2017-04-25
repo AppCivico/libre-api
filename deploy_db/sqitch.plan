@@ -20,3 +20,4 @@
 0016-user-plan-fix [0015-donation] 2017-04-12T20:03:22Z Junior Moraes <juniorfvox@gmail.com> # user-plan-fix
 0017-donation-relation [0016-user-plan-fix] 2017-04-17T14:23:40Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Changing the relations of the donations table
 0018-vehicle [0017-donation-relation] 2017-04-19T13:59:18Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Adapting the journalist table to accept news vehicles
+0019-credit [0018-vehicle] 2017-04-25T19:30:50Z Junior Moraes <juniorfvox@gmail.com> # credit

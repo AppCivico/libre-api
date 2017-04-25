@@ -32,8 +32,8 @@ sub list_POST {
         $c,
         for  => "create",
         with => {
-            donor_user_id      => $c->user->id,
-            journalist_user_id => $c->stash->{journalist}->id,
+            donor_id      => $c->user->id,
+            journalist_id => $c->stash->{journalist}->id,
         },
     );
 

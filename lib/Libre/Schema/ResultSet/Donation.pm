@@ -17,20 +17,20 @@ sub verifiers_specs {
         create => Data::Verifier->new(
             filters => [ qw(trim) ],
             profile => {
-                donor_user_id => {
+                donor_id => {
                     type       => "Int",
                     required   => 1,
                     post_check => sub {
-                        my $donor_user_id = $_[0]->get_value("donor_user_id");
+                        my $donor_user_id = $_[0]->get_value("donor_id");
 
                         $self->result_source->schema->resultset("User")->find($donor_user_id)->is_donor();
                     },
                 },
-                journalist_user_id => {
+                journalist_id => {
                     type       => "Int",
                     required   => 1,
                     post_check => sub {
-                        my $journalist_user_id = $_[0]->get_value("journalist_user_id");
+                        my $journalist_user_id = $_[0]->get_value("journalist_id");
 
                         $self->result_source->schema->resultset("User")->find($journalist_user_id)->is_journalist();
                     }
@@ -51,7 +51,7 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             my $donation = $self->create({
-                ( map { $_ => $values{$_} } qw(donor_user_id journalist_user_id) ),
+                ( map { $_ => $values{$_} } qw(donor_id journalist_id) ),
                 created_at  => \"now()",
             });
 

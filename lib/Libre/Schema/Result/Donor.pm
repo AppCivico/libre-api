@@ -129,34 +129,23 @@ use Data::Printer;
 sub end_cycle {
     my ($self) = @_;
 
-    # Obtendo todas as doações e contabilizando como créditos aos jornalista.
-    my $rs = $self->user->donation_donors;
-
     my $dbh = $self->result_source->schema->storage->dbh();
 
-    $dbh->do(<<'SQL_QUERY');
-WITH tmp AS (
-  SELECT *
+    $dbh->do(<<'SQL_QUERY', undef, $self->id, $self->id);
+WITH credit_tmp AS (
+  SELECT id
   FROM donation
   WHERE donor_id = ?
-    AND NOT IN (
-      SELECT id
-      FROM credit
+    AND id NOT IN (
+      SELECT c.id
+      FROM credit c
+      JOIN donation d
+        ON c.donation_id = d.id
+      WHERE d.donor_id = ?
     )
 )
-INSERT INTO credit
-  (donation_id, paid)
-SELECT 
-    
+INSERT INTO credit (donation_id) SELECT id FROM credit_tmp ;
 SQL_QUERY
-
-#    $dbh->do(<<'SQL_QUERY');
-#INSERT INTO credit
-#(donor_id, journalist_id, paid)
-#VALUES
-#SELECT
-#    
-#SQL_QUERY
 
     return 0;
 }

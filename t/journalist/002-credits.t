@@ -22,10 +22,18 @@ db_transaction {
         push @journalist_ids, stash "journalist.id";
     }
 
-    # Fechando o ciclo dos doadores.
+    # Realizando doações.
     for my $donor_id (@donor_ids) {
+        api_auth_as user_id => $donor_id;
+        my $journalist_id = $journalist_ids[0];
+
+        rest_post "/api/journalist/$journalist_id/donation",
+            name    => "donate to a journalist",
+            code    => 200,
+        ;
+
         my $donor = $schema->resultset("Donor")->find($donor_id);
-        ok($donor->end_cycle(), "end cycle");
+        #ok($donor->end_cycle(), "end cycle");
     }
 };
 
