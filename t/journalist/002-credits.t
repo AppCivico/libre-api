@@ -33,8 +33,29 @@ db_transaction {
         ;
 
         my $donor = $schema->resultset("Donor")->find($donor_id);
-        #ok($donor->end_cycle(), "end cycle");
+        ok($donor->end_cycle(), "end cycle");
     }
+
+    # Realizando algumas doações.
+    # O doador 1 doará uma vez para o jornalista 1 e duas vezes para o jornalista 2. O doador 2 doará apenas uma vez
+    # para o jornalista 1.
+    api_auth_as user_id => $donor_ids[0];
+    rest_post "/api/journalist/$journalist_ids[0]/donation", code => 200;
+    rest_post "/api/journalist/$journalist_ids[1]/donation", code => 200;
+    rest_post "/api/journalist/$journalist_ids[1]/donation", code => 200;
+
+    api_auth_as user_id => $donor_ids[1];
+    rest_post "/api/journalist/$journalist_ids[0]/donation", code => 200;
+
+    # Testando os créditos.
+    p [
+        map {
+            my $r = { $_->get_columns() };
+            +{ 
+                map { $_ => $r->{$_} } qw(donor_id journalist_id)
+            }
+        } $schema->resultset("Donation")->all(),
+    ];
 };
 
 done_testing();

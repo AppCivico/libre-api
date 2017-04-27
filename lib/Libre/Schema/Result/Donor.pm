@@ -147,7 +147,7 @@ WITH credit_tmp AS (
 INSERT INTO credit (donation_id) SELECT id FROM credit_tmp ;
 SQL_QUERY
 
-    return 0;
+    return 1;
 }
 
 __PACKAGE__->meta->make_immutable;
