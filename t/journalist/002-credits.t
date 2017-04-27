@@ -24,16 +24,7 @@ db_transaction {
 
     # Realizando doações.
     for my $donor_id (@donor_ids) {
-        api_auth_as user_id => $donor_id;
-        my $journalist_id = $journalist_ids[0];
-
-        rest_post "/api/journalist/$journalist_id/donation",
-            name    => "donate to a journalist",
-            code    => 200,
-        ;
-
-        my $donor = $schema->resultset("Donor")->find($donor_id);
-        ok($donor->end_cycle(), "end cycle");
+        ok ($schema->resultset("Donor")->find($donor_id)->end_cycle(), 'end cycle');
     }
 
     # Realizando algumas doações.
@@ -47,15 +38,35 @@ db_transaction {
     api_auth_as user_id => $donor_ids[1];
     rest_post "/api/journalist/$journalist_ids[0]/donation", code => 200;
 
+    # Fechando o ciclo agora que temos doações.
+    for my $donor_id (@donor_ids) {
+        ok ($schema->resultset("Donor")->find($donor_id)->end_cycle(), 'end cycle');
+    }
+
     # Testando os créditos.
-    p [
-        map {
-            my $r = { $_->get_columns() };
-            +{ 
-                map { $_ => $r->{$_} } qw(donor_id journalist_id)
-            }
-        } $schema->resultset("Donation")->all(),
-    ];
+    is_deeply(
+        [
+            { donor_id => $donor_ids[0], journalist_id => $journalist_ids[0] },
+            { donor_id => $donor_ids[0], journalist_id => $journalist_ids[1] },
+            { donor_id => $donor_ids[0], journalist_id => $journalist_ids[1] },
+            { donor_id => $donor_ids[1], journalist_id => $journalist_ids[0] },
+        ],
+        [
+            map {
+                my $r = $_;
+                +{ 
+                    map { $_ => $r->get_column($_) } qw/donor_id journalist_id/
+                }
+            } $schema->resultset("Credit")->search(
+                { paid => "true" },
+                {
+                    'select' => [ qw/donation.donor_id donation.journalist_id/ ],
+                    as       => [ qw/donor_id journalist_id/ ],
+                    join     => "donation"
+                }
+            )->all(),
+        ]
+    );
 };
 
 done_testing();

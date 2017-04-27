@@ -52,7 +52,9 @@ __PACKAGE__->table("donation");
 =head2 created_at
 
   data_type: 'timestamp'
+  default_value: current_timestamp
   is_nullable: 0
+  original: {default_value => \"now()"}
 
 =head2 donor_id
 
@@ -77,7 +79,12 @@ __PACKAGE__->add_columns(
     sequence          => "donation_id_seq",
   },
   "created_at",
-  { data_type => "timestamp", is_nullable => 0 },
+  {
+    data_type     => "timestamp",
+    default_value => \"current_timestamp",
+    is_nullable   => 0,
+    original      => { default_value => \"now()" },
+  },
   "donor_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "journalist_id",
@@ -144,8 +151,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-26 14:43:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6TF3x5op88NUegvi4CGaXg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-27 17:31:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9ZxvLKShx4Gxy0pp5D9P8g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

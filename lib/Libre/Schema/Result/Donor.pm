@@ -144,7 +144,7 @@ WITH credit_tmp AS (
       WHERE d.donor_id = ?
     )
 )
-INSERT INTO credit (donation_id) SELECT id FROM credit_tmp ;
+INSERT INTO credit (donation_id, paid, paid_at) SELECT id, 'TRUE', now() FROM credit_tmp ;
 SQL_QUERY
 
     return 1;

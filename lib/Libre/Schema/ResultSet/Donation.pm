@@ -51,8 +51,7 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             my $donation = $self->create({
-                ( map { $_ => $values{$_} } qw(donor_id journalist_id) ),
-                created_at  => \"now()",
+                map { $_ => $values{$_} } qw(donor_id journalist_id),
             });
 
             return $donation;
