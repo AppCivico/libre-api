@@ -146,16 +146,12 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            if ((!$values{cpf} && !$values{cnpj}) || ($values{cpf} && $values{cnpj})) {
+            if (((!$values{cpf} && !$values{cnpj}) || ($values{cpf} && $values{cnpj})) && $values{vehicle}) {
                 die \["cpf", "Must have either CPF or CNPJ"];
             }
 
-            if ($values{vehicle} == 1 && $values{cpf}) {
+            if ($values{vehicle} && $values{cpf}) {
                 die \["cpf", "not allowed"];
-            }
-
-            if (!$values{vehicle} && $values{cnpj}) {
-                die \["cnpj", "not allowed"];
             }
 
             my $user = $self->result_source->schema->resultset("User")->create({

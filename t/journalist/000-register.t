@@ -11,25 +11,7 @@ db_transaction {
     my $email   = lc(fake_email()->());
     $email      =~ s/\s+/_/g;
 
-    # Não pode registrar jornalista sem CPF
-    rest_post '/api/register/journalist',
-        name                => "Jornalista sem CPF",
-        is_fail             => 1,
-        params              => {
-            email                    => $email,
-            password                 => "foobarpass",
-            name                     => fake_name()->(),
-            surname                  => "foobarson",
-            address_state            => "Rio de Janeiro",
-            address_city             => "Rio de Janeiro",
-            address_zipcode          => '02351-000',
-            address_street           => "Rua Flores do Piauí",
-            address_residence_number => 1 + int(rand(2000)),
-            vehicle                  => fake_pick(0, 1)->(),
-        },
-    ;
-
-    # O CPF registrado deve ser válido.
+    # O CPF registrado por um jornalista deve ser válido.
     rest_post '/api/register/journalist',
         name                => "Jornalista com CPF invalido",
         is_fail             => 1,
@@ -120,6 +102,7 @@ db_transaction {
     ;
 
     # O usuário deve ter CPF ou CNPJ, nunca os dois ou nenhum.
+    # Veículo de notícias deve ter apenas CNPJ
     rest_post "/api/register/journalist",
         is_fail => 1,
         params  => {
@@ -139,20 +122,40 @@ db_transaction {
         },
     ;
 
+    # Jornalistas podem ter CPF ou CNPJ
     rest_post "/api/register/journalist",
-        is_fail => 1,
         params  => {
             email                    => fake_email()->(),
             password                 => "fooquxbar1",
             name                     => fake_first_name()->(),
             surname                  => fake_surname()->(),
             address_state            => "Rio de Janeiro",
+            cnpj                     => random_cnpj(),
+            cpf                      => random_cpf(),
             address_city             => "Rio de Janeiro",
             address_zipcode          => '02351-000',
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
             cellphone_number         => fake_digits("+551198#######")->(),
-            vehicle                  => 1,
+            vehicle                  => 0,
+        },
+    ;
+
+    # Jornalista apenas com CNPJ
+    rest_post "/api/register/journalist",
+        params  => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            surname                  => fake_surname()->(),
+            address_state            => "Rio de Janeiro",
+            cnpj                     => random_cnpj(),
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => 0,
         },
     ;
 
@@ -193,24 +196,6 @@ db_transaction {
         },
     ;
 
-    # Um jornalista não pode ter CNPJ.
-    rest_post "/api/register/journalist",
-        is_fail => 1,
-        params  => {
-            email                    => fake_email()->(),
-            password                 => "fooquxbar1",
-            name                     => fake_first_name()->(),
-            surname                  => fake_surname()->(),
-            cnpj                     => random_cnpj(),
-            address_state            => "Rio de Janeiro",
-            address_city             => "Rio de Janeiro",
-            address_zipcode          => '02351-000',
-            address_street           => "Rua Flores do Piauí",
-            address_residence_number => 1 + int(rand(2000)),
-            cellphone_number         => fake_digits("+551198#######")->(),
-            vehicle                  => 0,
-        },
-    ;
 };
 
 done_testing();
