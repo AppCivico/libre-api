@@ -30,6 +30,43 @@ db_transaction {
         },
     ;
 
+    # Criando um jornalista com CPF igual.
+    my $cpf = random_cpf(1);
+
+    rest_post '/api/register/journalist',
+        is_fail             => 0,
+        params              => {
+            email                    => $email,
+            password                 => "foobarpass",
+            name                     => fake_name()->(),
+            surname                  => "Foobarson",
+            cpf                      => $cpf,
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            vehicle                  => 0,
+        },
+    ;
+
+    rest_post '/api/register/journalist',
+        is_fail             => 1,
+        params              => {
+            email                    => $email,
+            password                 => "foobarpass",
+            name                     => fake_name()->(),
+            surname                  => "Foobarson",
+            cpf                      => $cpf,
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            vehicle                  => 0,
+        },
+    ;
+
     # Não pode ser registrado um jornalista sem endereço
     rest_post '/api/register/journalist',
         name                => "Jornalista sem endereço",
