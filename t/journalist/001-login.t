@@ -9,8 +9,12 @@ my $schema = Libre->model("DB");
 db_transaction {
     my $email = fake_email()->();
     my $password = "foobarquux1";
+    my $name     = fake_name()->();
+    my $surname  = fake_surname()->();
 
     create_journalist(
+        name     => $name,
+        surname  => $surname,
         email    => $email,
         password => $password,
     );
@@ -51,9 +55,13 @@ db_transaction {
     is_deeply(
         stash "l1",
         {
-            api_key => $user_session->api_key,
-            roles   => ["journalist"],
-            user_id => $user_session->user->id,
+            api_key    => $user_session->api_key,
+            roles      => ["journalist"],
+            user_id    => $user_session->user->id,
+            journalist => {
+                name    => $name,
+                surname => $surname,
+            },
         },
     );
 };
