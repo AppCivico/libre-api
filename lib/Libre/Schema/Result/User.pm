@@ -291,7 +291,6 @@ sub new_session {
     }
 
     # Determinando se é um doador ou jornalista/veiculo para retornar o nome e sobrenome
-    my ($name, $surname);
     my %extra_fields;
     my $rel =  $self->is_donor() ? 'donor' : 'journalist';
 

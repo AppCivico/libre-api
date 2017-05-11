@@ -54,7 +54,7 @@ db_transaction {
         [
             map {
                 my $r = $_;
-                +{ 
+                +{
                     map { $_ => $r->get_column($_) } qw/donor_id journalist_id/
                 }
             } $schema->resultset("Credit")->search(
