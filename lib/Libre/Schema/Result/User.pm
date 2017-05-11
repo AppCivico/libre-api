@@ -290,10 +290,22 @@ sub new_session {
         });
     }
 
+    # Determinando se é um doador ou jornalista/veiculo para retornar o nome e sobrenome
+    my ($name, $surname);
+    my %extra_fields;
+    my $rel =  $self->is_donor() ? 'donor' : 'journalist';
+
+    my $persona = $self->$rel;
+    for my $field (qw/name surname/){
+      $extra_fields{$field} = $persona->$field();
+    }
+
     return {
         user_id => $self->id,
         roles   => [ map { $_->name } $self->roles ],
         api_key => $session->api_key,
+        $rel => \%extra_fields,
+
     };
 }
 

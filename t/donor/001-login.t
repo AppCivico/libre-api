@@ -7,10 +7,14 @@ use Libre::Test::Further;
 my $schema = Libre->model("DB");
 
 db_transaction {
-    my $email = fake_email()->();
+    my $email    = fake_email()->();
     my $password = "foobarquux1";
+    my $name     = fake_name()->();
+    my $surname  = fake_surname()->();
 
     create_donor(
+        name     => $name,
+        surname  => $surname,
         email    => $email,
         password => $password,
     );
@@ -54,6 +58,10 @@ db_transaction {
             api_key => $user_session->api_key,
             roles   => ["donor"],
             user_id => $user_session->user->id,
+            donor   => {
+                name    => $name,
+                surname => $surname,
+            },
         },
     );
 };
