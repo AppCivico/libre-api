@@ -54,16 +54,6 @@ __PACKAGE__->table("journalist");
   is_foreign_key: 1
   is_nullable: 1
 
-=head2 name
-
-  data_type: 'text'
-  is_nullable: 0
-
-=head2 surname
-
-  data_type: 'text'
-  is_nullable: 0
-
 =head2 cpf
 
   data_type: 'text'
@@ -132,10 +122,6 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "user_bank_account_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
-  "name",
-  { data_type => "text", is_nullable => 0 },
-  "surname",
-  { data_type => "text", is_nullable => 0 },
   "cpf",
   { data_type => "text", is_nullable => 1 },
   "address_state",
@@ -226,8 +212,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-19 11:07:27
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PN6T0Yp5jM67aelvF2kdyg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-12 17:10:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:STh+Wa8zgFfoSHCgHuQzzg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

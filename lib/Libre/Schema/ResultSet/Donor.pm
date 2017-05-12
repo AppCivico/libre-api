@@ -64,7 +64,7 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             my $user = $self->result_source->schema->resultset("User")->create({
-                ( map { $_ => $values{$_} } qw(email password) ),
+                ( map { $_ => $values{$_} } qw(name surname email password) ),
                 verified    => 1,
                 verified_at => \"now()",
             });
@@ -72,7 +72,7 @@ sub action_specs {
             $user->add_to_roles({ id => 3 });
 
             return $self->create({
-                ( map { $_ => $values{$_} } qw(name surname phone) ),
+                ( map { $_ => $values{$_} } qw(phone) ),
                 user_id => $user->id,
             });
         },
