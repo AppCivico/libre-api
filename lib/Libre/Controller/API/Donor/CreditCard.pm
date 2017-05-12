@@ -110,7 +110,7 @@ sub _load_customer {
     }
     else {
         my $customer = $c->stash->{flotum}->new_customer(
-            name           => $user->donor->name,
+            name           => $user->name,
             remote_id      => $user->id,
             legal_document => $user->cpf || "missing",
         );
