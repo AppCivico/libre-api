@@ -27,7 +27,7 @@ sub verifiers_specs {
 
                         my $amount = $r->get_value('amount');
 
-                        if ($amount < 20) {
+                        if ($amount < 20000 || $amount > 20000000) {
                             return 0;
                         }
                         return 1;
