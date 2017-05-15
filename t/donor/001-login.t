@@ -58,10 +58,8 @@ db_transaction {
             api_key => $user_session->api_key,
             roles   => ["donor"],
             user_id => $user_session->user->id,
-            donor   => {
-                name    => $name,
-                surname => $surname,
-            },
+            name    => $name,
+            surname => $surname,
         },
     );
 };

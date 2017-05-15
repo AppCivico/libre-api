@@ -58,10 +58,8 @@ db_transaction {
             api_key    => $user_session->api_key,
             roles      => ["journalist"],
             user_id    => $user_session->user->id,
-            journalist => {
-                name    => $name,
-                surname => $surname,
-            },
+            name       => $name,
+            surname    => $surname,
         },
     );
 };

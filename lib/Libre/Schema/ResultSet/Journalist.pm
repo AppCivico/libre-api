@@ -42,8 +42,8 @@ sub verifiers_specs {
                     type     => 'Str',
                 },
                 name => {
-                    required    => 1,
-                    type        => 'Str',
+                    required => 1,
+                    type     => "Str",
                 },
                 surname => {
                     required => 1,
@@ -155,7 +155,7 @@ sub action_specs {
             }
 
             my $user = $self->result_source->schema->resultset("User")->create({
-                ( map { $_ => $values{$_} } qw(email password) ),
+                ( map { $_ => $values{$_} } qw(name surname email password) ),
                 verified    => 1,
                 verified_at => \"now()",
             });
@@ -165,7 +165,7 @@ sub action_specs {
             my $journalist = $self->create({
                 (
                     map { $_ => $values{$_} } qw(
-                        name surname cpf cnpj address_state address_city address_zipcode address_street
+                        cpf cnpj address_state address_city address_zipcode address_street
                         address_residence_number vehicle
                     )
                 ),

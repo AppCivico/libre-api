@@ -81,6 +81,16 @@ __PACKAGE__->table("user");
   data_type: 'text'
   is_nullable: 1
 
+=head2 name
+
+  data_type: 'text'
+  is_nullable: 0
+
+=head2 surname
+
+  data_type: 'text'
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -108,6 +118,10 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "cpf",
   { data_type => "text", is_nullable => 1 },
+  "name",
+  { data_type => "text", is_nullable => 0 },
+  "surname",
+  { data_type => "text", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -254,8 +268,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-24 11:05:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8CN9yjPRDAG6tSHSDvi60w
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-12 17:10:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OWU6afkqfxPTZJEBSzDsWQ
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {
@@ -290,22 +304,12 @@ sub new_session {
         });
     }
 
-    # Determinando se é um doador ou jornalista/veiculo para retornar o nome e sobrenome
-    my ($name, $surname);
-    my %extra_fields;
-    my $rel =  $self->is_donor() ? 'donor' : 'journalist';
-
-    my $persona = $self->$rel;
-    for my $field (qw/name surname/){
-      $extra_fields{$field} = $persona->$field();
-    }
-
     return {
         user_id => $self->id,
+        name    => $self->name,
+        surname => $self->surname,
         roles   => [ map { $_->name } $self->roles ],
         api_key => $session->api_key,
-        $rel => \%extra_fields,
-
     };
 }
 

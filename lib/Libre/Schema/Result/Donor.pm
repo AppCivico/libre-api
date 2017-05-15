@@ -48,16 +48,6 @@ __PACKAGE__->table("donor");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 name
-
-  data_type: 'text'
-  is_nullable: 0
-
-=head2 surname
-
-  data_type: 'text'
-  is_nullable: 0
-
 =head2 phone
 
   data_type: 'text'
@@ -78,10 +68,6 @@ __PACKAGE__->table("donor");
 __PACKAGE__->add_columns(
   "user_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "name",
-  { data_type => "text", is_nullable => 0 },
-  "surname",
-  { data_type => "text", is_nullable => 0 },
   "phone",
   { data_type => "text", is_nullable => 1 },
   "flotum_id",
@@ -120,8 +106,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-17 11:21:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mKj1VBDK4mU/lYaHqWC8pw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-12 17:10:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MFuvND+lYdFDi0XHImqkvQ
 use Libre::Utils;
 
 use Data::Printer;
