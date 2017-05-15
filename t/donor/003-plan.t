@@ -27,7 +27,7 @@ db_transaction {
         name    => "Plano de um doador",
         code    => 200,
         params  => {
-            amount => fake_int(20001, 100000)->(),
+            amount => fake_int(2001, 100000)->(),
         }
     ;
 
@@ -36,7 +36,7 @@ db_transaction {
         name    => "Plano de um  doador",
         is_fail => 1,
         params  => {
-            amount  => fake_int(-100, 19000)->(),
+            amount  => fake_int(-100, 1900)->(),
         }
     ;
 
