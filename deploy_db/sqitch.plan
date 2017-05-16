@@ -23,3 +23,4 @@
 0019-credit [0018-vehicle] 2017-04-25T19:30:50Z Junior Moraes <juniorfvox@gmail.com> # credit
 0020-donation-createdat-default [0019-credit] 2017-04-27T20:34:16Z Junior Moraes <juniorfvox@gmail.com> # donation-createdat-default
 0021-user-name-and-surname [0020-donation-createdat-default] 2017-05-12T20:02:32Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Moving the name and surname columns to the "user" table.
+0022-donation-to-support [0021-user-name-and-surname] 2017-05-16T14:18:11Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Changing the 'donation' table to 'libre'
