@@ -95,7 +95,7 @@ sub result_DELETE {
         $self->status_bad_request($c, error => "Cannot remove credit-card.");
     }
 
-    $c->stash->{donor}->donor->update({ flotum_preferred_credit_card => undef });
+    $c->stash->{donor}->user->donor->update({ flotum_preferred_credit_card => undef });
 
     $self->status_no_content($c);
 }
@@ -103,7 +103,7 @@ sub result_DELETE {
 sub _load_customer {
     my ($self, $c) = @_;
 
-    my $user = $c->stash->{donor};
+    my $user = $c->stash->{donor}->user;
 
     if ($user->donor->flotum_id) {
         return $c->stash->{flotum}->load_customer(id => $user->donor->flotum_id);

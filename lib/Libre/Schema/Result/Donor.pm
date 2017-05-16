@@ -137,13 +137,25 @@ SQL_QUERY
 }
 
 sub has_plan {
-  my ($self, $c) = @_;
+    my ($self, $c) = @_;
 
-  my $res = $self->user->user_plans->search();
+    if ($self->user->user_plans->search() >= 1) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
 
-  use DDP; p $res;
+sub has_credit_card {
+    my ($self, $c) = @_;
 
-  return 1;
+    if ($self->flotum_preferred_credit_card) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -109,7 +109,7 @@ db_transaction {
         { credit_cards => [] },
         "empty credit card list",
     );
-    
+
 };
 
 done_testing();

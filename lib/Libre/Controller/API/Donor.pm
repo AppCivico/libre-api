@@ -9,11 +9,6 @@ with "CatalystX::Eta::Controller::AutoBase";
 
 __PACKAGE__->config(
     result      => "DB::Donor",
-
-    list_key       => "donor",
-    build_list_row => sub {
-        return { $_[0]->get_columns() }
-    },
 );
 
 sub root : Chained('/api/logged') : PathPart('') : CaptureArgs(0) { }
@@ -24,8 +19,8 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
     my ($self, $c, $user_id) = @_;
 
     my $user = $c->stash->{collection}->find($user_id);
-    if (!$user || !$user->is_donor()) {
-        $c->detach("/error_404");
+    if (!$user) {
+         $c->detach("/error_404");
     }
 
     $c->stash->{donor} = $user;
@@ -33,10 +28,19 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
 
 sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub result_GET { 
-	my ($self, $c) = @_;
+sub result_GET {
+    my ($self, $c) = @_;
 
-use DDP; p $c->stash->{donor}->has_plan();
+    my $plan        = $c->stash->{donor}->has_plan;
+    my $credit_card = $c->stash->{donor}->has_credit_card;
+
+    return $self->status_ok(
+        $c,
+        entity => {
+            donor_has_plan        => $plan,
+            donor_has_credit_card => $credit_card,
+        },
+    );
 
 }
 

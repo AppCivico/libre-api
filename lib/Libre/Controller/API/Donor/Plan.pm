@@ -34,7 +34,7 @@ sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
 sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
-    $c->stash->{collection} = $c->stash->{donor}->user_plans;
+    $c->stash->{collection} = $c->stash->{donor}->user->user_plans;
 }
 
 sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
@@ -65,8 +65,6 @@ sub list_POST {
         entity   => { id => $user_plan->id },
         location => $c->uri_for( $self->action_for("result"), [ @{ $c->req->captures }, $user_plan->id ] ),
     );
-
-    my $test = $c->stash->{donor}->has_plan();
 }
 
 sub list_GET { }
