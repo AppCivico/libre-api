@@ -30,15 +30,21 @@ sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
 
 sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) { }
 
-sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
-    my ($self, $c) = @_;
+sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
+    my ($self, $c, $id) = @_;
 
-    $c->stash->{collection} = $c->model('DB::UserPlan');
+    if (defined($id) && $id > 0 && (my $user_plan = $c->stash->{collection}->find($id))) {
+        $c->stash->{user_plan} = $user_plan;
+    }
 }
+
+sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub list_POST {
     my ($self, $c) = @_;
 
+    # TODO Ao criar um novo plano, resetar o plano antigo, finalizar o atual e avisar o Korduv.
+    # TODO Ao criar o plano, devemos atrelar os likes órfãos ao mesmo.
     my $user_plan = $c->stash->{donor}->user_plans->execute(
         $c,
         for  => "create",
@@ -52,6 +58,16 @@ sub list_POST {
 }
 
 sub list_GET { }
+
+sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
+
+sub result_PUT {
+    my ($self, $c) = @_;
+
+    # TODO Ao alterar um plano, devemos avisar o Korduv sem reiniciar o ciclo.
+}
+
+#sub result_GET { }
 
 =encoding utf8
 
