@@ -74,7 +74,7 @@ sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { 
 sub result_GET { }
 
 sub result_PUT {
-    my ($self, $c) = @_;
+    #my ($self, $c) = @_;
 
     # TODO Ao alterar um plano, devemos avisar o Korduv sem reiniciar o ciclo.
     ...;
