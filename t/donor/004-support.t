@@ -15,12 +15,10 @@ db_transaction {
     my $donor_user_id      = stash "donor.id";
 
     rest_post "/api/donor/$donor_user_id/plan",
-        name    => "Creating a user plan",
-        code    => 200,
-        stash   => "user_plan",
-        params  => {
-            amount => fake_int(20001, 100000)->(),
-        }
+        name  => "Creating a user plan",
+        code  => 200,
+        stash => "user_plan",
+        [ amount => fake_int(20001, 100000)->() ],
     ;
 
     my $user_plan_id = stash "user_plan.id";

@@ -1,4 +1,4 @@
-Use common::sense;
+use common::sense;
 use FindBin qw($Bin);
 use lib "$Bin/../lib";
 
@@ -31,18 +31,14 @@ db_transaction {
         rest_post "/api/donor/$donor_id/plan",
             name    => "Plano de um doador",
             code    => 200,
-            params  => {
-                amount => fake_int(2001, 100000)->(),
-            },
+            [ amount => fake_int(2001, 100000)->() ],
         ;
 
         # O doador não pode escolher um valor de plano menor que 20
         rest_post "/api/donor/$donor_id/plan",
             name    => "Plano de um  doador",
             is_fail => 1,
-            params  => {
-                amount  => fake_int(-100, 1900)->(),
-            }
+            [ amount => fake_int(-100, 1900)->() ],
         ;
 
         rest_get "/api/donor/$donor_id/plan",
@@ -63,34 +59,32 @@ db_transaction {
     db_transaction {
         diag("testando o fluxo dos libres orfaos");
 
-        # TODO A donation deve vir com status 201.
-        rest_post "/api/journalist/$journalist_id/donation",
-            name => "donate to a journalist",
+        rest_post "/api/journalist/$journalist_id/support",
+            name  => "support a journalist",
             stash => "d1",
-            code => 201,
         ;
 
-        # TODO A donation deve vir com user_plan_id null.
-        ok (my $donation = $schema->resultset("Donation")->find(stash "d1.id"), "select donation");
+        # Os libres deve vir com user_plan_id null.
+        ok (my $donation = $schema->resultset("Libre")->find(stash "d1.id"), "select random donation");
         is (
-            $donation,
+            $donation->user_plan_id,
             undef,
             "donation user_plan_id=null",
         );
 
-        # TODO O endpoint de planos deve vir com status 201.
-        # TODO Enviar os libres para o jornalista do teste.
-        rest_post "/api/donor/$donor_id/plan",
-            name    => "creating donor plan",
-            stash   => "p1",
-            [ amount => fake_int(2001, 100000)->() ]
-        ;
+    #    # TODO O endpoint de planos deve vir com status 201.
+    #    # TODO Enviar os libres para o jornalista do teste.
+    #    rest_post "/api/donor/$donor_id/plan",
+    #        name    => "creating donor plan",
+    #        stash   => "p1",
+    #        [ amount => fake_int(2001, 100000)->() ]
+    #    ;
 
-        is (
-            $donation->discard_changes->user_plan_id,
-            stash "p1.id",
-            "donation user_plan_id=plan_id",
-        );
+    #    is (
+    #        $donation->discard_changes->user_plan_id,
+    #        stash "p1.id",
+    #        "donation user_plan_id=plan_id",
+    #    );
     };
 };
 
