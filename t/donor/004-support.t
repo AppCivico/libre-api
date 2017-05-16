@@ -16,7 +16,6 @@ db_transaction {
 
     rest_post "/api/donor/$donor_user_id/plan",
         name  => "Creating a user plan",
-        code  => 200,
         stash => "user_plan",
         [ amount => fake_int(20001, 100000)->() ],
     ;
@@ -25,7 +24,6 @@ db_transaction {
 
     rest_post "/api/journalist/$journalist_user_id/support",
         name => "donate to a journalist",
-        code => 200,
     ;
 
     # Não deve ser possível efetuar uma doação para um usuário que não seja um jornalista.
@@ -36,9 +34,10 @@ db_transaction {
     ;
 
     # Um libre/donation pode ou não estar associado a um plano
+    # TODO Corrigir isso. Não é o usuário que deve passar o id do plano, e sim o sistema que deve preenche-lo
+    # automaticamente.
     rest_post "/api/journalist/$journalist_user_id/support",
         name => "donate to a journalist with user_plan",
-        code => 200,
         params => {
             user_plan_id => $user_plan_id,
         }

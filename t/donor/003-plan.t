@@ -25,7 +25,7 @@ db_transaction {
         is_deeply ($res->{user_plan}, [], "donor has no plan yet");
     };
 
-    # CRUD da criação de plano.
+    # CRUD de plano.
     db_transaction {
         diag "testando a criação do plano";
         rest_post "/api/donor/$donor_id/plan",
@@ -54,10 +54,10 @@ db_transaction {
         die "rollback";
     };
 
-    # TODO Quando um novo plano é criado, os libres órfãos devem ser atrelados ao mesmo.
     db_transaction {
         diag("testando o fluxo dos libres orfaos");
 
+        # Quando um novo plano é criado, os libres órfãos devem ser atrelados ao mesmo.
         rest_post "/api/journalist/$journalist_id/support",
             name  => "support a journalist",
             stash => "d1",
@@ -71,19 +71,20 @@ db_transaction {
             "donation user_plan_id=null",
         );
 
-        # TODO O endpoint de planos deve vir com status 201.
-        # TODO Enviar os libres para o jornalista do teste.
+        # Criando um plano.
         rest_post "/api/donor/$donor_id/plan",
             name    => "creating donor plan",
             stash   => "p1",
             [ amount => fake_int(2001, 100000)->() ]
         ;
 
-    #    is (
-    #        $donation->discard_changes->user_plan_id,
-    #        stash "p1.id",
-    #        "donation user_plan_id=plan_id",
-    #    );
+        # Testando se os libres órfãos agora estão atrelados ao id do plano criado.
+        is (
+            $donation->discard_changes->user_plan_id,
+            stash "p1.id",
+            "donation user_plan_id=plan_id",
+        );
+        die "rollback";
     };
 };
 

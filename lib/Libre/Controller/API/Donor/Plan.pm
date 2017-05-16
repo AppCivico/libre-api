@@ -54,7 +54,6 @@ sub list_POST {
     my ($self, $c) = @_;
 
     # TODO Ao criar um novo plano, resetar o plano antigo, finalizar o atual e avisar o Korduv.
-    # TODO Ao criar o plano, devemos atrelar os likes órfãos ao mesmo.
     my $user_plan = $c->stash->{collection}->execute(
         $c,
         for  => "create",
