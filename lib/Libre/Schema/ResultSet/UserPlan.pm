@@ -5,7 +5,6 @@ use namespace::autoclean;
 
 extends 'DBIx::Class::ResultSet';
 
-# Verificar roles
 with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
@@ -52,6 +51,14 @@ sub action_specs {
                 amount      => $values{amount},
                 created_at  => \"now()",
             });
+
+            # Ao criar o plano, atrelamos todos os libres órfãos ao id desse plano.
+            # TODO Atualizar apenas os livres que são mais novos que NOW() - $ORPHAN_LIKES_EXPIRATION_TIME.
+            $user_plan->user->libre_donors->update(
+                {
+                    user_plan_id => $user_plan->id,
+                }
+            );
 
             return $user_plan;
         },

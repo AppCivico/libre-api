@@ -31,12 +31,12 @@ db_transaction {
     # O doador 1 doará uma vez para o jornalista 1 e duas vezes para o jornalista 2. O doador 2 doará apenas uma vez
     # para o jornalista 1.
     api_auth_as user_id => $donor_ids[0];
-    rest_post "/api/journalist/$journalist_ids[0]/support", code => 200;
-    rest_post "/api/journalist/$journalist_ids[1]/support", code => 200;
-    rest_post "/api/journalist/$journalist_ids[1]/support", code => 200;
+    rest_post "/api/journalist/$journalist_ids[0]/support";
+    rest_post "/api/journalist/$journalist_ids[1]/support";
+    rest_post "/api/journalist/$journalist_ids[1]/support";
 
     api_auth_as user_id => $donor_ids[1];
-    rest_post "/api/journalist/$journalist_ids[0]/support", code => 200;
+    rest_post "/api/journalist/$journalist_ids[0]/support";
 
     # Fechando o ciclo agora que temos doações.
     for my $donor_id (@donor_ids) {

@@ -6,10 +6,33 @@ use namespace::autoclean;
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
 with "CatalystX::Eta::Controller::AutoBase";
+with "CatalystX::Eta::Controller::AutoObject";
+with "CatalystX::Eta::Controller::AutoResultGET";
+with "CatalystX::Eta::Controller::AutoListPOST";
 
 __PACKAGE__->config(
+    # AutoObject.
     result  => "DB::Libre",
     no_user => 1,
+
+    # AutoBase
+    object_key         => "support",
+    object_verify_type => "int",
+
+    # AutoResultGET
+    build_row => sub {
+        return { $_[0]->get_columns() };
+    },
+
+    # AutoListPOST.
+    prepare_params_for_create => sub {
+        my ($self, $c) = @_;
+
+        return {
+            donor_id      => $c->user->id,
+            journalist_id => $c->stash->{journalist}->id,
+        };
+    },
 );
 
 sub root : Chained('/api/journalist/object') : PathPart('') : CaptureArgs(0) {
@@ -23,25 +46,15 @@ sub root : Chained('/api/journalist/object') : PathPart('') : CaptureArgs(0) {
 
 sub base : Chained('root') : PathPart('support') : CaptureArgs(0) { }
 
+sub object : Chained('base') : PathPart('') : CaptureArgs(1) { }
+
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub list_POST {
-    my ($self, $c) = @_;
+sub list_POST { }
 
-    my $support = $c->stash->{collection}->execute(
-        $c,
-        for  => "create",
-        with => {
-            donor_id      => $c->user->id,
-            journalist_id => $c->stash->{journalist}->id,
-        },
-    );
+sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-    return $self->status_ok(
-        $c,
-        entity => { id => $support->id },
-    );
-}
+sub result_GET { }
 
 __PACKAGE__->meta->make_immutable;
 

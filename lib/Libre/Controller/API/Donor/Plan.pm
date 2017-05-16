@@ -5,17 +5,20 @@ use namespace::autoclean;
 
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
-with "CatalystX::Eta::Controller::AutoBase";
 with "CatalystX::Eta::Controller::AutoListGET";
+with "CatalystX::Eta::Controller::AutoResultGET";
 
 __PACKAGE__->config(
-    # AutoBase
-    result => "DB::UserPlan",
-
     # AutoListGET
     list_key       => "user_plan",
     build_list_row => sub {
         return { $_[0]->get_columns() }
+    },
+
+    # AutoResultGET.
+    object_key => "user_plan",
+    build_row => sub {
+        return { $_[0]->get_columns() };
     },
 );
 
@@ -28,32 +31,58 @@ sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
     }
 }
 
-sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) { }
-
-sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') {
+sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
-    $c->stash->{collection} = $c->model('DB::UserPlan');
+    $c->stash->{collection} = $c->stash->{donor}->user_plans;
 }
+
+sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
+    my ($self, $c, $id) = @_;
+
+    if (defined($id) && (my $user_plan = $c->stash->{collection}->find($id))) {
+        $c->stash->{user_plan} = $user_plan;
+    }
+    else {
+        $c->detach("/error_404");
+    }
+}
+
+sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub list_POST {
     my ($self, $c) = @_;
 
-    my $user_plan = $c->stash->{donor}->user_plans->execute(
+    # TODO Ao criar um novo plano, resetar o plano antigo, finalizar o atual e avisar o Korduv.
+    my $user_plan = $c->stash->{collection}->execute(
         $c,
         for  => "create",
         with => $c->req->params,
     );
 
-    $self->status_ok(
+    $self->status_created(
         $c,
-        entity => { id => $user_plan->id },
+        entity   => { id => $user_plan->id },
+        location => $c->uri_for( $self->action_for("result"), [ @{ $c->req->captures }, $user_plan->id ] ),
     );
 
     my $test = $c->stash->{donor}->has_plan();
 }
 
 sub list_GET { }
+
+sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
+
+sub result_GET { }
+
+sub result_PUT {
+    my ($self, $c) = @_;
+
+    # TODO Ao alterar um plano, devemos avisar o Korduv sem reiniciar o ciclo.
+    ...;
+}
+
+#sub result_GET { }
 
 =encoding utf8
 
