@@ -1,4 +1,4 @@
-package Libre::Controller::API::Journalist::Donation;
+package Libre::Controller::API::Journalist::Support;
 use common::sense;
 use Moose;
 use namespace::autoclean;
@@ -8,7 +8,7 @@ BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 with "CatalystX::Eta::Controller::AutoBase";
 
 __PACKAGE__->config(
-    result  => "DB::Donation",
+    result  => "DB::Libre",
     no_user => 1,
 );
 
@@ -21,14 +21,14 @@ sub root : Chained('/api/journalist/object') : PathPart('') : CaptureArgs(0) {
     }
 }
 
-sub base : Chained('root') : PathPart('donation') : CaptureArgs(0) { }
+sub base : Chained('root') : PathPart('support') : CaptureArgs(0) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub list_POST {
     my ($self, $c) = @_;
 
-    my $donation = $c->stash->{collection}->execute(
+    my $support = $c->stash->{collection}->execute(
         $c,
         for  => "create",
         with => {
@@ -39,7 +39,7 @@ sub list_POST {
 
     return $self->status_ok(
         $c,
-        entity => { id => $donation->id },
+        entity => { id => $support->id },
     );
 }
 
