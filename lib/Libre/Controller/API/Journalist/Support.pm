@@ -8,8 +8,10 @@ BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 with "CatalystX::Eta::Controller::AutoBase";
 with "CatalystX::Eta::Controller::AutoObject";
 with "CatalystX::Eta::Controller::AutoResultGET";
+with "CatalystX::Eta::Controller::AutoListPOST";
 
 __PACKAGE__->config(
+    # AutoObject.
     result  => "DB::Libre",
     no_user => 1,
 
@@ -20,6 +22,16 @@ __PACKAGE__->config(
     # AutoResultGET
     build_row => sub {
         return { $_[0]->get_columns() };
+    },
+
+    # AutoListPOST.
+    prepare_params_for_create => sub {
+        my ($self, $c) = @_;
+
+        return {
+            donor_id      => $c->user->id,
+            journalist_id => $c->stash->{journalist}->id,
+        };
     },
 );
 
@@ -38,24 +50,7 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub list_POST {
-    my ($self, $c) = @_;
-
-    my $support = $c->stash->{collection}->execute(
-        $c,
-        for  => "create",
-        with => {
-            donor_id      => $c->user->id,
-            journalist_id => $c->stash->{journalist}->id,
-        },
-    );
-
-    return $self->status_created(
-        $c,
-        entity   => { id => $support->id },
-        location => $c->uri_for($self->action_for('result'), [ $c->stash->{journalist}->id, $support->id ]),
-    );
-}
+sub list_POST { }
 
 sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
 

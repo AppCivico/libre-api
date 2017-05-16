@@ -30,7 +30,6 @@ db_transaction {
         diag "testando a criação do plano";
         rest_post "/api/donor/$donor_id/plan",
             name    => "Plano de um doador",
-            code    => 200,
             [ amount => fake_int(2001, 100000)->() ],
         ;
 
@@ -72,13 +71,13 @@ db_transaction {
             "donation user_plan_id=null",
         );
 
-    #    # TODO O endpoint de planos deve vir com status 201.
-    #    # TODO Enviar os libres para o jornalista do teste.
-    #    rest_post "/api/donor/$donor_id/plan",
-    #        name    => "creating donor plan",
-    #        stash   => "p1",
-    #        [ amount => fake_int(2001, 100000)->() ]
-    #    ;
+        # TODO O endpoint de planos deve vir com status 201.
+        # TODO Enviar os libres para o jornalista do teste.
+        rest_post "/api/donor/$donor_id/plan",
+            name    => "creating donor plan",
+            stash   => "p1",
+            [ amount => fake_int(2001, 100000)->() ]
+        ;
 
     #    is (
     #        $donation->discard_changes->user_plan_id,
