@@ -122,6 +122,35 @@ db_transaction {
         );
         die "rollback";
     };
+
+    db_transaction {
+        diag "testando ciclo de planos";
+
+        # Quando um usuário já possuía um plano e adiciona um novo, o plano antigo deve ser fechado.
+        rest_post "/api/donor/$donor_id/plan",
+            name  => "add plan",
+            stash => "p2",
+            [ amount => fake_int(2001, 100000)->() ]
+        ;
+
+        my $user_plan_rs = $schema->resultset("UserPlan")->search( { user_id => $donor_id } );
+
+        is ($user_plan_rs->count, 1, "donor has 1 plan");
+        is ($user_plan_rs->find(stash "p2")->closed_at, undef, "current plan isnt closed yet");
+
+        # Adicionando um novo plano.
+        rest_post "/api/donor/$donor_id/plan",
+            name  => "add plan again",
+            stash => "p3",
+            [ amount => fake_int(2001, 100000)->() ]
+        ;
+
+        is ( $user_plan_rs->count, 2, "donor has 2 plan now" );
+        ok ( defined($user_plan_rs->find(stash "p2")->closed_at), "old plan closed");
+        is ( $user_plan_rs->find(stash "p3")->closed_at, undef, "new plan ok" );
+
+        die "rollback";
+    };
 };
 
 done_testing();

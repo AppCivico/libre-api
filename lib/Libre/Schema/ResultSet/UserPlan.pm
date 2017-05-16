@@ -49,6 +49,12 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
+            # TODO Avisar o Korduv que tenho um plano novo.
+            
+            # Fechando o plano anterior.
+            $self->search( { closed_at => undef } )
+            ->update( { closed_at => \"NOW()" } );
+
             my $user_plan = $self->create(
                 {
                     amount      => $values{amount},
@@ -56,10 +62,10 @@ sub action_specs {
                 }
             );
 
-            # Ao criar o plano, atrelamos todos os libres órfãos ao id desse plano.
+            # Ao criar o plano, atrelamos todos os libres órfãos ao id desse plano. Os que são mais velhos que a env
+            # 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS' permanecem como órfãos e nunca serão computados.
             my $orphan_expiration_time = int $ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS};
 
-            # TODO Bindar esse parâmetro decentemente ao invés de sanitizar com int(). Não consegui fazê-lo com o
             # DBIx::Class, mas como isso vem do envfile.sh deixarei assim por enquanto.
             $user_plan->user->libre_donors
             ->search( \[ "created_at >= ( NOW() - '$orphan_expiration_time days'::interval )" ] )

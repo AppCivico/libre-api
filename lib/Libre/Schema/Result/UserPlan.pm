@@ -72,6 +72,11 @@ __PACKAGE__->table("user_plan");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 closed_at
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -94,6 +99,8 @@ __PACKAGE__->add_columns(
     original      => { default_value => \"now()" },
   },
   "valid_until",
+  { data_type => "timestamp", is_nullable => 1 },
+  "closed_at",
   { data_type => "timestamp", is_nullable => 1 },
 );
 
@@ -142,8 +149,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-15 14:53:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:keBpzZpw2tzCJK0bx76wlw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-16 17:56:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:V3ooP1D635GS8XLM1/Zt9Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
