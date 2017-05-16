@@ -136,5 +136,15 @@ SQL_QUERY
     return 1;
 }
 
+sub has_plan {
+  my ($self, $c) = @_;
+
+  my $res = $self->user->user_plans->search();
+
+  use DDP; p $res;
+
+  return 1;
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

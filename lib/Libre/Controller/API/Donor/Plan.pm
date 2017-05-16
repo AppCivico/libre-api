@@ -49,6 +49,8 @@ sub list_POST {
         $c,
         entity => { id => $user_plan->id },
     );
+
+    my $test = $c->stash->{donor}->has_plan();
 }
 
 sub list_GET { }
