@@ -19,11 +19,11 @@ db_transaction {
         stash => "l1",
     ;
 
-    stash_test "l1" => sub {
-        my $res = shift;
-
-        is_deeply ($res->{user_plan}, [], "donor has no plan yet");
-    };
+    is_deeply (
+        (stash "l1")->{user_plan},
+        [],
+        "donor has no plan yet",
+    );
 
     # CRUD de plano.
     db_transaction {
@@ -105,11 +105,7 @@ db_transaction {
 
         # Atualizando o created_at da doação para 90 dias atrás.
         ok(
-            $libre->update(
-                {
-                    created_at => \"( NOW() - '90 days'::interval )",
-                },
-            ),
+            $libre->update( { created_at => \"( NOW() - '90 days'::interval )" } ),
             "set libre created_at to 90 days ago",
         );
 
