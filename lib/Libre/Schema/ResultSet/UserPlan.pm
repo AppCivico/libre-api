@@ -50,7 +50,6 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             # TODO Avisar o Korduv que tenho um plano novo.
-            
             # Fechando o plano anterior.
             $self->search( { closed_at => undef } )
             ->update( { closed_at => \"NOW()" } );
