@@ -31,12 +31,12 @@ db_transaction {
     # O doador 1 doará uma vez para o jornalista 1 e duas vezes para o jornalista 2. O doador 2 doará apenas uma vez
     # para o jornalista 1.
     api_auth_as user_id => $donor_ids[0];
-    rest_post "/api/journalist/$journalist_ids[0]/donation", code => 200;
-    rest_post "/api/journalist/$journalist_ids[1]/donation", code => 200;
-    rest_post "/api/journalist/$journalist_ids[1]/donation", code => 200;
+    rest_post "/api/journalist/$journalist_ids[0]/support", code => 200;
+    rest_post "/api/journalist/$journalist_ids[1]/support", code => 200;
+    rest_post "/api/journalist/$journalist_ids[1]/support", code => 200;
 
     api_auth_as user_id => $donor_ids[1];
-    rest_post "/api/journalist/$journalist_ids[0]/donation", code => 200;
+    rest_post "/api/journalist/$journalist_ids[0]/support", code => 200;
 
     # Fechando o ciclo agora que temos doações.
     for my $donor_id (@donor_ids) {
@@ -60,9 +60,9 @@ db_transaction {
             } $schema->resultset("Credit")->search(
                 { paid => "true" },
                 {
-                    'select' => [ qw/donation.donor_id donation.journalist_id/ ],
+                    'select' => [ qw/libre.donor_id libre.journalist_id/ ],
                     as       => [ qw/donor_id journalist_id/ ],
-                    join     => "donation"
+                    join     => "libre"
                 }
             )->all(),
         ]

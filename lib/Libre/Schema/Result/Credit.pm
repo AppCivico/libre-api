@@ -49,7 +49,7 @@ __PACKAGE__->table("credit");
   is_nullable: 0
   sequence: 'credit_id_seq'
 
-=head2 donation_id
+=head2 libre_id
 
   data_type: 'integer'
   is_foreign_key: 1
@@ -83,7 +83,7 @@ __PACKAGE__->add_columns(
     is_nullable       => 0,
     sequence          => "credit_id_seq",
   },
-  "donation_id",
+  "libre_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "paid",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
@@ -112,24 +112,24 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 donation
+=head2 libre
 
 Type: belongs_to
 
-Related object: L<Libre::Schema::Result::Donation>
+Related object: L<Libre::Schema::Result::Libre>
 
 =cut
 
 __PACKAGE__->belongs_to(
-  "donation",
-  "Libre::Schema::Result::Donation",
-  { id => "donation_id" },
+  "libre",
+  "Libre::Schema::Result::Libre",
+  { id => "libre_id" },
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-24 11:05:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:q6bcOjsIHrJi7OfRvBXSoQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-15 15:56:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:E8C9Ef7vjRmZAzaot/w0Zg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

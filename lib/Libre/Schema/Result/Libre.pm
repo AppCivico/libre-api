@@ -1,12 +1,12 @@
 use utf8;
-package Libre::Schema::Result::Donation;
+package Libre::Schema::Result::Libre;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
 
 =head1 NAME
 
-Libre::Schema::Result::Donation
+Libre::Schema::Result::Libre
 
 =cut
 
@@ -34,11 +34,11 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "PassphraseColumn");
 
-=head1 TABLE: C<donation>
+=head1 TABLE: C<libre>
 
 =cut
 
-__PACKAGE__->table("donation");
+__PACKAGE__->table("libre");
 
 =head1 ACCESSORS
 
@@ -47,7 +47,7 @@ __PACKAGE__->table("donation");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'donation_id_seq'
+  sequence: 'libre_id_seq'
 
 =head2 created_at
 
@@ -68,6 +68,12 @@ __PACKAGE__->table("donation");
   is_foreign_key: 1
   is_nullable: 0
 
+=head2 user_plan_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -76,7 +82,7 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "donation_id_seq",
+    sequence          => "libre_id_seq",
   },
   "created_at",
   {
@@ -89,6 +95,8 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "journalist_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "user_plan_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -116,7 +124,7 @@ Related object: L<Libre::Schema::Result::Credit>
 __PACKAGE__->has_many(
   "credits",
   "Libre::Schema::Result::Credit",
-  { "foreign.donation_id" => "self.id" },
+  { "foreign.libre_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -150,9 +158,29 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
+=head2 user_plan
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-04-27 17:31:32
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9ZxvLKShx4Gxy0pp5D9P8g
+Type: belongs_to
+
+Related object: L<Libre::Schema::Result::UserPlan>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "user_plan",
+  "Libre::Schema::Result::UserPlan",
+  { id => "user_plan_id" },
+  {
+    is_deferrable => 0,
+    join_type     => "LEFT",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
+  },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-15 15:56:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:C58sYC9XO32u/yeHjZq99w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

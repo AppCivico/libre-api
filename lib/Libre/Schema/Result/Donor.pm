@@ -120,17 +120,17 @@ sub end_cycle {
     $dbh->do(<<'SQL_QUERY', undef, $self->id, $self->id);
 WITH credit_tmp AS (
   SELECT id
-  FROM donation
+  FROM libre
   WHERE donor_id = ?
     AND id NOT IN (
       SELECT c.id
       FROM credit c
-      JOIN donation d
-        ON c.donation_id = d.id
+      JOIN libre d
+        ON c.libre_id = d.id
       WHERE d.donor_id = ?
     )
 )
-INSERT INTO credit (donation_id, paid, paid_at) SELECT id, 'TRUE', now() FROM credit_tmp ;
+INSERT INTO credit (libre_id, paid, paid_at) SELECT id, 'TRUE', now() FROM credit_tmp ;
 SQL_QUERY
 
     return 1;

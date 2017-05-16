@@ -152,36 +152,6 @@ __PACKAGE__->add_unique_constraint("user_email_key", ["email"]);
 
 =head1 RELATIONS
 
-=head2 donation_donors
-
-Type: has_many
-
-Related object: L<Libre::Schema::Result::Donation>
-
-=cut
-
-__PACKAGE__->has_many(
-  "donation_donors",
-  "Libre::Schema::Result::Donation",
-  { "foreign.donor_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-=head2 donation_journalists
-
-Type: has_many
-
-Related object: L<Libre::Schema::Result::Donation>
-
-=cut
-
-__PACKAGE__->has_many(
-  "donation_journalists",
-  "Libre::Schema::Result::Donation",
-  { "foreign.journalist_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 donor
 
 Type: might_have
@@ -209,6 +179,36 @@ __PACKAGE__->might_have(
   "journalist",
   "Libre::Schema::Result::Journalist",
   { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 libre_donors
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::Libre>
+
+=cut
+
+__PACKAGE__->has_many(
+  "libre_donors",
+  "Libre::Schema::Result::Libre",
+  { "foreign.donor_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 libre_journalists
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::Libre>
+
+=cut
+
+__PACKAGE__->has_many(
+  "libre_journalists",
+  "Libre::Schema::Result::Libre",
+  { "foreign.journalist_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -268,8 +268,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-12 17:10:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OWU6afkqfxPTZJEBSzDsWQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-15 14:53:13
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rSuiUlqH04Q9Diy4ksvj6g
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {

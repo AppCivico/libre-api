@@ -1,4 +1,4 @@
-package Libre::Schema::ResultSet::Donation;
+package Libre::Schema::ResultSet::Libre;
 use common::sense;
 use Moose;
 use namespace::autoclean;
@@ -50,11 +50,11 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $donation = $self->create({
-                map { $_ => $values{$_} } qw(donor_id journalist_id),
+            my $support = $self->create({
+                map { $_ => $values{$_} } qw(donor_id journalist_id user_plan_id),
             });
 
-            return $donation;
+            return $support;
         },
     };
 }
