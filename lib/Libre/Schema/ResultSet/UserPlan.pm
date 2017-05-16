@@ -8,6 +8,8 @@ extends 'DBIx::Class::ResultSet';
 with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
+BEGIN { $ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} or die "missing env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS'." }
+
 use Data::Verifier;
 use Libre::Types qw(PositiveInt);
 
@@ -47,18 +49,21 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $user_plan = $self->create({
-                amount      => $values{amount},
-                created_at  => \"now()",
-            });
-
-            # Ao criar o plano, atrelamos todos os libres órfãos ao id desse plano.
-            # TODO Atualizar apenas os livres que são mais novos que NOW() - $ORPHAN_LIKES_EXPIRATION_TIME.
-            $user_plan->user->libre_donors->update(
+            my $user_plan = $self->create(
                 {
-                    user_plan_id => $user_plan->id,
+                    amount      => $values{amount},
+                    created_at  => \"NOW()",
                 }
             );
+
+            # Ao criar o plano, atrelamos todos os libres órfãos ao id desse plano.
+            my $orphan_expiration_time = int $ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS};
+
+            # TODO Bindar esse parâmetro decentemente ao invés de sanitizar com int(). Não consegui fazê-lo com o
+            # DBIx::Class, mas como isso vem do envfile.sh deixarei assim por enquanto.
+            $user_plan->user->libre_donors
+            ->search( \[ "created_at >= ( NOW() - '$orphan_expiration_time days'::interval )" ] )
+            ->update( { user_plan_id => $user_plan->id } );
 
             return $user_plan;
         },
