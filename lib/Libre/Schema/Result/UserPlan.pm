@@ -152,7 +152,43 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-17 16:38:46
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0M0+Apok4ek3RrA8oOiF/A
 
+BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+use WebService::Korduv;
+
+has _korduv => (
+    is         => "ro",
+    isa        => "WebService::Korduv",
+    lazy_build => 1,
+);
+
+sub update_on_korduv {
+    my ($self) = @_;
+
+    return $self->_korduv->setup_subscription(
+        api_key => $ENV{LIBRE_KORDUV_API_KEY},
+
+        payment_interval_class => "each_n_days",
+        payment_interval_value => 30,
+
+        remote_subscription_id => 0,
+
+        currency       => "bra",
+        pricing_schema => "linear",
+
+        base_price  => $self->amount,
+        extra_price => 0,
+        extra_usage => 0,
+
+        fail_forever_after    => 3,
+        fail_forever_interval => 86400,
+
+        timezone    => "America/Sao_Paulo",
+        charge_time => "09:00",
+    );
+}
+
+sub _build__korduv { WebService::Korduv->instance }
+
 __PACKAGE__->meta->make_immutable;
 1;

@@ -11,14 +11,7 @@ with "Libre::Role::Verification::TransactionalActions::DBIC";
 BEGIN { $ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} or die "missing env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS'." }
 
 use Data::Verifier;
-use WebService::Korduv;
 use Libre::Types qw(PositiveInt);
-
-has _korduv => (
-    is         => "ro",
-    isa        => "WebService::Korduv",
-    lazy_build => 1,
-);
 
 sub verifiers_specs {
     my $self = shift;
@@ -58,7 +51,6 @@ sub action_specs {
 
             # Verificando se ja há um plano existente para este usuário.
             my $user_plan = $self->search( { canceled_at => undef } )->next();
-
             if ($user_plan) {
                 $user_plan->update(\%values);
             }
@@ -66,8 +58,8 @@ sub action_specs {
                 $user_plan = $self->create(\%values);
             }
 
-            # TODO Avisar o Korduv que tenho um plano novo.
-            #$self->_korduv->setup_subscription(
+            # Atualizando a informação no Korduv.
+            $user_plan->update_on_korduv();
 
             # Ao criar ou atualizar o plano, atrelamos todos os libres órfãos ao id desse plano. Os que são mais
             # velhos que a env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS' permanecem como órfãos e nunca serão computados.
@@ -82,6 +74,5 @@ sub action_specs {
     };
 }
 
-sub _build__korduv { WebService::Korduv->instance }
 
 1;
