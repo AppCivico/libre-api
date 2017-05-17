@@ -50,9 +50,19 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
+            # Verificando se o doador possui um plano corrente.
+            my $donor_id = $values{donor_id};
+
+            my $donor_plan = $self->result_source->schema->resultset("Donor")->find($donor_id)->get_current_plan();
+
             my $support = $self->create(
                 {
-                    map { $_ => $values{$_} } qw(donor_id journalist_id),
+                    ( map { $_ => $values{$_} } qw(donor_id journalist_id) ),
+                    (
+                        $donor_plan
+                        ? ( user_plan_id => $donor_plan->id )
+                        : ()
+                    ),
                 }
             );
 

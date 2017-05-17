@@ -112,32 +112,8 @@ use Libre::Utils;
 
 use Data::Printer;
 
-sub end_cycle {
-    my ($self) = @_;
-
-    my $dbh = $self->result_source->schema->storage->dbh();
-
-    $dbh->do(<<'SQL_QUERY', undef, $self->id, $self->id);
-WITH credit_tmp AS (
-  SELECT id
-  FROM libre
-  WHERE donor_id = ?
-    AND id NOT IN (
-      SELECT c.id
-      FROM credit c
-      JOIN libre d
-        ON c.libre_id = d.id
-      WHERE d.donor_id = ?
-    )
-)
-INSERT INTO credit (libre_id, paid, paid_at) SELECT id, 'TRUE', now() FROM credit_tmp ;
-SQL_QUERY
-
-    return 1;
-}
-
 sub has_plan {
-    my ($self, $c) = @_;
+    my ($self) = @_;
 
     if ($self->user->user_plans->search() >= 1) {
         return 1;
@@ -148,7 +124,7 @@ sub has_plan {
 }
 
 sub has_credit_card {
-    my ($self, $c) = @_;
+    my ($self) = @_;
 
     if ($self->flotum_preferred_credit_card) {
         return 1;
@@ -156,6 +132,19 @@ sub has_credit_card {
     else {
         return 0;
     }
+}
+
+sub get_current_plan {
+    my ($self) = @_;
+
+    return $self->user->user_plans->search(
+        { closed_at => undef },
+        { 
+            order_by  => { '-desc' => "created_at" },
+            rows      => 1,
+        }
+    )
+    ->next();
 }
 
 __PACKAGE__->meta->make_immutable;
