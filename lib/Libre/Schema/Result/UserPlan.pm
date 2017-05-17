@@ -77,6 +77,13 @@ __PACKAGE__->table("user_plan");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 callback_id
+
+  data_type: 'uuid'
+  default_value: uuid_generate_v4()
+  is_nullable: 0
+  size: 16
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -102,6 +109,13 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "canceled_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "callback_id",
+  {
+    data_type => "uuid",
+    default_value => \"uuid_generate_v4()",
+    is_nullable => 0,
+    size => 16,
+  },
 );
 
 =head1 PRIMARY KEY
@@ -149,8 +163,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-17 16:38:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0M0+Apok4ek3RrA8oOiF/A
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-17 17:52:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Oh2fjnk0hd/pY7ryvApFYw
 
 BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
 
@@ -166,6 +180,9 @@ has _korduv => (
 sub update_on_korduv {
     my ($self) = @_;
 
+    # Discard changes para obter o callback_url.
+    my $callback_id = $self->discard_changes->callback_id;
+
     return $self->_korduv->setup_subscription(
         api_key => $ENV{LIBRE_KORDUV_API_KEY},
 
@@ -177,9 +194,9 @@ sub update_on_korduv {
         currency       => "bra",
         pricing_schema => "linear",
 
-        on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $self->callback_id ),
-        on_charge_failed_forever   => get_nueta_api_url_for('/korduv/success-failed/'  . $self->callback_id ),
-        on_charge_attempted_failed => get_nueta_api_url_for('/korduv/success-failed/'  . $self->callback_id ),
+        on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $callback_id ),
+        on_charge_failed_forever   => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
+        on_charge_attempted_failed => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
 
         base_price  => $self->amount,
         extra_price => 0,
