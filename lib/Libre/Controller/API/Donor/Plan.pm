@@ -34,7 +34,7 @@ sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
 sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
-    $c->stash->{collection} = $c->stash->{donor}->user_plans;
+    $c->stash->{collection} = $c->stash->{donor}->user->user_plans;
 }
 
 sub object : Chained('base') : PathPart('') : CaptureArgs(1) {

@@ -136,5 +136,27 @@ SQL_QUERY
     return 1;
 }
 
+sub has_plan {
+    my ($self, $c) = @_;
+
+    if ($self->user->user_plans->search() >= 1) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+sub has_credit_card {
+    my ($self, $c) = @_;
+
+    if ($self->flotum_preferred_credit_card) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

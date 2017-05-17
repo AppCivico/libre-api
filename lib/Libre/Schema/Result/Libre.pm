@@ -184,5 +184,18 @@ __PACKAGE__->belongs_to(
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+# TODO implementar fórmulas de distribuição de libres
+
+sub get_libre_value {
+  my ($self) = @_;
+
+
+}
+
+sub get_total_likes {
+
+}
+
 __PACKAGE__->meta->make_immutable;
 1;
