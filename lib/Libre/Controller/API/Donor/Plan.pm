@@ -50,17 +50,16 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub list_POST {
+sub list_PUT {
     my ($self, $c) = @_;
 
-    # TODO Ao criar um novo plano, resetar o plano antigo, finalizar o atual e avisar o Korduv.
     my $user_plan = $c->stash->{collection}->execute(
         $c,
-        for  => "create",
+        for  => "upsert",
         with => $c->req->params,
     );
 
-    $self->status_created(
+    $self->status_accepted(
         $c,
         entity   => { id => $user_plan->id },
         location => $c->uri_for( $self->action_for("result"), [ @{ $c->req->captures }, $user_plan->id ] ),
@@ -72,15 +71,6 @@ sub list_GET { }
 sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub result_GET { }
-
-sub result_PUT {
-    #my ($self, $c) = @_;
-
-    # TODO Ao alterar um plano, devemos avisar o Korduv sem reiniciar o ciclo.
-    ...;
-}
-
-#sub result_GET { }
 
 =encoding utf8
 

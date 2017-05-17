@@ -27,8 +27,8 @@ db_transaction {
         is ($libre_rs->find(stash "s1")->user_plan_id, undef, "user_plan_id=null");
 
         # Criando um plano.
-        rest_post "/api/donor/$donor_id/plan",
-            name  => "Creating a user plan",
+        rest_put "/api/donor/$donor_id/plan",
+            name  => "creating a user plan",
             stash => "user_plan",
             [ amount => fake_int(20001, 100000)->() ],
         ;
@@ -38,7 +38,9 @@ db_transaction {
             name  => "donate again",
             stash => "s2",
         ;
-        is ($libre_rs->find(stash "s2")->user_plan_id, stash "user_plan.id", "user_plan_id ok");
+
+        my $user_plan = stash "user_plan";
+        is ($libre_rs->find(stash "s2")->user_plan_id, $user_plan->{id} , "user_plan_id ok");
 
         # Não deve ser possível efetuar uma doação para um usuário que não seja um jornalista.
         rest_post "/api/journalist/$donor_id/support",
@@ -49,6 +51,11 @@ db_transaction {
 
         die "rollback";
     };
+
+};
+done_testing; exit 0;
+
+__END__
 
     db_transaction {
         diag("testando o fluxo dos libres orfaos");
@@ -68,7 +75,7 @@ db_transaction {
         );
 
         # Criando um plano.
-        rest_post "/api/donor/$donor_id/plan",
+        rest_put "/api/donor/$donor_id/plan",
             name    => "creating donor plan",
             stash   => "p1",
             [ amount => fake_int(2001, 100000)->() ]
@@ -106,7 +113,7 @@ db_transaction {
         );
 
         # Ok, agora vou criar um plano. O esperado é que NÃO atrele o libre a este plano.
-        rest_post "/api/donor/$donor_id/plan",
+        rest_put "/api/donor/$donor_id/plan",
             name  => "create donor plan",
             [ amount => fake_int(2001, 100000)->() ]
         ;

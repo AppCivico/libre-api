@@ -138,7 +138,7 @@ sub get_current_plan {
     my ($self) = @_;
 
     return $self->user->user_plans->search(
-        { closed_at => undef },
+        { canceled_at => undef },
         {
             order_by  => { '-desc' => "created_at" },
             rows      => 1,
