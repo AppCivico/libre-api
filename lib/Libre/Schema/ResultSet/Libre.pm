@@ -50,9 +50,11 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $support = $self->create({
-                map { $_ => $values{$_} } qw(donor_id journalist_id user_plan_id),
-            });
+            my $support = $self->create(
+                {
+                    map { $_ => $values{$_} } qw(donor_id journalist_id),
+                }
+            );
 
             return $support;
         },
