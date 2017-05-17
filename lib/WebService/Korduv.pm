@@ -7,7 +7,6 @@ use Furl;
 use Try::Tiny::Retry;
 use Libre::Utils;
 
-
 BEGIN { $ENV{LIBRE_KORDUV_URL} or die "missing env 'LIBRE_KORDUV_URL'." }
 
 has 'furl' => ( is => 'rw', lazy => 1, builder => '_build_furl' );
@@ -17,7 +16,7 @@ sub _build_furl { Furl->new }
 sub setup_subscription {
     my ( $self, %opts ) = @_;
 
-    if (is_test) {
+    if (is_test()) {
         $Libre::Test::Further::korduv = \%opts;
 
         return {

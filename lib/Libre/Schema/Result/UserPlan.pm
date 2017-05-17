@@ -155,6 +155,7 @@ __PACKAGE__->belongs_to(
 BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
 
 use WebService::Korduv;
+use Libre::Utils;
 
 has _korduv => (
     is         => "ro",
@@ -171,10 +172,14 @@ sub update_on_korduv {
         payment_interval_class => "each_n_days",
         payment_interval_value => 30,
 
-        remote_subscription_id => 0,
+        remote_subscription_id => $self->user->id,
 
         currency       => "bra",
         pricing_schema => "linear",
+
+        on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $self->callback_id ),
+        on_charge_failed_forever   => get_nueta_api_url_for('/korduv/success-failed/'  . $self->callback_id ),
+        on_charge_attempted_failed => get_nueta_api_url_for('/korduv/success-failed/'  . $self->callback_id ),
 
         base_price  => $self->amount,
         extra_price => 0,
