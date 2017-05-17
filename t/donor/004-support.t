@@ -52,11 +52,6 @@ db_transaction {
         die "rollback";
     };
 
-};
-done_testing; exit 0;
-
-__END__
-
     db_transaction {
         diag("testando o fluxo dos libres orfaos");
 
@@ -81,10 +76,11 @@ __END__
             [ amount => fake_int(2001, 100000)->() ]
         ;
 
+        my $plan_id = (stash "p1")->{id};
         # Testando se os libres órfãos agora estão atrelados ao id do plano criado.
         is (
             $libre->discard_changes->user_plan_id,
-            stash "p1.id",
+            (stash "p1")->{id},
             "donation user_plan_id=plan_id",
         );
         die "rollback";
