@@ -16,7 +16,7 @@ db_transaction {
             company => fake_name()->(),
             subject => fake_sentences(fake_int(1, 3))->(),
             phone   => fake_digits("+55119#######")->(),
-            email   => 'fake_email()->()',
+            email   => fake_email()->(),
             message => fake_paragraphs(fake_int(1, 3))->(),
         },
     ;
