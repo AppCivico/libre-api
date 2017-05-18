@@ -24,10 +24,11 @@ db_transaction {
     );
 
     rest_put "/api/donor/$donor_id/plan",
-        name    => "Plano de um doador",
-        [
+        name   => "Plano de um doador",
+        stash  => "user_plan",
+        params => {
             amount => fake_int(2001, 100000)->(),
-        ],
+        },
     ;
 
     # O doador não pode escolher um valor de plano menor que 20
@@ -51,7 +52,11 @@ db_transaction {
         is ($res->{user_plan}->[0]->{user_id}, $donor_id, "user id is donor id");
     };
 
-    # Simulando o callback do Korduv.
+    diag "simulando o callback do korduv";
+    my $user_plan = $schema->resultset("UserPlan")->find((stash("user_plan"))->{id});
+    ok (my $callback_id = $user_plan->callback_id, "get callback_id");
+
+    is (my $res = get("/korduv/success-renewal/$callback_id"), "", "korduv callback");
 };
 
 done_testing();

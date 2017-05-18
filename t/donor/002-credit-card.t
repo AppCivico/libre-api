@@ -6,8 +6,6 @@ use Libre::Test::Further;
 
 my $schema = Libre->model("DB");
 
-my $furl = Furl->new( timeout => 15, );
-
 db_transaction {
     create_donor;
     api_auth_as user_id => stash "donor.id";

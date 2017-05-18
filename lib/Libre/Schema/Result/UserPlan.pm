@@ -210,6 +210,13 @@ sub update_on_korduv {
     );
 }
 
+sub on_korduv_callback_success {
+    my ($self) = @_;
+
+    # TODO Criar um novo http callback para daqui $DAYS_BETWEEN_PAYMENTS.
+    ...;
+}
+
 sub _build__korduv { WebService::Korduv->instance }
 
 __PACKAGE__->meta->make_immutable;
