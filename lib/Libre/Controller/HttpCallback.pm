@@ -136,7 +136,6 @@ sub _update_credit_card {
                 die "Cannot remove credit-card.";
             }
         }
-
     }
 
     $user->donor->update({
@@ -146,6 +145,7 @@ sub _update_credit_card {
           })
     });
 
+    # TODO Chamar o update_on_korduv nesse callback se existir plano.
 }
 
 

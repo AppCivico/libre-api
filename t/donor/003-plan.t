@@ -30,7 +30,7 @@ db_transaction {
         ],
     ;
 
-# O doador não pode escolher um valor de plano menor que 20
+    # O doador não pode escolher um valor de plano menor que 20
     rest_put "/api/donor/$donor_id/plan",
         name    => "Plano de um  doador",
         is_fail => 1,
@@ -50,6 +50,8 @@ db_transaction {
         is ($res->{user_plan}->[0]->{valid_until}, undef, "no valid until");
         is ($res->{user_plan}->[0]->{user_id}, $donor_id, "user id is donor id");
     };
+
+    # Simulando o callback do Korduv.
 };
 
 done_testing();
