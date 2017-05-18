@@ -28,7 +28,7 @@ db_transaction {
     );
 
     # Listando um doador com um plano mas sem cartão
-    rest_post "/api/donor/$donor_id/plan",
+    rest_put "/api/donor/$donor_id/plan",
         name    => "Plano de um doador",
         [ amount => fake_int(2001, 100000)->() ],
     ;
