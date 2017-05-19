@@ -5,6 +5,7 @@ use MooseX::Singleton;
 use JSON::MaybeXS;
 use Furl;
 use Try::Tiny::Retry;
+use Libre::Utils;
 
 BEGIN { $ENV{LIBRE_HTTP_CB_URL} or die "missing env 'LIBRE_HTTP_CB_URL'." }
 

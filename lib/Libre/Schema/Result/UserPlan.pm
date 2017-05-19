@@ -84,6 +84,11 @@ __PACKAGE__->table("user_plan");
   is_nullable: 0
   size: 16
 
+=head2 last_close_at
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -116,6 +121,8 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 16,
   },
+  "last_close_at",
+  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -163,8 +170,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-17 17:52:16
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Oh2fjnk0hd/pY7ryvApFYw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-19 17:54:12
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:isYYmRM5W4QrijvjJo+cAA
 
 BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
 
@@ -218,11 +225,41 @@ sub update_on_korduv {
 }
 
 sub on_korduv_callback_success {
-    my ($self) = @_;
+    my ($self, $data) = @_;
 
     # TODO Criar um novo http callback para daqui $DAYS_BETWEEN_PAYMENTS.
     my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
     my $token = $httpcb_rs->create_for_action("payment-success-renewal");
+
+    # TODO Na query devemos usar a data do korduv, e não NOW().
+    my $wait_until = $self->result_source->schema->resultset("UserPlan")->search(
+        { id => $self->id },
+        {
+            select => [
+                \<<'SQL_QUERY'
+EXTRACT(
+  EPOCH FROM (
+    CASE WHEN last_close_at IS NULL THEN (
+      NOW() + '30 days'::interval
+    )
+    ELSE (
+      last_close_at + '30 days'::interval
+    )
+    END
+  )
+)
+SQL_QUERY
+            ],
+            'as' => [ "wait_until_epoch", ]
+        }
+    )->next;
+
+    # Agendando o callback.
+    $self->_httpcb->add(
+        url        => get_libre_api_url_for("/callback-for-token/" . $token),
+        method     => "get",
+        wait_until => $wait_until->get_column("wait_until_epoch"),
+    );
 }
 
 

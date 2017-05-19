@@ -27,3 +27,4 @@
 0023-plan-closed-at [0022-donation-to-support] 2017-05-16T20:57:22Z Junior Moraes <juniorfvox@gmail.com> # plan-closed-at
 0024-plan-canceled-at [0023-plan-closed-at] 2017-05-17T20:03:44Z Junior Moraes <juniorfvox@gmail.com> # plan-canceled-at
 0025-user-plan-callback-id [0024-plan-canceled-at] 2017-05-17T20:46:04Z Junior Moraes <juniorfvox@gmail.com> # user-plan-callback-id
+0026-plan-last-close-at [0025-user-plan-callback-id] 2017-05-19T22:20:09Z junior,,, <junior@fvox> # an-last-close-at
