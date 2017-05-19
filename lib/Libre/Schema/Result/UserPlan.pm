@@ -169,9 +169,14 @@ __PACKAGE__->belongs_to(
 BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
 
 use WebService::Korduv;
+use WebService::HttpCallback;
 use Libre::Utils;
 
-with "Libre::Role::Verification::TransactionalActions::DBIC";
+has _httpcb => (
+    is         => "ro",
+    isa        => "WebService::HttpCallback",
+    lazy_build => 1,
+);
 
 has _korduv => (
     is         => "ro",
@@ -216,11 +221,14 @@ sub on_korduv_callback_success {
     my ($self) = @_;
 
     # TODO Criar um novo http callback para daqui $DAYS_BETWEEN_PAYMENTS.
-    #my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
-    #my $token = $httpcb_rs->create_for_action("payment-success-renewal");
+    my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
+    my $token = $httpcb_rs->create_for_action("payment-success-renewal");
 }
 
+
 sub _build__korduv { WebService::Korduv->instance }
+
+sub _build__httpcb { WebService::HttpCallback->instance }
 
 __PACKAGE__->meta->make_immutable;
 1;

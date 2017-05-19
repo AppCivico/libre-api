@@ -28,6 +28,8 @@ db_transaction {
     my $req = request GET "korduv/success-renewal/$callback_id";
     is ($req->status_line, "200 OK", "callback success");
 
+    is ($schema->resultset("HttpCallbackToken")->count(), "1", "created http callback token");
+
 };
 
 done_testing();
