@@ -11,9 +11,9 @@ BEGIN { extends "Catalyst::Controller" }
 sub root : Chained('/') : PathPart('korduv') : CaptureArgs(0) { }
 
 sub success_renewal : Chained('root') : PathPart('success-renewal') : Args(1) {
-    my ($self, $c, $token) = @_;
+    my ($self, $c, $callback_id) = @_;
 
-    my $user_plan = $c->model('DB::UserPlan')->search( { callback_id => $token } )->next();
+    my $user_plan = $c->model('DB::UserPlan')->search( { callback_id => $callback_id } )->next();
 
     if ($user_plan) {
         eval { $user_plan->on_korduv_callback_success($c->req->data) };
@@ -26,8 +26,7 @@ sub success_renewal : Chained('root') : PathPart('success-renewal') : Args(1) {
             $c->res->code(200);
         }
     }
-
-    $c->res->body('');
+    $c->res->body("");
 }
 
 1;

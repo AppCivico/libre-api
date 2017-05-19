@@ -51,12 +51,6 @@ db_transaction {
         is ($res->{user_plan}->[0]->{valid_until}, undef, "no valid until");
         is ($res->{user_plan}->[0]->{user_id}, $donor_id, "user id is donor id");
     };
-
-    diag "simulando o callback do korduv";
-    my $user_plan = $schema->resultset("UserPlan")->find((stash("user_plan"))->{id});
-    ok (my $callback_id = $user_plan->callback_id, "get callback_id");
-
-    is (my $res = get("/korduv/success-renewal/$callback_id"), "", "korduv callback");
 };
 
 done_testing();

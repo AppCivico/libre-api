@@ -171,6 +171,8 @@ BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." 
 use WebService::Korduv;
 use Libre::Utils;
 
+with "Libre::Role::Verification::TransactionalActions::DBIC";
+
 has _korduv => (
     is         => "ro",
     isa        => "WebService::Korduv",
@@ -214,7 +216,8 @@ sub on_korduv_callback_success {
     my ($self) = @_;
 
     # TODO Criar um novo http callback para daqui $DAYS_BETWEEN_PAYMENTS.
-    ...;
+    #my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
+    #my $token = $httpcb_rs->create_for_action("payment-success-renewal");
 }
 
 sub _build__korduv { WebService::Korduv->instance }
