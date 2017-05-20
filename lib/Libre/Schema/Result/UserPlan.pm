@@ -249,12 +249,8 @@ sub on_korduv_callback_success {
 EXTRACT(
   EPOCH FROM (
     '$days_between_payments days'::interval + (
-      CASE WHEN last_close_at IS NULL THEN (
-        ?
-      )
-      ELSE (
-        last_close_at
-      )
+      CASE WHEN last_close_at IS NULL THEN ( ? )
+      ELSE ( last_close_at )
       END
     )
   )
