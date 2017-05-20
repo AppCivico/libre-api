@@ -26,7 +26,7 @@ sub success_renewal : Chained('root') : PathPart('success-renewal') : Args(1) {
             $c->res->code(200);
         }
     }
-    $c->res->body("");
+    $c->res->body(encode_json({}));
 }
 
 1;
