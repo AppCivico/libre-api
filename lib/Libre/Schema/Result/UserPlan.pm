@@ -89,6 +89,13 @@ __PACKAGE__->table("user_plan");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 invalided_at
+
+  data_type: 'timestamp'
+  default_value: current_timestamp
+  is_nullable: 1
+  original: {default_value => \"now()"}
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -123,6 +130,13 @@ __PACKAGE__->add_columns(
   },
   "last_close_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "invalided_at",
+  {
+    data_type     => "timestamp",
+    default_value => \"current_timestamp",
+    is_nullable   => 1,
+    original      => { default_value => \"now()" },
+  },
 );
 
 =head1 PRIMARY KEY
@@ -170,8 +184,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-19 17:54:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:isYYmRM5W4QrijvjJo+cAA
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-19 21:51:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QGaCpWqbl7nws1LowsFc5w
 
 BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
 
@@ -262,6 +276,16 @@ SQL_QUERY
     );
 }
 
+sub on_korduv_fail_forever {
+    my ($self) = @_;
+
+    my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
+    my $token     = $httpcb_rs->create_for_action("payment-fail-forever");
+
+    my $plan = $self->result_source->schema->resultset("UserPlan")->find($self->id)->update(
+        { invalided_at => \"NOW()"}
+    );
+}
 
 sub _build__korduv { WebService::Korduv->instance }
 
