@@ -231,7 +231,7 @@ sub on_korduv_callback_success {
     my ($self, $data) = @_;
 
     my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
-    my $token = $httpcb_rs->create_for_action("payment-success-renewal");
+    my $token = $httpcb_rs->create_for_action("payment-success-renewal", { user_id => $self->user->id });
 
     my $last_payment_received_at = $data->{status}->{last_payment_received_at};
     if (!defined($last_payment_received_at)) {

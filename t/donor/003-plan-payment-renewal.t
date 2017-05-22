@@ -60,6 +60,15 @@ db_transaction {
         "callback action",
     );
 
+    is (
+        $httpcb->extra_args,
+        encode_json({
+            user_id => $donor_id,
+        }),
+        "http callback has extra args",
+    );
+
+
     rest_post [ "callback-for-token", $httpcb->token ],
         name => "http callback triggered",
         code => 200,
