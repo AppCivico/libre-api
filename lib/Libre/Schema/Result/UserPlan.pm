@@ -212,16 +212,16 @@ sub update_on_korduv {
         api_key => $ENV{LIBRE_KORDUV_API_KEY},
 
         payment_interval_class => "each_n_days",
-        payment_interval_value => 30,
+        payment_interval_value => 30, # TODO Validar se este será o intervalo.
 
         remote_subscription_id => $self->user->id,
 
         currency       => "bra",
         pricing_schema => "linear",
 
-        on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $callback_id ),
-        on_charge_failed_forever   => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
-        on_charge_attempted_failed => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
+        on_charge_renewed          => get_libre_api_url_for( '/korduv/success-renewal/' . $callback_id ),
+        on_charge_failed_forever   => get_libre_api_url_for( '/korduv/fail-forever/'  . $callback_id ),
+        on_charge_attempted_failed => get_libre_api_url_for( '/korduv/fail/'          . $callback_id ),
 
         base_price  => $self->amount,
         extra_price => 0,
@@ -286,6 +286,14 @@ sub on_korduv_fail_forever {
     my $plan = $self->result_source->schema->resultset("UserPlan")->find($self->id)->update(
         { invalided_at => \"NOW()"}
     );
+}
+
+sub on_korduv_callback_fail {
+    my ($self) = @_;
+
+    my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
+
+    # TODO Enviar um email avisando o usuário de que a compra dele não pode ser finalizada.
 }
 
 sub _build__korduv { WebService::Korduv->instance }
