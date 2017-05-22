@@ -29,5 +29,44 @@ sub success_renewal : Chained('root') : PathPart('success-renewal') : Args(1) {
     $c->res->body(encode_json({}));
 }
 
+sub fail : Chained('root') : PathPart('fail') : Args(1) {
+    my ($self, $c, $callback_id) = @_;
+
+    my $user_plan = $c->model('DB::UserPlan')->search( { callback_id => $callback_id } )->next();
+
+    if ($user_plan) {
+        eval { $user_plan->on_korduv_callback_fail($c->req->data) };
+
+        if ($@) {
+            $c->error("[korduv::success_renewal] fail " . Dumper($@) . "\n" . Dumper($c->req->data));
+            $c->res->code(500);
+        }
+        else {
+            $c->res->code(200);
+        }
+    }
+    $c->res->body(encode_json({}));
+}
+
+sub fail_forever : Chained('root') : PathPart('fail-forever') : Args(1) {
+    my ($self, $c, $callback_id) = @_;
+
+    my $user_plan = $c->model('DB::UserPlan')->search( { callback_id => $callback_id } )->next();
+
+    if ($user_plan) {
+        eval { $user_plan->on_korduv_fail_forever($c->req->data) };
+
+        if ($@) {
+            $c->error("[korduv::fail_forever]" . Dumper($@) . "\n" . Dumper($c->req->data));
+            $c->res->code(500);
+            use DDP; p $c;
+        }
+        else {
+            $c->res->code(200);
+        }
+    }
+    $c->res->body("");
+}
+
 1;
 
