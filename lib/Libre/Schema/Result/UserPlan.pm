@@ -84,17 +84,10 @@ __PACKAGE__->table("user_plan");
   is_nullable: 0
   size: 16
 
-=head2 last_close_at
-
-  data_type: 'timestamp'
-  is_nullable: 1
-
 =head2 invalided_at
 
   data_type: 'timestamp'
-  default_value: current_timestamp
   is_nullable: 1
-  original: {default_value => \"now()"}
 
 =cut
 
@@ -128,15 +121,8 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 16,
   },
-  "last_close_at",
-  { data_type => "timestamp", is_nullable => 1 },
   "invalided_at",
-  {
-    data_type     => "timestamp",
-    default_value => \"current_timestamp",
-    is_nullable   => 1,
-    original      => { default_value => \"now()" },
-  },
+  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -184,8 +170,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-19 21:51:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QGaCpWqbl7nws1LowsFc5w
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-22 10:47:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nsivZDctCipxX/p9X7pUDA
 
 BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
 
