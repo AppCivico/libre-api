@@ -25,9 +25,33 @@ db_transaction {
     my $user_plan = $schema->resultset("UserPlan")->find((stash("user_plan"))->{id});
     ok (my $callback_id = $user_plan->callback_id, "get callback_id");
 
-    # TODO Entender como o korduv faz as requests para passar os params.
-    my $req = request GET "korduv/success-renewal/$callback_id";
-    is ($req->status_line, "200 OK", "callback success");
+    my $now = $schema->resultset("UserPlan")->search(
+        {},
+        {
+            select => [ \"NOW()" ],
+            as     => [ "now" ],
+        }
+    )->next();
+
+    my $last_payment_received_at = $now->get_column("now");
+    my $last_charge_created_at   = $now->get_column("now");
+
+    rest_post $Libre::Test::Further::korduv->{on_charge_renewed},
+        name    => "callback do korduv",
+        code    => 200,
+        headers => [ 'content-type' => "application/json" ],
+        data    => encode_json {
+            status => {
+                cancel_reason            => "foobar",
+                cancelled_at             => undef,
+                last_payment_received_at => $last_payment_received_at,
+                last_charge_created_at   =>  $last_charge_created_at,
+                status                   => "active",
+                next_billing_at          => "2017-01-01 12:00:00",
+                paid_until               => "2017-01-01 12:00:00",
+            },
+        },
+    ;
 
     my $httpcb_rs = $schema->resultset("HttpCallbackToken");
     is ($httpcb_rs->count(), "1", "just one http callback token");
@@ -36,7 +60,21 @@ db_transaction {
         "callback action",
     );
 
-    # TODO Simulando a request do http callback.
+    is (
+        $httpcb->extra_args,
+        encode_json({
+            user_id => $donor_id,
+        }),
+        "http callback has extra args",
+    );
+
+
+    rest_post [ "callback-for-token", $httpcb->token ],
+        name => "http callback triggered",
+        code => 200,
+    ;
+
+    # TODO Testar a distribuição de libres.
 };
 
 done_testing();

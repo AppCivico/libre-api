@@ -173,7 +173,10 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-22 10:47:47
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nsivZDctCipxX/p9X7pUDA
 
-BEGIN { $ENV{LIBRE_KORDUV_API_KEY} or die "missing env 'LIBRE_KORDUV_API_KEY'." }
+BEGIN {
+    $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
+    $ENV{LIBRE_DAYS_BETWEEN_PAYMENTS} or die "missing env 'LIBRE_DAYS_BETWEEN_PAYMENTS'.";
+}
 
 use WebService::Korduv;
 use WebService::HttpCallback;
@@ -227,28 +230,32 @@ sub update_on_korduv {
 sub on_korduv_callback_success {
     my ($self, $data) = @_;
 
-    # TODO Criar um novo http callback para daqui $DAYS_BETWEEN_PAYMENTS.
     my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
-    my $token = $httpcb_rs->create_for_action("payment-success-renewal");
+    my $token = $httpcb_rs->create_for_action("payment-success-renewal", { user_id => $self->user->id });
 
-    # TODO Na query devemos usar a data do korduv, e não NOW().
+    my $last_payment_received_at = $data->{status}->{last_payment_received_at};
+    if (!defined($last_payment_received_at)) {
+        die "missing 'last_payment_received_at'.";
+    }
+
+    my $days_between_payments = int($ENV{LIBRE_DAYS_BETWEEN_PAYMENTS});
+
     my $wait_until = $self->result_source->schema->resultset("UserPlan")->search(
         { id => $self->id },
         {
             select => [
-                \<<'SQL_QUERY'
+                \[<<"SQL_QUERY", "${days_between_payments} days", $last_payment_received_at,
 EXTRACT(
   EPOCH FROM (
-    CASE WHEN last_close_at IS NULL THEN (
-      NOW() + '30 days'::interval
+    ?::interval + (
+      CASE WHEN last_close_at IS NULL THEN ( ? )
+      ELSE ( last_close_at )
+      END
     )
-    ELSE (
-      last_close_at + '30 days'::interval
-    )
-    END
   )
 )
 SQL_QUERY
+                ]
             ],
             'as' => [ "wait_until_epoch", ]
         }
@@ -257,7 +264,7 @@ SQL_QUERY
     # Agendando o callback.
     $self->_httpcb->add(
         url        => get_libre_api_url_for("/callback-for-token/" . $token),
-        method     => "get",
+        method     => "post",
         wait_until => $wait_until->get_column("wait_until_epoch"),
     );
 }
