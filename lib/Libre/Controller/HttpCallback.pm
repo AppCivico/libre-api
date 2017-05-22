@@ -139,14 +139,13 @@ sub _update_credit_card {
 
     $user->donor->update(
         {
-            flotum_preferred_credit_card => encode_json( {
+            flotum_preferred_credit_card => encode_json({
                 map { $_ => $c->req->data->{$_} }
                   qw/id mask validity conjecture_brand created_at/
-            } )
+            })
         }
     );
 
-    # TODO Testar essa parte quando implementar o PUT do credit-card.
     my $user_plan = $user->donor->get_current_plan();
     if ($user_plan) {
         $user_plan->update_on_korduv();

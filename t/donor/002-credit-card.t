@@ -47,6 +47,15 @@ db_transaction {
         $callback = URI->new($res->{href})->query_param('callback');
     };
 
+    # Cadastrando um plano antes de invocar o callback do httpcb para que possamos atualizar no korduv também.
+    rest_put "/api/donor/$donor_id/plan",
+        name   => "Plano de um doador",
+        stash  => "user_plan",
+        params => {
+            amount => fake_int(2001, 100000)->(),
+        },
+    ;
+
     # Simulando o callback.
     rest_post [ $callback ],
         name    => 'receiving callback',
