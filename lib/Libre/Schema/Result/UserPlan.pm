@@ -230,7 +230,6 @@ sub update_on_korduv {
 sub on_korduv_callback_success {
     my ($self, $data) = @_;
 
-    # TODO Criar um novo http callback para daqui $DAYS_BETWEEN_PAYMENTS.
     my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
     my $token = $httpcb_rs->create_for_action("payment-success-renewal");
 

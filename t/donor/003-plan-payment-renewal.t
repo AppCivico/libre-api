@@ -60,7 +60,12 @@ db_transaction {
         "callback action",
     );
 
-    # TODO Simulando a request do http callback.
+    rest_post [ "callback-for-token", $httpcb->token ],
+        name => "http callback triggered",
+        code => 200,
+    ;
+
+    # TODO Testar a distribuição de libres.
 };
 
 done_testing();
