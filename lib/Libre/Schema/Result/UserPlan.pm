@@ -183,6 +183,7 @@ __PACKAGE__->belongs_to(
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
     $ENV{LIBRE_DAYS_BETWEEN_PAYMENTS} or die "missing env 'LIBRE_DAYS_BETWEEN_PAYMENTS'.";
+    $ENV{LIBRE_MAX_FAILED_PAYMENTS}   or die "missing env 'LIBRE_MAX_FAILED_PAYMENTS'.";
 }
 
 use WebService::Korduv;
@@ -226,7 +227,7 @@ sub update_on_korduv {
         extra_price => 0,
         extra_usage => 0,
 
-        fail_forever_after    => 3,
+        fail_forever_after    => $ENV{LIBRE_MAX_FAILED_PAYMENTS},
         fail_forever_interval => 86400,
 
         timezone    => "America/Sao_Paulo",
