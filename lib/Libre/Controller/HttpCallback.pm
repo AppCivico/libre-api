@@ -74,9 +74,8 @@ sub http_callback_POST {
 
         my $extra_args = $config->extra_args ? decode_json $config->extra_args : {};
         my $action_detach = {
-
-            'credit-card-added' => '_update_credit_card',
-
+            'credit-card-added'       => '_update_credit_card',
+            'payment-success-renewal' => '_success_payment'
         };
 
         if ( exists $action_detach->{ $config->action } ) {
@@ -138,16 +137,29 @@ sub _update_credit_card {
         }
     }
 
-    $user->donor->update({
-        flotum_preferred_credit_card => encode_json({
-            map { $_ => $c->req->data->{$_} }
-              qw/id mask validity conjecture_brand created_at/
-          })
-    });
+    $user->donor->update(
+        {
+            flotum_preferred_credit_card => encode_json( {
+                map { $_ => $c->req->data->{$_} }
+                  qw/id mask validity conjecture_brand created_at/
+            } )
+        }
+    );
 
-    # TODO Chamar o update_on_korduv nesse callback se existir plano.
+    # TODO Testar essa parte quando implementar o PUT do credit-card.
+    my $user_plan = $user->donor->get_current_plan();
+    if ($user_plan) {
+        $user_plan->update_on_korduv();
+    }
 }
 
+sub _success_payment {
+    my ($self, $c, $extra_args) = @_;
+
+    # TODO Esse é o callback que deve fechar o ciclo e iniciar a distribuição de libres.
+    my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next; };
+    return unless $user;
+}
 
 __PACKAGE__->meta->make_immutable;
 1;
