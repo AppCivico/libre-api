@@ -75,7 +75,7 @@ sub http_callback_POST {
         my $extra_args = $config->extra_args ? decode_json $config->extra_args : {};
         my $action_detach = {
             'credit-card-added'       => '_update_credit_card',
-            'payment-success-renewal' => '_success_payment'
+            'payment-success-renewal' => '_compute_donations',
         };
 
         if ( exists $action_detach->{ $config->action } ) {
@@ -147,17 +147,23 @@ sub _update_credit_card {
     );
 
     my $user_plan = $user->donor->get_current_plan();
-    if ($user_plan) {
+    if (ref $user_plan) {
         $user_plan->update_on_korduv();
     }
 }
 
-sub _success_payment {
+sub _compute_donations {
     my ($self, $c, $extra_args) = @_;
 
     # TODO Esse é o callback que deve fechar o ciclo e iniciar a distribuição de libres.
     my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next; };
     return unless $user;
+
+    # Atualizando o last_close_at do plano.
+    my $user_plan = $user->donor->get_current_plan();
+    if (ref $user_plan) {
+        $user_plan->update( { last_close_at => \"NOW()" } );
+    }
 }
 
 __PACKAGE__->meta->make_immutable;
