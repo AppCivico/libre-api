@@ -59,7 +59,6 @@ sub fail_forever : Chained('root') : PathPart('fail-forever') : Args(1) {
         if ($@) {
             $c->error("[korduv::fail_forever]" . Dumper($@) . "\n" . Dumper($c->req->data));
             $c->res->code(500);
-            use DDP; p $c;
         }
         else {
             $c->res->code(200);

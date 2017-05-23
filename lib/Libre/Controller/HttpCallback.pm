@@ -156,13 +156,27 @@ sub _compute_donations {
     my ($self, $c, $extra_args) = @_;
 
     # TODO Esse é o callback que deve fechar o ciclo e iniciar a distribuição de libres.
-    my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next; };
+    my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next };
     return unless $user;
 
     # Atualizando o last_close_at do plano.
     my $user_plan = $user->donor->get_current_plan();
     if (ref $user_plan) {
-        $user_plan->update( { last_close_at => \"NOW()" } );
+        # TODO Obtendo todos os likes pendentes.
+        my $last_close_at = $user_plan->last_close_at;
+        my $donor_id      = $extra_args->{user_id};
+
+        my @libres = $c->model("DB::Libre")->search(
+            {
+                donor_id   => $donor_id,
+                created_at => { '<' => \[ "COALESCE(?, NOW())", $last_close_at ] },
+            },
+            #{ for => 'update' },
+        );
+
+        use DDP; p \@libres;
+
+        #$user_plan->update( { last_close_at => \"NOW()" } );
     }
 }
 
