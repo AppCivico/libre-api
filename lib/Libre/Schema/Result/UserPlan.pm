@@ -276,12 +276,11 @@ sub on_korduv_fail_forever {
         {invalided_at => \"NOW()"}
     );
 
-    # TODO pegar todos os libres com user_plan plan invalidado e retirar o user_plan
     my $libres_rs     = $self->result_source->schema->resultset("Libre");
     my $orphan_libres = $libres_rs->update(
         {user_plan_id => undef,}
     );
-    # use DDP; p $libres_rs;
+
 }
 
 sub _build__korduv { WebService::Korduv->instance }

@@ -4,8 +4,6 @@ use lib "$Bin/../lib";
 
 use Libre::Test::Further;
 use HTTP::Request::Common qw(GET);
-use DateTime;
-use DDP;
 
 my $schema = Libre->model("DB");
 
@@ -16,7 +14,7 @@ db_transaction {
 
     my $journalist_id = stash "journalist.id";
     my $donor_id      = stash "donor.id";
-    my $libre_rs      = $schema->resultset("Libre");
+    my $libre_rs      = $schema->resultset("Libre"); 
 
     # Criando um plano
     rest_put "/api/donor/$donor_id/plan",
@@ -46,10 +44,11 @@ db_transaction {
     # Criando uma doação
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donation",
-        stash => "s1",
+        stash => "s2",
     ;
 
-    # TODO verificar se o id do plan bate com o id do plan na doação
+    my $stashed_user_plan = stash "user_plan";
+    is ($libre_rs->find(stash "s2")->user_plan_id, $stashed_user_plan->{id} , "user_plan_id ok");
 
     my $user_plan = $schema->resultset("UserPlan")->find((stash("user_plan"))->{id});
     ok (my $callback_id = $user_plan->callback_id, "get callback_id");
@@ -70,7 +69,7 @@ db_transaction {
         ok(defined($invalided_at), "User plan is invalid");
     };
 
-    # TODO verificar se o user_plan das doações foram retirados
+    is ($libre_rs->find(stash "s2")->user_plan_id, undef, "user_plan_id ok, removed as expected");
 };
 
 done_testing();
