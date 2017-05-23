@@ -60,12 +60,12 @@ db_transaction {
         "callback action",
     );
 
-    is (
-        $httpcb->extra_args,
-        encode_json({
+    is_deeply (
+        decode_json($httpcb->extra_args),
+        {
             user_id      => $donor_id,
             user_plan_id => $user_plan->id,
-        }),
+        },
         "http callback has extra args",
     );
 
