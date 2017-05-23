@@ -177,13 +177,12 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-22 16:02:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7wi4Y+lrzGpy/rq7rYQE/g
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 10:41:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BvaxsaKa0j+wlag1amWcrQ
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
     $ENV{LIBRE_DAYS_BETWEEN_PAYMENTS} or die "missing env 'LIBRE_DAYS_BETWEEN_PAYMENTS'.";
-    $ENV{LIBRE_MAX_FAILED_PAYMENTS}   or die "missing env 'LIBRE_MAX_FAILED_PAYMENTS'.";
 }
 
 use WebService::Korduv;
@@ -212,22 +211,22 @@ sub update_on_korduv {
         api_key => $ENV{LIBRE_KORDUV_API_KEY},
 
         payment_interval_class => "each_n_days",
-        payment_interval_value => 30, # TODO Validar se este será o intervalo.
+        payment_interval_value => 30,
 
         remote_subscription_id => $self->user->id,
 
         currency       => "bra",
         pricing_schema => "linear",
 
-        on_charge_renewed          => get_libre_api_url_for( '/korduv/success-renewal/' . $callback_id ),
-        on_charge_failed_forever   => get_libre_api_url_for( '/korduv/fail-forever/'  . $callback_id ),
-        on_charge_attempted_failed => get_libre_api_url_for( '/korduv/fail/'          . $callback_id ),
+        on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $callback_id ),
+        on_charge_failed_forever   => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
+        on_charge_attempted_failed => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
 
         base_price  => $self->amount,
         extra_price => 0,
         extra_usage => 0,
 
-        fail_forever_after    => $ENV{LIBRE_MAX_FAILED_PAYMENTS},
+        fail_forever_after    => 3,
         fail_forever_interval => 86400,
 
         timezone    => "America/Sao_Paulo",
@@ -280,20 +279,17 @@ SQL_QUERY
 sub on_korduv_fail_forever {
     my ($self) = @_;
 
-    my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
-    my $token     = $httpcb_rs->create_for_action("payment-fail-forever");
-
-    my $plan = $self->result_source->schema->resultset("UserPlan")->find($self->id)->update(
-        { invalided_at => \"NOW()"}
+    my $plan = $self->update(
+        {invalided_at => \"NOW()"}
     );
-}
 
-sub on_korduv_callback_fail {
-    my ($self) = @_;
-
-    my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
-
-    # TODO Enviar um email avisando o usuário de que a compra dele não pode ser finalizada.
+    my $libres_rs     = $self->result_source->schema->resultset("Libre");
+    my $orphan_libres = $libres_rs->search(
+          { "user_plan.invalided_at" => \"IS NOT NULL" },
+          { join => "user_plan" }
+     )->update(
+          { user_plan_id => undef }
+     );
 }
 
 sub _build__korduv { WebService::Korduv->instance }
