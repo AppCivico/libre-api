@@ -68,7 +68,6 @@ db_transaction {
         "http callback has extra args",
     );
 
-
     rest_post [ "callback-for-token", $httpcb->token ],
         name => "http callback triggered",
         code => 200,
