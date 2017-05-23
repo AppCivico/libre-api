@@ -174,9 +174,7 @@ sub _compute_donations {
             #{ for => 'update' },
         );
 
-        use DDP; p \@libres;
-
-        #$user_plan->update( { last_close_at => \"NOW()" } );
+        $user_plan->update( { last_close_at => \"NOW()" } );
     }
 }
 
