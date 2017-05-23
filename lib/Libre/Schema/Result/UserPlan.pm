@@ -84,12 +84,12 @@ __PACKAGE__->table("user_plan");
   is_nullable: 0
   size: 16
 
-=head2 invalided_at
+=head2 last_close_at
 
   data_type: 'timestamp'
   is_nullable: 1
 
-=head2 last_close_at
+=head2 invalided_at
 
   data_type: 'timestamp'
   is_nullable: 1
@@ -126,9 +126,9 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 16,
   },
-  "invalided_at",
-  { data_type => "timestamp", is_nullable => 1 },
   "last_close_at",
+  { data_type => "timestamp", is_nullable => 1 },
+  "invalided_at",
   { data_type => "timestamp", is_nullable => 1 },
 );
 
@@ -177,8 +177,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 10:36:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uWwHFbuPsTqw/GuBKJpNdg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 10:41:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BvaxsaKa0j+wlag1amWcrQ
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
@@ -284,10 +284,14 @@ sub on_korduv_fail_forever {
     );
 
     my $libres_rs     = $self->result_source->schema->resultset("Libre");
-    my $orphan_libres = $libres_rs->update(
-        {user_plan_id => undef,}
-    );
+    my $orphan_libres = $libres_rs->search(
+          { "user_plan.invalided_at" => \"IS NOT NULL" },
+          { join => "user_plan" }
+     )->update(
+          { user_plan_id => undef }
+     );
 
+     use DDP; p $orphan_libres;
 }
 
 sub _build__korduv { WebService::Korduv->instance }
