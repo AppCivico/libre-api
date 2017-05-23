@@ -29,3 +29,4 @@
 0025-user-plan-callback-id [0024-plan-canceled-at] 2017-05-17T20:46:04Z Junior Moraes <juniorfvox@gmail.com> # user-plan-callback-id
 0026-plan-last-close-at [0025-user-plan-callback-id] 2017-05-19T22:20:09Z junior,,, <junior@fvox> # an-last-close-at
 0027-invalided-at [0026-plan-last-close-at] 2017-05-22T18:58:47Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Adding the invalided_at column for the user_plan
+0028-payment [0027-invalided-at] 2017-05-23T22:12:06Z Junior Moraes <juniorfvox@gmail.com> # payment

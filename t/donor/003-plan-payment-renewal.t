@@ -45,7 +45,7 @@ db_transaction {
                 cancel_reason            => "foobar",
                 cancelled_at             => undef,
                 last_payment_received_at => $last_payment_received_at,
-                last_charge_created_at   =>  $last_charge_created_at,
+                last_charge_created_at   => $last_charge_created_at,
                 status                   => "active",
                 next_billing_at          => "2017-01-01 12:00:00",
                 paid_until               => "2017-01-01 12:00:00",
