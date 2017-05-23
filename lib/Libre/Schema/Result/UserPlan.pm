@@ -283,8 +283,6 @@ sub on_korduv_fail_forever {
         {invalided_at => \"NOW()"}
     );
 
-    use DDP; p $self;
-
     my $libres_rs     = $self->result_source->schema->resultset("Libre");
     my $orphan_libres = $libres_rs->search(
           { 
