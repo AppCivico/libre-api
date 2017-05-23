@@ -282,6 +282,14 @@ SQL_QUERY
     );
 }
 
+sub on_korduv_callback_fail {
+    my ($self) = @_;
+
+    my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
+
+    # TODO Enviar um email avisando o usuário de que a compra dele não pode ser finalizada.
+}
+
 sub on_korduv_fail_forever {
     my ($self) = @_;
 

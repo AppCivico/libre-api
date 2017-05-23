@@ -63,7 +63,8 @@ db_transaction {
     is (
         $httpcb->extra_args,
         encode_json({
-            user_id => $donor_id,
+            user_id      => $donor_id,
+            user_plan_id => $user_plan->id,
         }),
         "http callback has extra args",
     );
