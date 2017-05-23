@@ -219,8 +219,8 @@ sub update_on_korduv {
         pricing_schema => "linear",
 
         on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $callback_id ),
-        on_charge_failed_forever   => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
-        on_charge_attempted_failed => get_libre_api_url_for('/korduv/success-failed/'  . $callback_id ),
+        on_charge_failed_forever   => get_libre_api_url_for('/korduv/fail-forever/'    . $callback_id ),
+        on_charge_attempted_failed => get_libre_api_url_for('/korduv/fail/'            . $callback_id ),
 
         base_price  => $self->amount,
         extra_price => 0,
