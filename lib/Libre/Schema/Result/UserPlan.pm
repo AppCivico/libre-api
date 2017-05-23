@@ -290,8 +290,6 @@ sub on_korduv_fail_forever {
      )->update(
           { user_plan_id => undef }
      );
-
-     use DDP; p $orphan_libres;
 }
 
 sub _build__korduv { WebService::Korduv->instance }
