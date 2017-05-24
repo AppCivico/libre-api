@@ -320,7 +320,19 @@ sub on_korduv_callback_fail {
 
     my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
 
-    # TODO Enviar um email avisando o usuário de que a compra dele não pode ser finalizada.
+    my $email = Libre::Mailer::Template->new(
+        to       => $self->user->email,
+        from     => 'no-reply@libre.org.br',
+        subject  => "Libre - Seu pagamento não foi bem sucedido",
+        template => get_data_section('payment-fail.tt'),
+        vars     => {
+            name => $self->user->name,
+        },
+    )->build_email();
+
+    my $queued = $email_queue_rs->create({ body => $email->as_string });
+    
+    return $queued;
 }
 
 sub on_korduv_fail_forever {
