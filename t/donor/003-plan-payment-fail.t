@@ -33,6 +33,8 @@ db_transaction {
     ;
 
     # TODO Testar se o email foi criado.
+
+    is($schema->resultset("EmailQueue")->count, 1, 'email queued');
 };
 
 done_testing();
