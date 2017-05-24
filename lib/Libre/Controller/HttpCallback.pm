@@ -183,10 +183,13 @@ sub _compute_donations {
 
         # TODO Calculando o valor total doado.
         # Erro detectado: se o usuário editar o 'amount', posso repassar um dinheiro que não temos.
-        my $amount = $user_plan->amount;
-        my $amount_without_tax = $amount - ( $amount * ( $ENV{LIBRE_GATEWAY_PERCENTAGE} / 100 ) );
+        my $amount                       = $user_plan->amount;
+        my $amount_with_capture_tax      = $amount - ( $amount * ( $ENV{LIBRE_CAPTURE_GATEWAY_PERCENTAGE} / 100 ) );
+        my $amount_with_distribution_tax = $amount_with_capture_tax - ( $amount_with_capture_tax * ($ENV{LIBRE_DISTRIBUTION_GATEWAY_PERCENTAGE} / 100) );
 
-        for my $libre (@libres) { }
+        for my $libre (@libres) { 
+            my $libre_value = int($amount_with_distribution_tax/$libre);
+        }
     }
 }
 

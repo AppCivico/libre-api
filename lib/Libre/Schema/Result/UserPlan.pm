@@ -254,8 +254,17 @@ sub on_korduv_callback_success {
 
     $self->result_source->schema->txn_do(sub {
         # TODO Saber o quanto realmente foi cobrado do usuário.
+
+        # Mockando o valor cobrado do usuário
+        my $amount = $self->amount;
+
         # Criando o registro na tabela payment.
-        #$self->user->payments->create();
+        my $payment = $self->user->payments->create({
+            donor_id     => $self->user_id,
+            amount       => $amount,
+            user_plan_id => $self->id,
+            gateway_tax  => $ENV{LIBRE_GATEWAY_PERCENTAGE},
+        });
 
         my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
         my $token = $httpcb_rs->create_for_action(
