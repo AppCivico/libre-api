@@ -10,11 +10,9 @@ with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
 # use Business::BR::CEP qw(teste_cep);
-use Libre::Types qw(CPF CNPJ EmailAddress);
+use Libre::Types qw(CPF CNPJ EmailAddress PhoneNumber);
 
 use Data::Verifier;
-use Number::Phone::BR;
-
 
 sub verifiers_specs {
     my $self = shift;
@@ -121,7 +119,7 @@ sub verifiers_specs {
                 },
                 cellphone_number => {
                     required   => 0,
-                    type       => "Str",
+                    type       => PhoneNumber,
                     post_check => sub {
                         my $phone = $_[0]->get_value("cellphone_number");
                         Number::Phone::BR->new($phone);

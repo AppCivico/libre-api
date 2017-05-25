@@ -8,7 +8,7 @@ extends "DBIx::Class::ResultSet";
 with "Libre::Role::Verification";
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
-use Libre::Types qw(EmailAddress);
+use Libre::Types qw(EmailAddress PhoneNumber);
 
 use Data::Verifier;
 use Number::Phone::BR;
@@ -41,12 +41,8 @@ sub verifiers_specs {
                     type     => "Str",
                 },
                 phone => {
-                    required   => 0,
-                    type       => "Str",
-                    post_check => sub {
-                        my $phone = $_[0]->get_value("phone");
-                        Number::Phone::BR->new($phone);
-                    },
+                    required => 0,
+                    type     => PhoneNumber,
                 },
             },
         ),
