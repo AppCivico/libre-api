@@ -53,11 +53,11 @@ coerce CEP, from Str, via {
 };
 
 subtype EmailAddress,as Str,
-  where { Email::Valid->address(-address => $_) eq $_ },
+  where   { Email::Valid->address(-address => $_) eq $_ },
   message {'Must be a valid email address'}
 ;
 
-my $is_international_mobile_number = sub {
+my $is_mobile_number = sub {
     my $num = shift;
 
     return $num =~ /^\+\d{12,13}$/ ? 1 : 0 if $num =~ /\+55/;
@@ -65,12 +65,9 @@ my $is_international_mobile_number = sub {
 };
 
 subtype PhoneNumber, as Str,
-  where {
-    #return 1 if $_ eq '+5599901010101';
-
-    $is_international_mobile_number->($_);
-  },
-  message { "$_ phone number invalido" };
+  where   { $is_mobile_number->($_) },
+  message { "$_ phone number invalido" }
+;
 
 1;
 
