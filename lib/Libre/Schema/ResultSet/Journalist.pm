@@ -120,10 +120,6 @@ sub verifiers_specs {
                 cellphone_number => {
                     required   => 0,
                     type       => PhoneNumber,
-                    post_check => sub {
-                        my $phone = $_[0]->get_value("cellphone_number");
-                        Number::Phone::BR->new($phone);
-                    },
                 },
                 vehicle      => {
                     required => 1,
