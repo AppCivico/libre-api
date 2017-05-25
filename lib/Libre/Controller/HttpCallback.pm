@@ -186,7 +186,7 @@ sub _compute_donations {
         my $amount                          = $user_plan->amount;
         my $amount_without_capture_tax      = $amount - ( $amount * ( $ENV{LIBRE_CAPTURE_GATEWAY_PERCENTAGE} / 100 ) );
         my $amount_without_distribution_tax = $amount_with_capture_tax - ( $amount_with_capture_tax * ($ENV{LIBRE_DISTRIBUTION_GATEWAY_PERCENTAGE} / 100) );
-        my $libre_value                     = int($amount_without_distribution_tax/scalar(@libres));
+        my $libre_value                     = int($amount_without_distribution_tax/ (scalar(@libres) + 1) );
 
         for my $libre (@libres) { 
             
