@@ -71,4 +71,24 @@ sub action_specs {
     };
 }
 
+sub invalid_libres {
+    my ($self) = @_;
+
+    use DDP; p $self->result_source->schema->resultset("Donor")->find(1);
+
+    my $libres_to_be_invalided = $self->search(
+        {
+            user_plan_id  => undef,
+        },
+    )->next();
+
+    my $v = $libres_to_be_invalided->update(
+        {
+            invalid      => 1,
+            invalided_at => \"NOW()",
+        },
+            { for => "update" },
+    );
+}
+
 1;
