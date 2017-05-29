@@ -70,7 +70,7 @@ __PACKAGE__->table("payment");
 
   data_type: 'numeric'
   is_nullable: 0
-  size: [3,2]
+  size: [4,2]
 
 =head2 created_at
 
@@ -96,7 +96,7 @@ __PACKAGE__->add_columns(
   "user_plan_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "gateway_tax",
-  { data_type => "numeric", is_nullable => 0, size => [3, 2] },
+  { data_type => "numeric", is_nullable => 0, size => [4, 2] },
   "created_at",
   {
     data_type     => "timestamp",
@@ -151,8 +151,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 15:52:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:W2/qBMsaROtHDfvfG/EaXA
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-29 17:47:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:20MfYWOSmvx7vnWx6z3YMQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

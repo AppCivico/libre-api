@@ -198,6 +198,7 @@ __PACKAGE__->belongs_to(
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
     $ENV{LIBRE_DAYS_BETWEEN_PAYMENTS} or die "missing env 'LIBRE_DAYS_BETWEEN_PAYMENTS'.";
+    $ENV{LIBRE_TAX_PERCENTAGE}        or die "missing env 'LIBRE_TAX_PERCENTAGE'.";
 }
 
 use WebService::Korduv;
@@ -258,12 +259,14 @@ sub on_korduv_callback_success {
         my $amount = $data->{last_subscription_charge}->{charge_amount};
 
         # Criando o registro na tabela payment.
-        my $payment = $self->user->payments->create({
-            donor_id     => $self->user_id,
-            amount       => $amount,
-            user_plan_id => $self->id,
-            gateway_tax  => $ENV{LIBRE_GATEWAY_PERCENTAGE},
-        });
+        my $payment = $self->user->payments->create(
+            {
+                donor_id     => $self->user_id,
+                amount       => $amount,
+                user_plan_id => $self->id,
+                gateway_tax  => $ENV{LIBRE_TAX_PERCENTAGE},
+            }
+        );
 
         my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
         my $token = $httpcb_rs->create_for_action(
@@ -271,6 +274,7 @@ sub on_korduv_callback_success {
             {
                 user_id      => $self->user->id,
                 user_plan_id => $self->id,
+                payment_id   => $payment->id,
             }
         );
 

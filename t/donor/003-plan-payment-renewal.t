@@ -64,11 +64,22 @@ db_transaction {
         "callback action",
     );
 
+    ok (
+        my $payment = $schema->resultset("Payment")->search(
+            {
+                donor_id     => $donor_id,
+                user_plan_id => $user_plan->id,
+            },
+        )->next(),
+        "master payment created",
+    );
+
     is_deeply (
         decode_json($httpcb->extra_args),
         {
             user_id      => $donor_id,
             user_plan_id => $user_plan->id,
+            payment_id   => $payment->id,
         },
         "http callback has extra args",
     );
