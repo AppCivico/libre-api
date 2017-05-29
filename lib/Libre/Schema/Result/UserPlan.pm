@@ -329,16 +329,16 @@ sub on_korduv_fail_forever {
 
     my $libres_rs     = $self->result_source->schema->resultset("Libre");
     my $orphan_libres = $libres_rs->search(
-          { 
-               "user_plan.invalided_at" => \"IS NOT NULL",
-               donor_id                 => $self->user_id,
-          },
-          {
-               join => "user_plan",
-          }
-     )->update(
-          { user_plan_id => undef }
-     );
+        { 
+            "user_plan.invalided_at" => \"IS NOT NULL",
+            donor_id                 => $self->user_id,
+        },
+        {
+            join => "user_plan",
+        }
+    )->update(
+        { user_plan_id => undef }
+    );
 }
 
 sub _build__korduv { WebService::Korduv->instance }
