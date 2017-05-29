@@ -253,10 +253,9 @@ sub on_korduv_callback_success {
     my ($self, $data) = @_;
 
     $self->result_source->schema->txn_do(sub {
-        # TODO Saber o quanto realmente foi cobrado do usuário.
+        die "invalid request" unless ref($data) eq "HASH" && defined($data->{last_subscription_charge});
 
-        # Mockando o valor cobrado do usuário
-        my $amount = $self->amount;
+        my $amount = $data->{last_subscription_charge}->{charge_amount};
 
         # Criando o registro na tabela payment.
         my $payment = $self->user->payments->create({

@@ -17,7 +17,7 @@ db_transaction {
         name   => "creating donor plan",
         stash  => "user_plan",
         params => {
-            amount => fake_int(2001, 100000)->(),
+            amount => 2000,
         },
     ;
 
@@ -49,6 +49,10 @@ db_transaction {
                 status                   => "active",
                 next_billing_at          => "2017-01-01 12:00:00",
                 paid_until               => "2017-01-01 12:00:00",
+            },
+            last_subscription_charge => {
+                charge_amount     => 2000,
+                charge_created_at => "2017-06-01 01:00:00",
             },
         },
     ;
