@@ -15,7 +15,7 @@ use Data::Section::Simple qw(get_data_section);
 use vars qw(@ISA @EXPORT);
 
 @ISA    = (qw(Exporter));
-@EXPORT = qw(is_test random_string get_data_section get_libre_api_url_for);
+@EXPORT = qw(is_test random_string get_data_section get_libre_api_url_for truncate_money);
 
 =head1 METHODS
 
@@ -38,6 +38,16 @@ sub get_libre_api_url_for {
     $args = "/$args" unless $args =~ m{^\/};
 
     return ( ( is_test() ? "http://localhost" : $ENV{LIBRE_URL} ) . $args );
+}
+
+sub truncate_money {
+    my $number = shift;
+
+    if (!defined($number) || $number < 0) {
+        die "invalid number";
+    }
+
+    return int($number * 100) / 100;
 }
 
 =head1 AUTHOR
