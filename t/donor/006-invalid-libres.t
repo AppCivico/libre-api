@@ -35,6 +35,11 @@ db_transaction {
     	{ user_plan_id => undef },
     );
 
+    # Simulando passagem de tempo
+    $schema->resultset("Libre")->find((stash("s1"))->{id})->update(
+        { created_at => \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} month'::interval)" }
+    );
+
     # Invalidando libres
     my $invalided_libre = $schema->resultset("Libre")->invalid_libres();
     
