@@ -85,11 +85,6 @@ __PACKAGE__->table("libre");
   default_value: false
   is_nullable: 0
 
-=head2 orphaned_at
-
-  data_type: 'timestamp'
-  is_nullable: 1
-
 =cut
 
 __PACKAGE__->add_columns(
@@ -117,8 +112,6 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "invalid",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
-  "orphaned_at",
-  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -201,8 +194,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-29 16:03:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XVNWKVCCbrFg858smF7Qxg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-29 16:14:09
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:H4fUPXxHzqaDyxKOFjBh8A
 
 
 __PACKAGE__->meta->make_immutable;
