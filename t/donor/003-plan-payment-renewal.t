@@ -88,8 +88,6 @@ db_transaction {
         name => "http callback triggered",
         code => 200,
     ;
-
-    # TODO Testar a distribuição de libres.
 };
 
 done_testing();

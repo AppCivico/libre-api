@@ -176,8 +176,9 @@ sub _compute_donations {
 
         my $libre_rs = $c->model("DB::Libre")->search(
             {
-                donor_id   => $donor_id,
-                created_at => { '>' => \[ "COALESCE(?, NOW())", $last_close_at ] },
+                donor_id     => $donor_id,
+                user_plan_id => $user_plan_id,
+                created_at   => { '<' => \[ "COALESCE(?, NOW())", $last_close_at ] },
             },
             #{ for => "update" },
         );
@@ -186,8 +187,15 @@ sub _compute_donations {
         my $payment = $c->model("DB::Payment")->find($payment_id);
         return unless ref $payment;
 
-        my $amount = int($payment->amount);
-        my $amount_without_libre_tax = $amount - ( $amount * ( $ENV{LIBRE_TAX_PERCENTAGE} / 100 ) );
+        my $amount    = int($payment->amount);
+        my $libre_tax = ( $amount * ( $ENV{LIBRE_TAX_PERCENTAGE} / 100 ) );
+        my $amount_without_libre_tax = $amount - $libre_tax;
+
+        # Atualizando o last_close_at do plano.
+        $user_plan->update( { last_close_at => \"NOW()" } );
+
+        my @libres = $libre_rs->all();
+        use DDP; p \@libres;
 
         # TODO Distribuir os libres.
         #my $libre_value = int($amount_without_distribution_tax/ (scalar(@libres) + 1) );
