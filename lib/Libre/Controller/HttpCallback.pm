@@ -195,7 +195,6 @@ sub _compute_donations {
         $user_plan->update( { last_close_at => \"NOW()" } );
 
         my @libres = $libre_rs->all();
-        use DDP; p \@libres;
 
         # TODO Distribuir os libres.
         #my $libre_value = int($amount_without_distribution_tax/ (scalar(@libres) + 1) );
