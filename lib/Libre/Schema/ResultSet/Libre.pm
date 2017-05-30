@@ -8,6 +8,10 @@ extends "DBIx::Class::ResultSet";
 with "Libre::Role::Verification";
 with "Libre::Role::Verification::TransactionalActions::DBIC";
 
+BEGIN {
+    $ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} or die "missing env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS'.";
+}
+
 use Data::Verifier;
 
 sub verifiers_specs {
@@ -69,6 +73,35 @@ sub action_specs {
             return $support;
         },
     };
+}
+
+sub invalid_libres {
+    my ($self) = @_;
+
+    my $orphaned_time = $self->search(
+        { 
+            created_at   => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
+            user_plan_id => undef,
+        }
+    )->next();
+
+    if (!$orphaned_time->{invalided_at}) {
+
+        my $libres_to_be_invalided = $self->search( 
+            {
+                user_plan_id  => undef,
+                created_at    => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
+            }
+        )->next();
+
+        $libres_to_be_invalided->update(
+            {
+                invalid      => 1,
+                invalided_at => \"NOW()",
+            },
+                { for => "update" },
+        );
+    }
 }
 
 1;

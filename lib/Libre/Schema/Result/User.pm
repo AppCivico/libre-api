@@ -212,6 +212,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 payments
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::Payment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "payments",
+  "Libre::Schema::Result::Payment",
+  { "foreign.donor_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user_plans
 
 Type: has_many
@@ -268,8 +283,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-15 14:53:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rSuiUlqH04Q9Diy4ksvj6g
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 15:29:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zIEaaL6q5C92T5CXj3ai+A
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {

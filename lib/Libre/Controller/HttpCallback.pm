@@ -157,24 +157,40 @@ sub _compute_donations {
 
     # TODO Esse é o callback que deve fechar o ciclo e iniciar a distribuição de libres.
     my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next };
-    return unless $user;
+    return unless ref $user;
 
-    # Atualizando o last_close_at do plano.
-    my $user_plan = $user->donor->get_current_plan();
+    my $donor_id      = $extra_args->{user_id};
+    my $user_plan_id  = $extra_args->{user_plan_id};
+
+    my $user_plan = $c->model("DB::UserPlan")->search(
+        {
+            'me.id'      => $user_plan_id,
+            'me.user_id' => $donor_id,
+        },
+    )->next();
+
     if (ref $user_plan) {
         # TODO Obtendo todos os likes pendentes.
         my $last_close_at = $user_plan->last_close_at;
-        my $donor_id      = $extra_args->{user_id};
 
         my @libres = $c->model("DB::Libre")->search(
             {
                 donor_id   => $donor_id,
-                created_at => { '<' => \[ "COALESCE(?, NOW())", $last_close_at ] },
+                created_at => { '>' => \[ "COALESCE(?, NOW())", $last_close_at ] },
             },
-            #{ for => 'update' },
+            { for => "update" },
         );
 
-        $user_plan->update( { last_close_at => \"NOW()" } );
+        # TODO Calculando o valor total doado.
+        # Erro detectado: se o usuário editar o 'amount', posso repassar um dinheiro que não temos.
+        #my $amount                          = $user_plan->amount;
+        #my $amount_without_capture_tax      = $amount - ( $amount * ( $ENV{LIBRE_CAPTURE_GATEWAY_PERCENTAGE} / 100 ) );
+        #my $amount_without_distribution_tax = $amount_with_capture_tax - ( $amount_with_capture_tax * ($ENV{LIBRE_DISTRIBUTION_GATEWAY_PERCENTAGE} / 100) );
+        #my $libre_value                     = int($amount_without_distribution_tax/ (scalar(@libres) + 1) );
+
+        #for my $libre (@libres) { 
+            
+        #}
     }
 }
 

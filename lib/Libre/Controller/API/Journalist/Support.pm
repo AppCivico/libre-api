@@ -10,6 +10,8 @@ with "CatalystX::Eta::Controller::AutoObject";
 with "CatalystX::Eta::Controller::AutoResultGET";
 with "CatalystX::Eta::Controller::AutoListPOST";
 
+# TODO caso o valor do libre seja menor que X deve ser iniciado um fluxo a definir.
+
 __PACKAGE__->config(
     # AutoObject.
     result  => "DB::Libre",

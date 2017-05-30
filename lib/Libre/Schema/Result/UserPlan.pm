@@ -161,6 +161,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 payments
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::Payment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "payments",
+  "Libre::Schema::Result::Payment",
+  { "foreign.user_plan_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user
 
 Type: belongs_to
@@ -177,8 +192,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 10:41:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BvaxsaKa0j+wlag1amWcrQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 15:29:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vxUf/ggAJ+7SWz14Jue8fw
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
@@ -237,27 +252,41 @@ sub update_on_korduv {
 sub on_korduv_callback_success {
     my ($self, $data) = @_;
 
-    my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
-    my $token = $httpcb_rs->create_for_action(
-        "payment-success-renewal",
-        {
-            user_id      => $self->user->id,
+    $self->result_source->schema->txn_do(sub {
+        # TODO Saber o quanto realmente foi cobrado do usuário.
+
+        # Mockando o valor cobrado do usuário
+        my $amount = $self->amount;
+
+        # Criando o registro na tabela payment.
+        my $payment = $self->user->payments->create({
+            donor_id     => $self->user_id,
+            amount       => $amount,
             user_plan_id => $self->id,
+            gateway_tax  => $ENV{LIBRE_GATEWAY_PERCENTAGE},
+        });
+
+        my $httpcb_rs = $self->result_source->schema->resultset("HttpCallbackToken");
+        my $token = $httpcb_rs->create_for_action(
+            "payment-success-renewal",
+            {
+                user_id      => $self->user->id,
+                user_plan_id => $self->id,
+            }
+        );
+
+        my $last_payment_received_at = $data->{status}->{last_payment_received_at};
+        if (!defined($last_payment_received_at)) {
+            die "missing 'last_payment_received_at'.";
         }
-    );
 
-    my $last_payment_received_at = $data->{status}->{last_payment_received_at};
-    if (!defined($last_payment_received_at)) {
-        die "missing 'last_payment_received_at'.";
-    }
+        my $days_between_payments = int($ENV{LIBRE_DAYS_BETWEEN_PAYMENTS});
 
-    my $days_between_payments = int($ENV{LIBRE_DAYS_BETWEEN_PAYMENTS});
-
-    my $wait_until = $self->result_source->schema->resultset("UserPlan")->search(
-        { id => $self->id },
-        {
-            select => [
-                \[<<"SQL_QUERY", "${days_between_payments} days", $last_payment_received_at,
+        my $wait_until = $self->result_source->schema->resultset("UserPlan")->search(
+            { id => $self->id },
+            {
+                select => [
+                    \[<<"SQL_QUERY", "${days_between_payments} days", $last_payment_received_at,
 EXTRACT(
   EPOCH FROM (
     ?::interval + (
@@ -268,18 +297,19 @@ EXTRACT(
   )
 )
 SQL_QUERY
-                ]
-            ],
-            'as' => [ "wait_until_epoch", ]
-        }
-    )->next;
+                    ]
+                ],
+                'as' => [ "wait_until_epoch", ]
+            }
+        )->next;
 
-    # Agendando o callback.
-    $self->_httpcb->add(
-        url        => get_libre_api_url_for("/callback-for-token/" . $token),
-        method     => "post",
-        wait_until => $wait_until->get_column("wait_until_epoch"),
-    );
+        # Agendando o callback.
+        $self->_httpcb->add(
+            url        => get_libre_api_url_for("/callback-for-token/" . $token),
+            method     => "post",
+            wait_until => $wait_until->get_column("wait_until_epoch"),
+        );
+    });
 }
 
 sub on_korduv_callback_fail {
@@ -299,16 +329,16 @@ sub on_korduv_fail_forever {
 
     my $libres_rs     = $self->result_source->schema->resultset("Libre");
     my $orphan_libres = $libres_rs->search(
-          { 
-               "user_plan.invalided_at" => \"IS NOT NULL",
-               donor_id                 => $self->user_id,
-          },
-          {
-               join => "user_plan",
-          }
-     )->update(
-          { user_plan_id => undef }
-     );
+        { 
+            "user_plan.invalided_at" => \"IS NOT NULL",
+            donor_id                 => $self->user_id,
+        },
+        {
+            join => "user_plan",
+        }
+    )->update(
+        { user_plan_id => undef }
+    );
 }
 
 sub _build__korduv { WebService::Korduv->instance }
