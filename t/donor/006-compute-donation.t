@@ -40,7 +40,7 @@ db_transaction {
 
     ok (
         my $token = $httpcb_rs->create_for_action(
-        "payment-success-renewal",
+            "payment-success-renewal",
             {
                 user_id      => $donor_id,
                 user_plan_id => $user_plan_id,
@@ -49,6 +49,11 @@ db_transaction {
         ),
         "fake http callback of fake payment",
     );
+
+    rest_post [ "callback-for-token", $token ],
+        name => "http callback triggered",
+        code => 200,
+    ;
 };
 
 done_testing();
