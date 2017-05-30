@@ -90,7 +90,7 @@ sub invalid_libres {
         my $libres_to_be_invalided = $self->search( 
             {
                 user_plan_id  => undef,
-                created_at   => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
+                created_at    => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
             }
         )->next();
 

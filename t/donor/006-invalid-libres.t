@@ -40,11 +40,12 @@ db_transaction {
         { created_at => \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} month'::interval)" }
     );
 
+    is($libre->invalid, 0, 'Libre valid, as expected');
+
     # Invalidando libres
     my $invalided_libre = $schema->resultset("Libre")->invalid_libres();
     
-    my $invalid_bool = 1;
-    is($invalided_libre->invalid, $invalid_bool, 'Libre invalid, as expected');
+    is($invalided_libre->invalid, 1, 'Libre invalid, as expected');
 };
 
 done_testing();
