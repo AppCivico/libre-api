@@ -17,7 +17,7 @@ db_transaction {
         name   => "creating donor plan",
         stash  => "user_plan",
         params => {
-            amount => fake_int(2001, 100000)->(),
+            amount => 2000,
         },
     ;
 
@@ -50,6 +50,10 @@ db_transaction {
                 next_billing_at          => "2017-01-01 12:00:00",
                 paid_until               => "2017-01-01 12:00:00",
             },
+            last_subscription_charge => {
+                charge_amount     => 2000,
+                charge_created_at => "2017-06-01 01:00:00",
+            },
         },
     ;
 
@@ -60,11 +64,22 @@ db_transaction {
         "callback action",
     );
 
+    ok (
+        my $payment = $schema->resultset("Payment")->search(
+            {
+                donor_id     => $donor_id,
+                user_plan_id => $user_plan->id,
+            },
+        )->next(),
+        "master payment created",
+    );
+
     is_deeply (
         decode_json($httpcb->extra_args),
         {
             user_id      => $donor_id,
             user_plan_id => $user_plan->id,
+            payment_id   => $payment->id,
         },
         "http callback has extra args",
     );
@@ -73,8 +88,6 @@ db_transaction {
         name => "http callback triggered",
         code => 200,
     ;
-
-    # TODO Testar a distribuição de libres.
 };
 
 done_testing();

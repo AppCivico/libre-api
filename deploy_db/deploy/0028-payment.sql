@@ -8,7 +8,7 @@ create table payment (
     donor_id       integer not null references "user"(id),
     amount         integer not null,
     user_plan_id   integer not null references user_plan(id),
-    gateway_tax    numeric(3, 2) not null,
+    gateway_tax    numeric(4, 2) not null,
     created_at     timestamp without time zone not null default now()
 );
 

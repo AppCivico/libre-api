@@ -159,8 +159,9 @@ sub _compute_donations {
     my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next };
     return unless ref $user;
 
-    my $donor_id      = $extra_args->{user_id};
-    my $user_plan_id  = $extra_args->{user_plan_id};
+    my $donor_id     = $extra_args->{user_id};
+    my $user_plan_id = $extra_args->{user_plan_id};
+    my $payment_id   = $extra_args->{payment_id};
 
     my $user_plan = $c->model("DB::UserPlan")->search(
         {
@@ -173,24 +174,32 @@ sub _compute_donations {
         # TODO Obtendo todos os likes pendentes.
         my $last_close_at = $user_plan->last_close_at;
 
-        my @libres = $c->model("DB::Libre")->search(
+        my $libre_rs = $c->model("DB::Libre")->search(
             {
-                donor_id   => $donor_id,
-                created_at => { '>' => \[ "COALESCE(?, NOW())", $last_close_at ] },
+                donor_id     => $donor_id,
+                user_plan_id => $user_plan_id,
+                created_at   => { '<' => \[ "COALESCE(?, NOW())", $last_close_at ] },
             },
-            { for => "update" },
+            #{ for => "update" },
         );
 
-        # TODO Calculando o valor total doado.
-        # Erro detectado: se o usuário editar o 'amount', posso repassar um dinheiro que não temos.
-        #my $amount                          = $user_plan->amount;
-        #my $amount_without_capture_tax      = $amount - ( $amount * ( $ENV{LIBRE_CAPTURE_GATEWAY_PERCENTAGE} / 100 ) );
-        #my $amount_without_distribution_tax = $amount_with_capture_tax - ( $amount_with_capture_tax * ($ENV{LIBRE_DISTRIBUTION_GATEWAY_PERCENTAGE} / 100) );
-        #my $libre_value                     = int($amount_without_distribution_tax/ (scalar(@libres) + 1) );
+        # Capturando o amount.
+        my $payment = $c->model("DB::Payment")->find($payment_id);
+        return unless ref $payment;
 
-        #for my $libre (@libres) { 
-            
-        #}
+        my $amount    = int($payment->amount);
+        my $libre_tax = ( $amount * ( $ENV{LIBRE_TAX_PERCENTAGE} / 100 ) );
+        my $amount_without_libre_tax = $amount - $libre_tax;
+
+        # Atualizando o last_close_at do plano.
+        $user_plan->update( { last_close_at => \"NOW()" } );
+
+        my @libres = $libre_rs->all();
+
+        # TODO Distribuir os libres.
+        #my $libre_value = int($amount_without_distribution_tax/ (scalar(@libres) + 1) );
+
+        #for my $libre (@libres) { }
     }
 }
 

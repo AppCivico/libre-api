@@ -12,6 +12,7 @@ use JSON::MaybeXS;
 use Data::Fake qw(Core Company Dates Internet Names Text);
 use Business::BR::CPF qw(random_cpf);
 use Business::BR::CNPJ qw(random_cnpj format_cnpj);
+use Libre::Utils;
 
 # ugly hack
 sub import {
