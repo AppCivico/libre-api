@@ -348,5 +348,11 @@ sub _build__korduv { WebService::Korduv->instance }
 
 sub _build__httpcb { WebService::HttpCallback->instance }
 
+sub get_current_plan_total_supports {
+    my ($self) = @_;
+
+    return $self->libres->count;
+}
+
 __PACKAGE__->meta->make_immutable;
 1;
