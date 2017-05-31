@@ -21,6 +21,17 @@ db_transaction {
         },
     ;
 
+    # Criando dois jornalistas que receberão doações.
+    my @journalist_ids = ();
+    for ( 1 .. 2 ) {
+        create_journalist;
+        push @journalist_ids, (stash "journalist.id");
+    }
+
+    # Fazendo três doações para o jornalista 1, e duas doações para o jornalista 2.
+    rest_post "/api/journalist/$journalist_ids[0]/support", name => "support journalist 1" for 1 .. 3;
+    rest_post "/api/journalist/$journalist_ids[1]/support", name => "support journalist 2" for 1 .. 2;
+
     my $user_plan_id = (stash("user_plan")->{id});
     my $user_plan = $schema->resultset("UserPlan")->find($user_plan_id);
     my $httpcb_rs = $schema->resultset("HttpCallbackToken");
