@@ -66,6 +66,8 @@ db_transaction {
         name => "http callback triggered",
         code => 200,
     ;
+
+    # TODO Testar os dados dentro da tabela money_transfer.
 };
 
 done_testing();

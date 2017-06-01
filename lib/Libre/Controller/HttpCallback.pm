@@ -197,7 +197,7 @@ sub _compute_donations {
 
         my $amount    = int($payment->amount);
         # TODO Usar a taxa que veio do master payment.
-        my $libre_tax = ( $amount * ( $ENV{LIBRE_TAX_PERCENTAGE} / 100 ) );
+        my $libre_tax = ( $amount * ( $payment->gateway_tex / 100 ) );
         my $amount_without_libre_tax = $amount - $libre_tax;
 
         my $libre_price = int($amount_without_libre_tax / $total_likes);
