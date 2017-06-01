@@ -178,28 +178,46 @@ sub _compute_donations {
             {
                 donor_id     => $donor_id,
                 user_plan_id => $user_plan_id,
-                created_at   => { '<' => \[ "COALESCE(?, NOW())", $last_close_at ] },
+                created_at   => { '<=' => \[ "COALESCE(?, NOW())", $last_close_at ] },
             },
-            #{ for => "update" },
+            {
+                'select' => [ { count => \1, '-as' => "supports" }, "journalist_id" ],
+                'as'     => [ "supports", "journalist_id" ],
+                group_by  => [ "journalist_id" ],
+                #for => "update",
+            },
         );
+
 
         # Capturando o amount.
         my $payment = $c->model("DB::Payment")->find($payment_id);
         return unless ref $payment;
 
+        my $total_likes = $libre_rs->get_column("supports")->sum;
+
         my $amount    = int($payment->amount);
+        # TODO Usar a taxa que veio do master payment.
         my $libre_tax = ( $amount * ( $ENV{LIBRE_TAX_PERCENTAGE} / 100 ) );
         my $amount_without_libre_tax = $amount - $libre_tax;
+
+        my $libre_price = int($amount_without_libre_tax / $total_likes);
 
         # Atualizando o last_close_at do plano.
         $user_plan->update( { last_close_at => \"NOW()" } );
 
-        my @libres = $libre_rs->all();
+        for my $libre ($libre_rs->all()) {
+            my $journalist_id = $libre->journalist_id;
+            my $supports      = $libre->get_column("supports");
 
-        # TODO Distribuir os libres.
-        #my $libre_value = int($amount_without_distribution_tax/ (scalar(@libres) + 1) );
+            my $amount_to_transfer = $libre_price * $supports;
 
-        #for my $libre (@libres) { }
+            $c->model("DB::MoneyTransfer")->create(
+                {
+                    journalist_id => $journalist_id,
+                    amount        => $amount_to_transfer,
+                }
+            );
+        }
     }
 }
 

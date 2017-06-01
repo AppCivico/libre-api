@@ -74,16 +74,21 @@ __PACKAGE__->table("libre");
   is_foreign_key: 1
   is_nullable: 1
 
-=head2 invalided_at
-
-  data_type: 'timestamp'
-  is_nullable: 1
-
 =head2 invalid
 
   data_type: 'boolean'
   default_value: false
   is_nullable: 0
+
+=head2 invalided_at
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
+=head2 orphaned_at
+
+  data_type: 'timestamp'
+  is_nullable: 1
 
 =cut
 
@@ -108,10 +113,12 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "user_plan_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
-  "invalided_at",
-  { data_type => "timestamp", is_nullable => 1 },
   "invalid",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
+  "invalided_at",
+  { data_type => "timestamp", is_nullable => 1 },
+  "orphaned_at",
+  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -194,8 +201,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-29 16:14:09
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:H4fUPXxHzqaDyxKOFjBh8A
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-01 18:05:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3ZfV+phguF0F6OzaSZcI+w
 
 
 __PACKAGE__->meta->make_immutable;

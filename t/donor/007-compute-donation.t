@@ -11,13 +11,14 @@ db_transaction {
     create_donor;
     api_auth_as user_id => stash "donor.id";
 
-    my $donor_id = stash "donor.id";
+    my $donor_id    = stash "donor.id";
+    my $plan_amount = 2500;
 
     rest_put "/api/donor/$donor_id/plan",
         name   => "creating donor plan",
         stash  => "user_plan",
         params => {
-            amount => 2000,
+            amount => $plan_amount,
         },
     ;
 
@@ -42,8 +43,8 @@ db_transaction {
             {
                 donor_id     => $donor_id,
                 user_plan_id => $user_plan_id,
-                amount       => 2000,
-                gateway_tax  => 10.5,
+                amount       => $plan_amount,
+                gateway_tax  => 11.5,
             },
         ),
         "fake payment",
