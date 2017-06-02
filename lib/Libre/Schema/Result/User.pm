@@ -227,6 +227,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 user_forgot_passwords
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::UserForgotPassword>
+
+=cut
+
+__PACKAGE__->has_many(
+  "user_forgot_passwords",
+  "Libre::Schema::Result::UserForgotPassword",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user_plans
 
 Type: has_many
@@ -283,8 +298,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 15:29:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zIEaaL6q5C92T5CXj3ai+A
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-02 11:21:53
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dBoBEd9Mf0rsV1rTBC+e2Q
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {
