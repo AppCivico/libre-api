@@ -54,7 +54,8 @@ sub action_specs {
             $self->search({
                 user_id     => $user->id,
                 valid_until => { '>=' => \'NOW()' },
-            })->update({ valid_until => \"(NOW() - '1 second'::interval)" });
+            })
+            ->update({ valid_until => \"(NOW() - '1 second'::interval)" });
 
             my $forgot_password = $self->create({
                 user        => $user,

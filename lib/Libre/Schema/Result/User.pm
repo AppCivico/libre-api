@@ -355,5 +355,24 @@ sub is_journalist {
     return $self->user_roles->search({ role_id => 2 })->count;
 }
 
+sub send_email_forgot_password {
+    my ($self, $token) = @_;
+
+    my $email = Libre::Mailer::Template->new(
+        to       => $self->email,
+        from     => 'no-reply@libre.org.br',
+        subject  => "Libre - Recuperação de senha",
+        template => get_data_section('forgot_password.tt'),
+        vars     => {
+            name  => $self->name,
+            token => $token,
+        },
+    )->build_email();
+
+    my $queued = $self->result_source->schema->resultset("EmailQueue")->create({ body => $email->as_string });
+
+    return $queued;
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

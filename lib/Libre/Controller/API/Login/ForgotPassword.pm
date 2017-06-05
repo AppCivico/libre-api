@@ -1,4 +1,4 @@
-package Libre::Controller::API::ForgotPassword;
+package Libre::Controller::API::Login::ForgotPassword;
 use common::sense;
 use Moose;
 use namespace::autoclean;
