@@ -67,7 +67,31 @@ db_transaction {
         code => 200,
     ;
 
-    # TODO Testar os dados dentro da tabela money_transfer.
+    # O jornalista 1 deve receber R$ 13,26.
+    is (
+        $schema->resultset("MoneyTransfer")->search(
+            {
+                journalist_id => $journalist_ids[0],
+                amount        => 1326,
+                transferred   => "false",
+            },
+        )->count,
+        "1",
+        'journalist 1 will receive R$ 13,26',
+    );
+
+    # E o jornalista 2 deve receber R$ 8,84.
+    is (
+        $schema->resultset("MoneyTransfer")->search(
+            {
+                journalist_id => $journalist_ids[1],
+                amount        => 884,
+                transferred   => "false",
+            },
+        )->count,
+        "1",
+        'journalist 2 will receive R$ 8,84',
+    );
 };
 
 done_testing();

@@ -189,15 +189,14 @@ sub _compute_donations {
         );
 
 
-        # Capturando o amount.
+        # Capturando o amount da tabela de payment.
         my $payment = $c->model("DB::Payment")->find($payment_id);
         return unless ref $payment;
 
         my $total_likes = $libre_rs->get_column("supports")->sum;
 
         my $amount    = int($payment->amount);
-        # TODO Usar a taxa que veio do master payment.
-        my $libre_tax = ( $amount * ( $payment->gateway_tex / 100 ) );
+        my $libre_tax = ( $amount * ( $payment->gateway_tax / 100 ) );
         my $amount_without_libre_tax = $amount - $libre_tax;
 
         my $libre_price = int($amount_without_libre_tax / $total_likes);
