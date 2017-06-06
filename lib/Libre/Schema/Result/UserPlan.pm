@@ -362,3 +362,80 @@ sub _build__httpcb { WebService::HttpCallback->instance }
 
 __PACKAGE__->meta->make_immutable;
 1;
+
+__DATA__
+
+@@ payment-fail.tt
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
+                                <tbody>
+                                    <tr>
+                                        <td height="50"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><a href="midialibre.com.br"><img src="http://imgur.com/a/vTl7s" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
+                                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
+                                                <tbody>
+                                                    <tr>
+                                                        <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+                                                            <p><span><b>Olá [% name %], </b><br>
+                                                                <br></span>
+                                                            </p>
+                                                            <p> <strong> </strong>Recebemos a sinalização de que o seu pagamento falhou.<br><br>O pagamento tentará ser realizado novamente. Após 3 falhas o pagamento deverá ser realizado novamente manualmente.
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="30"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
+                                                            <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
+                                                    
+                                                                <p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+                                                                Equipe Libre
+                                                            </strong>
+                                                            <a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="30"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
+                                            <span><strong>Libre</strong></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div></div>
+    </body>
+</html>
