@@ -176,21 +176,6 @@ __PACKAGE__->add_unique_constraint("journalist_cpf_key", ["cpf"]);
 
 =head1 RELATIONS
 
-=head2 money_transfers
-
-Type: has_many
-
-Related object: L<Libre::Schema::Result::MoneyTransfer>
-
-=cut
-
-__PACKAGE__->has_many(
-  "money_transfers",
-  "Libre::Schema::Result::MoneyTransfer",
-  { "foreign.journalist_id" => "self.user_id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 user
 
 Type: belongs_to
@@ -227,8 +212,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-01 18:05:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cyxuVMFaSOg79NnQ9LuAGg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-02 11:21:53
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iH8CRl9XkrQ7XKWqdhUMHQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
