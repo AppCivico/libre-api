@@ -7,11 +7,11 @@ use Libre::Test::Further;
 my $schema = Libre->model("DB");
 
 db_transaction {
-	create_journalist;
-	create_donor;
-	api_auth_as user_id => stash "donor.id";
+    create_journalist;
+    create_donor;
+    api_auth_as user_id => stash "donor.id";
 
-	my $journalist_id = stash "journalist.id";
+    my $journalist_id = stash "journalist.id";
     my $donor_id      = stash "donor.id";
 
     rest_put "/api/donor/$donor_id/plan",
@@ -19,7 +19,7 @@ db_transaction {
         stash  => "user_plan",
         params => {
             amount => fake_int(2001, 100000)->(),
-    	},
+        },
     ;
 
     rest_post "/api/journalist/$journalist_id/support",
@@ -29,10 +29,10 @@ db_transaction {
 
     # Simulando invalidação do plano
     my $user_plan = $schema->resultset("UserPlan")->find((stash("user_plan"))->{id})->update(
-    	{ invalided_at => \"NOW()" },
+        { invalided_at => \"NOW()" },
     );
     my $libre = $schema->resultset("Libre")->find((stash("s1"))->{id})->update(
-    	{ user_plan_id => undef },
+        { user_plan_id => undef },
     );
 
     # Simulando passagem de tempo
@@ -44,7 +44,7 @@ db_transaction {
 
     # Invalidando libres
     my $invalided_libre = $schema->resultset("Libre")->invalid_libres();
-    
+
     is($invalided_libre->invalid, 1, 'Libre invalid, as expected');
 };
 
