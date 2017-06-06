@@ -184,7 +184,6 @@ sub _compute_donations {
                 'select' => [ { count => \1, '-as' => "supports" }, "journalist_id" ],
                 'as'     => [ "supports", "journalist_id" ],
                 group_by  => [ "journalist_id" ],
-                #for => "update",
             },
         );
 
@@ -193,7 +192,7 @@ sub _compute_donations {
         my $payment = $c->model("DB::Payment")->find($payment_id);
         return unless ref $payment;
 
-        my $total_likes = $libre_rs->get_column("supports")->sum;
+        my $total_likes = $libre_rs->get_column("supports")->sum || 1;
 
         my $amount    = int($payment->amount);
         my $libre_tax = ( $amount * ( $payment->gateway_tax / 100 ) );
@@ -217,6 +216,8 @@ sub _compute_donations {
                 }
             );
         }
+
+        # TODO Registrar a doação para o próprio Libre.
     }
 }
 
