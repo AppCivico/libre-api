@@ -1,5 +1,5 @@
--- Deploy libre:0030-forgot-password to pg
--- requires: 0029-invalid-libres
+-- Deploy libre:0031-forgot-password to pg
+-- requires: 0030-money-transfer
 
 BEGIN;
 
