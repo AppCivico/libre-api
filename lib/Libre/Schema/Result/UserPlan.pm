@@ -348,6 +348,13 @@ sub _build__korduv { WebService::Korduv->instance }
 
 sub _build__httpcb { WebService::HttpCallback->instance }
 
+sub get_current_plan_amount {
+    my ($self) = @_;
+
+    use DDP; p $self->valid_until;
+    return $self->amount ;
+}
+
 sub get_current_plan_total_supports {
     my ($self) = @_;
 
