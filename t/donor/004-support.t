@@ -27,7 +27,7 @@ db_transaction {
         is ($libre_rs->find(stash "s1")->user_plan_id, undef, "user_plan_id=null");
 
         # Criando um plano.
-        rest_put "/api/donor/$donor_id/plan",
+        rest_post "/api/donor/$donor_id/plan",
             name  => "creating a user plan",
             stash => "user_plan",
             [ amount => fake_int(20001, 100000)->() ],
@@ -70,7 +70,7 @@ db_transaction {
         );
 
         # Criando um plano.
-        rest_put "/api/donor/$donor_id/plan",
+        rest_post "/api/donor/$donor_id/plan",
             name    => "creating donor plan",
             stash   => "p1",
             [ amount => fake_int(2001, 100000)->() ]
@@ -109,7 +109,7 @@ db_transaction {
         );
 
         # Ok, agora vou criar um plano. O esperado é que NÃO atrele o libre a este plano.
-        rest_put "/api/donor/$donor_id/plan",
+        rest_post "/api/donor/$donor_id/plan",
             name  => "create donor plan",
             [ amount => fake_int(2001, 100000)->() ]
         ;

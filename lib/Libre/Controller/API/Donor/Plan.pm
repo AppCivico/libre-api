@@ -50,7 +50,7 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub list_PUT {
+sub list_POST {
     my ($self, $c) = @_;
 
     my $user_plan = $c->stash->{collection}->execute(
@@ -59,7 +59,7 @@ sub list_PUT {
         with => $c->req->params,
     );
 
-    $self->status_accepted(
+    $self->status_created(
         $c,
         entity   => { id => $user_plan->id },
         location => $c->uri_for( $self->action_for("result"), [ @{ $c->req->captures }, $user_plan->id ] ),

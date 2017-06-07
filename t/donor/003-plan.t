@@ -23,7 +23,7 @@ db_transaction {
         "donor has no plan yet",
     );
 
-    rest_put "/api/donor/$donor_id/plan",
+    rest_post "/api/donor/$donor_id/plan",
         name   => "Plano de um doador",
         stash  => "user_plan",
         params => {
@@ -32,7 +32,7 @@ db_transaction {
     ;
 
     # O doador não pode escolher um valor de plano menor que 20
-    rest_put "/api/donor/$donor_id/plan",
+    rest_post "/api/donor/$donor_id/plan",
         name    => "Plano de um  doador",
         is_fail => 1,
         [

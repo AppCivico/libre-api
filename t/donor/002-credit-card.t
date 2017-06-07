@@ -48,7 +48,7 @@ db_transaction {
     };
 
     # Cadastrando um plano antes de invocar o callback do httpcb para que possamos atualizar no korduv também.
-    rest_put "/api/donor/$donor_id/plan",
+    rest_post "/api/donor/$donor_id/plan",
         name   => "Plano de um doador",
         stash  => "user_plan",
         params => {
