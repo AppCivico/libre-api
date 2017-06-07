@@ -57,9 +57,9 @@ db_transaction {
     };
 
     db_transaction {
-        diag "plan and credit card.";
+        diag "plan with credit card.";
 
-    # Mockando cartão de crédito para fazer a subscription no korduv.
+        # Mockando cartão de crédito para fazer a subscription no korduv.
         ok (
             $schema->resultset("Donor")->find($donor_id)->update({
                 flotum_id => "587ef4d0-3316-4499-9f12-518a965248d7",
@@ -81,6 +81,35 @@ db_transaction {
         # 'first_korduv_sync' para FALSE.
         ok (my $user_plan = $schema->resultset("UserPlan")->find(stash "up2.id"), "get user plan");
         ok (!$user_plan->first_korduv_sync, "first korduv sync=false");
+    };
+
+    db_transaction {
+        diag "plan before credit card.";
+
+        rest_post "/api/donor/$donor_id/plan",
+            name   => "add plan",
+            stash  => "up3",
+            params => {
+                amount => fake_int(2001, 100000)->(),
+            },
+        ;
+
+        ok (my $user_plan = $schema->resultset("UserPlan")->find(stash "up3.id"), "get user plan");
+        ok ($user_plan->first_korduv_sync, "first korduv sync=true");
+        ok (!$user_plan->update_on_korduv(), 'update on korduv without credit card');
+        ok ($user_plan->discard_changes->first_korduv_sync, "first korduv sync=true");
+
+        ok (
+            $schema->resultset("Donor")->find($donor_id)->update({
+                flotum_id => "587ef4d0-3316-4499-9f12-518a965248d7",
+                flotum_preferred_credit_card =>
+'"{"validity":"201801","conjecture_brand":"mastercard","created_at":"2017-06-07T18:05:09","id":"3acd6d0c-58c0-40b9-9144-84a8b5f14806","mask":"5268*********853"}',
+            }),
+            'mock credit card'
+        );
+
+        ok ($user_plan->update_on_korduv(), 'update on korduv');
+        ok (!$user_plan->discard_changes->first_korduv_sync, "first korduv sync=false");
     };
 };
 

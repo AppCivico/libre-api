@@ -78,30 +78,18 @@ sub action_specs {
 sub invalid_libres {
     my ($self) = @_;
 
-    my $orphaned_time = $self->search(
-        { 
+    my $orphan_libre = $self->search(
+        {
             created_at   => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
             user_plan_id => undef,
+            invalid      => 0,
         }
-    )->next();
-
-    if (!$orphaned_time->{invalided_at}) {
-
-        my $libres_to_be_invalided = $self->search( 
-            {
-                user_plan_id  => undef,
-                created_at    => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
-            }
-        )->next();
-
-        $libres_to_be_invalided->update(
-            {
-                invalid      => 1,
-                invalided_at => \"NOW()",
-            },
-                { for => "update" },
-        );
-    }
+    )->update(
+        {
+            invalid      => 1,
+            invalided_at => \"NOW()",
+        }
+    );
 }
 
 1;
