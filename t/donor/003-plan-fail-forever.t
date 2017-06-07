@@ -8,13 +8,13 @@ use HTTP::Request::Common qw(GET);
 my $schema = Libre->model("DB");
 
 db_transaction {
-	create_donor;
+    create_donor;
     create_journalist;
-	api_auth_as user_id => stash "donor.id";
+    api_auth_as user_id => stash "donor.id";
 
     my $journalist_id = stash "journalist.id";
     my $donor_id      = stash "donor.id";
-    my $libre_rs      = $schema->resultset("Libre"); 
+    my $libre_rs      = $schema->resultset("Libre");
 
     # Criando um plano
     rest_post "/api/donor/$donor_id/plan",

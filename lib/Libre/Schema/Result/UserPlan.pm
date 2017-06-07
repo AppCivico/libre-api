@@ -358,7 +358,7 @@ sub on_korduv_callback_fail {
     )->build_email();
 
     my $queued = $email_queue_rs->create({ body => $email->as_string });
-    
+
     return $queued;
 }
 
@@ -369,7 +369,7 @@ sub on_korduv_fail_forever {
 
     my $libres_rs     = $self->result_source->schema->resultset("Libre");
     my $orphan_libres = $libres_rs->search(
-        { 
+        {
             "user_plan.invalided_at" => \"IS NOT NULL",
             donor_id                 => $self->user_id,
         },
@@ -430,7 +430,6 @@ __DATA__
                                                     <tr>
                                                         <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
                                                             <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-                                                    
                                                                 <p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
                                                                 Equipe Libre
                                                             </strong>
