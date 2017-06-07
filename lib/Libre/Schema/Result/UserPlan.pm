@@ -226,8 +226,6 @@ sub update_on_korduv {
     my $flotum_id = $self->user->donor->flotum_id;
     my $flotum_preferred_credit_card = $self->user->donor->flotum_preferred_credit_card;
 
-    return unless defined($flotum_id) && defined($flotum_preferred_credit_card);
-
     return $self->_korduv->setup_subscription(
         api_key => $ENV{LIBRE_KORDUV_API_KEY},
 

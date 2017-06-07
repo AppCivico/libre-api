@@ -53,7 +53,8 @@ sub action_specs {
             my $user_plan = $self->create(\%values)->discard_changes();
 
             # Atualizando a informação no Korduv.
-            $user_plan->update_on_korduv(next_billing_at => $user_plan->created_at->datetime());
+            # TODO Passar o next_billing_at somente quando for o primeiro plano criado.
+            #$user_plan->update_on_korduv(next_billing_at => $user_plan->created_at->datetime());
 
             # Ao criar ou atualizar o plano, atrelamos todos os libres órfãos ao id desse plano. Os que são mais
             # velhos que a env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS' permanecem como órfãos e nunca serão computados.

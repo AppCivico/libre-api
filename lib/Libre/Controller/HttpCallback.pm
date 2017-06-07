@@ -146,9 +146,10 @@ sub _update_credit_card {
         }
     );
 
+    # TODO Somente na adição do primeiro plano deve-se passar o next_billing_at.
     my $user_plan = $user->donor->get_current_plan();
     if (ref $user_plan) {
-        $user_plan->update_on_korduv();
+        $user_plan->update_on_korduv(next_billing_at => $user_plan->created_at->datetime());
     }
 }
 
