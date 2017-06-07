@@ -50,7 +50,7 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             # TODO Se já tiver um plano anteriormente, verificar se devo cancelá-lo, ou se devo barrar a ação.
-            my $user_plan = $self->create(\%values);
+            my $user_plan = $self->create(\%values)->discard_changes();
 
             # Atualizando a informação no Korduv.
             $user_plan->update_on_korduv(next_billing_at => $user_plan->created_at->datetime());
