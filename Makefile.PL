@@ -62,6 +62,7 @@ my %WriteMakefileArgs = (
     "DateTime" => 0,
     "DateTime::Format::Pg" => 0,
     "DateTimeX::Easy" => 0,
+    "Digest::SHA1" => 0,
     "Email::Sender::Simple" => 0,
     "Email::Sender::Transport::SMTP::TLS" => 0,
     "Email::Valid" => 0,
@@ -92,6 +93,7 @@ my %WriteMakefileArgs = (
     "Server::Starter" => 0,
     "Starman" => 0,
     "Template" => 0,
+    "Time::HiRes" => 0,
     "Try::Tiny::Retry" => 0,
     "base" => 0,
     "common::sense" => 0,
@@ -114,9 +116,9 @@ my %WriteMakefileArgs = (
     "blib" => "1.01",
     "lib" => 0
   },
-  "VERSION" => 20170525,
+  "VERSION" => 20170607,
   "test" => {
-    "TESTS" => "t/*.t t/donor/*.t t/journalist/*.t t/misc/*.t t/worker/*.t"
+    "TESTS" => "t/*.t t/donor/*.t t/journalist/*.t t/misc/*.t t/user/*.t t/worker/*.t"
   }
 );
 
@@ -171,6 +173,7 @@ my %FallbackPrereqs = (
   "DateTime" => 0,
   "DateTime::Format::Pg" => 0,
   "DateTimeX::Easy" => 0,
+  "Digest::SHA1" => 0,
   "Email::Sender::Simple" => 0,
   "Email::Sender::Transport::SMTP::TLS" => 0,
   "Email::Valid" => 0,
@@ -206,6 +209,7 @@ my %FallbackPrereqs = (
   "Starman" => 0,
   "Template" => 0,
   "Test::More" => 0,
+  "Time::HiRes" => 0,
   "Try::Tiny::Retry" => 0,
   "base" => 0,
   "blib" => "1.01",
