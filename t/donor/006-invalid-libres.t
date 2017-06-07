@@ -7,45 +7,45 @@ use Libre::Test::Further;
 my $schema = Libre->model("DB");
 
 db_transaction {
-	create_journalist;
-	create_donor;
-	api_auth_as user_id => stash "donor.id";
+    create_journalist;
+    create_donor;
+    api_auth_as user_id => stash "donor.id";
 
-	my $journalist_id = stash "journalist.id";
+    my $journalist_id = stash "journalist.id";
     my $donor_id      = stash "donor.id";
 
-    rest_post "/api/donor/$donor_id/plan",
-        name   => "create donor plan",
-        stash  => "user_plan",
-        params => {
-            amount => fake_int(2001, 100000)->(),
-    	},
+    # Distribuindo 3 libres sem plano
+    rest_post "/api/journalist/$journalist_id/support",
+        name  => "donate to a journalist",
+        stash => "s1",
     ;
 
     rest_post "/api/journalist/$journalist_id/support",
-            name  => "donate to a journalist",
-            stash => "s1",
+        name  => "donate to a journalist",
+        stash => "s2",
     ;
 
-    # Simulando invalidação do plano
-    my $user_plan = $schema->resultset("UserPlan")->find((stash("user_plan"))->{id})->update(
-    	{ invalided_at => \"NOW()" },
-    );
-    my $libre = $schema->resultset("Libre")->find((stash("s1"))->{id})->update(
-    	{ user_plan_id => undef },
-    );
+    rest_post "/api/journalist/$journalist_id/support",
+        name  => "donate to a journalist",
+        stash => "s3",
+    ;
 
-    # Simulando passagem de tempo
+    # Alterando a data de criação de apenas 1 dos 3 libres distribuidos
     $schema->resultset("Libre")->find((stash("s1"))->{id})->update(
-        { created_at => \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} month'::interval)" }
+        { created_at => \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} months'::interval)" }
     );
 
-    is($libre->invalid, 0, 'Libre valid, as expected');
+    # Invalidando os libres que devem ser invalidados
+    $schema->resultset("Libre")->invalid_libres();
 
-    # Invalidando libres
-    my $invalided_libre = $schema->resultset("Libre")->invalid_libres();
-    
-    is($invalided_libre->invalid, 1, 'Libre invalid, as expected');
+    # Testando se somente o like mais antigo está com invalid == true.
+    my $invalided_lbr    = $schema->resultset("Libre")->find((stash("s1"))->{id});
+    my $first_valid_lbr  = $schema->resultset("Libre")->find((stash("s2"))->{id});
+    my $second_valid_lbr = $schema->resultset("Libre")->find((stash("s3"))->{id});
+
+    is($invalided_lbr->invalid,    1, 'Libre invalid, as expected');
+    is($first_valid_lbr->invalid,  0, 'Libre valid, as expected');
+    is($second_valid_lbr->invalid, 0, 'Libre valid, as expected');
 };
 
 done_testing();
