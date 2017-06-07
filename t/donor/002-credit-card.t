@@ -64,11 +64,11 @@ db_transaction {
         data    => $content,
     ;
 
-    ok (my $user = $schema->resultset("Donor")->find($donor_id));
+    ok (my $donor = $schema->resultset("Donor")->find($donor_id));
 
     my $content_as_json = decode_json $content;
     is_deeply(
-        decode_json($user->flotum_preferred_credit_card),
+        decode_json($donor->flotum_preferred_credit_card),
         {
             map { $_ => $content_as_json->{$_} }
               qw(conjecture_brand created_at id mask validity)
@@ -101,7 +101,7 @@ db_transaction {
     ;
 
     is(
-        $user->discard_changes->flotum_preferred_credit_card,
+        $donor->discard_changes->flotum_preferred_credit_card,
         undef,
         "user has no preferred credit card",
     );
