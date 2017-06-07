@@ -223,6 +223,10 @@ sub update_on_korduv {
     # Discard changes para obter o callback_url.
     my $callback_id = $self->discard_changes->callback_id;
     my $user_id = $self->user->id;
+    my $flotum_id = $self->user->donor->flotum_id;
+    my $flotum_preferred_credit_card = $self->user->donor->flotum_preferred_credit_card;
+
+    return unless defined($flotum_id) && defined($flotum_preferred_credit_card);
 
     return $self->_korduv->setup_subscription(
         api_key => $ENV{LIBRE_KORDUV_API_KEY},
@@ -231,6 +235,8 @@ sub update_on_korduv {
         payment_interval_value => 30,
 
         remote_subscription_id => "user:$user_id",
+        flotum_customer_id     => $flotum_id,
+        flotum_credit_card_id  => $flotum_preferred_credit_card,
 
         currency       => "bra",
         pricing_schema => "linear",
