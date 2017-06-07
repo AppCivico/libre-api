@@ -27,8 +27,6 @@ INFO "Iniciando $Script...";
 my $schema = get_schema;
 my $now    = DateTime->now(time_zone => "America/Sao_Paulo");
 
-use DDP; p $schema->resultset("Libre")->invalid_libres();
-
 INFO "Orfanizando libres...";
 
 my $orphanized_libres = $schema->resultset("Libre")->invalid_libres();
