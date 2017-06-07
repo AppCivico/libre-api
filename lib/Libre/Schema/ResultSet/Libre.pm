@@ -82,6 +82,7 @@ sub invalid_libres {
         {
             created_at   => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
             user_plan_id => undef,
+            invalid      => 0,
         }
     )->update(
         {
