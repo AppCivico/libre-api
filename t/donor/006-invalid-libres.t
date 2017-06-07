@@ -14,7 +14,7 @@ db_transaction {
 	my $journalist_id = stash "journalist.id";
     my $donor_id      = stash "donor.id";
 
-    rest_put "/api/donor/$donor_id/plan",
+    rest_post "/api/donor/$donor_id/plan",
         name   => "create donor plan",
         stash  => "user_plan",
         params => {

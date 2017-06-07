@@ -17,7 +17,7 @@ db_transaction {
     my $libre_rs      = $schema->resultset("Libre"); 
 
     # Criando um plano
-    rest_put "/api/donor/$donor_id/plan",
+    rest_post "/api/donor/$donor_id/plan",
         name   => "creating donor plan",
         stash  => "user_plan",
         params => {
