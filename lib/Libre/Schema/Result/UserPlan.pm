@@ -94,6 +94,12 @@ __PACKAGE__->table("user_plan");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 first_korduv_sync
+
+  data_type: 'boolean'
+  default_value: true
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -130,6 +136,8 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "invalided_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "first_korduv_sync",
+  { data_type => "boolean", default_value => \"true", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -192,8 +200,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-23 15:29:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vxUf/ggAJ+7SWz14Jue8fw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-07 14:37:44
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BLTWoNlstd5dfIgaBf/uNw
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
@@ -218,43 +226,55 @@ has _korduv => (
 );
 
 sub update_on_korduv {
-    my ($self, %opts) = @_;
+    my ($self) = @_;
 
-    # Discard changes para obter o callback_url.
-    my $callback_id = $self->discard_changes->callback_id;
-    my $user_id = $self->user->id;
-    my $flotum_id = $self->user->donor->flotum_id;
-    my $flotum_preferred_credit_card = $self->user->donor->flotum_preferred_credit_card;
+    $self->result_source->schema->txn_do(sub {
+        # Discard changes para obter o callback_url.
+        my $callback_id = $self->discard_changes->callback_id;
+        my $user_id = $self->user->id;
+        my $flotum_id = $self->user->donor->flotum_id;
+        my $flotum_preferred_credit_card = $self->user->donor->flotum_preferred_credit_card;
 
-    return $self->_korduv->setup_subscription(
-        api_key => $ENV{LIBRE_KORDUV_API_KEY},
+        return unless defined($flotum_id) && defined($flotum_preferred_credit_card);
 
-        payment_interval_class => "each_n_days",
-        payment_interval_value => 30,
+        my %opts = ();
+        if ($self->first_korduv_sync) {
+            $opts{restart_cycle}   = 1;
+            $opts{next_billing_at} = $self->created_at->datetime();
 
-        remote_subscription_id => "user:$user_id",
-        flotum_customer_id     => $flotum_id,
-        flotum_credit_card_id  => $flotum_preferred_credit_card,
+            $self->update( { first_korduv_sync => "false" } );
+        }
 
-        currency       => "bra",
-        pricing_schema => "linear",
+        return $self->_korduv->setup_subscription(
+            api_key => $ENV{LIBRE_KORDUV_API_KEY},
 
-        on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $callback_id ),
-        on_charge_failed_forever   => get_libre_api_url_for('/korduv/fail-forever/'    . $callback_id ),
-        on_charge_attempted_failed => get_libre_api_url_for('/korduv/fail/'            . $callback_id ),
+            payment_interval_class => "each_n_days",
+            payment_interval_value => 30,
 
-        base_price  => $self->amount,
-        extra_price => 0,
-        extra_usage => 0,
+            remote_subscription_id => "user:$user_id",
+            flotum_customer_id     => $flotum_id,
+            flotum_credit_card_id  => $flotum_preferred_credit_card,
 
-        fail_forever_after    => 3,
-        fail_forever_interval => 86400,
+            currency       => "bra",
+            pricing_schema => "linear",
 
-        timezone    => "America/Sao_Paulo",
-        charge_time => "09:00",
+            on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $callback_id ),
+            on_charge_failed_forever   => get_libre_api_url_for('/korduv/fail-forever/'    . $callback_id ),
+            on_charge_attempted_failed => get_libre_api_url_for('/korduv/fail/'            . $callback_id ),
 
-        %opts,
-    );
+            base_price  => $self->amount,
+            extra_price => 0,
+            extra_usage => 0,
+
+            fail_forever_after    => 3,
+            fail_forever_interval => 86400,
+
+            timezone    => "America/Sao_Paulo",
+            charge_time => "09:00",
+
+            %opts,
+        );
+    });
 }
 
 sub on_korduv_callback_success {

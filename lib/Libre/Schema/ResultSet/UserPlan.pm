@@ -50,11 +50,10 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             # TODO Se já tiver um plano anteriormente, verificar se devo cancelá-lo, ou se devo barrar a ação.
-            my $user_plan = $self->create(\%values)->discard_changes();
+            my $user_plan = $self->create(\%values);
 
             # Atualizando a informação no Korduv.
-            # TODO Passar o next_billing_at somente quando for o primeiro plano criado.
-            #$user_plan->update_on_korduv(next_billing_at => $user_plan->created_at->datetime());
+            $user_plan->update_on_korduv();
 
             # Ao criar ou atualizar o plano, atrelamos todos os libres órfãos ao id desse plano. Os que são mais
             # velhos que a env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS' permanecem como órfãos e nunca serão computados.
