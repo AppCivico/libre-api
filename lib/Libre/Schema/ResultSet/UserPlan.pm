@@ -17,7 +17,7 @@ sub verifiers_specs {
     my $self = shift;
 
     return {
-        upsert => Data::Verifier->new(
+        create => Data::Verifier->new(
             filters => [ qw(trim) ],
             profile => {
                 amount => {
@@ -43,23 +43,17 @@ sub action_specs {
     my ($self) = @_;
 
     return {
-        upsert => sub {
+        create => sub {
             my $r = shift;
 
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            # Verificando se ja há um plano existente para este usuário.
-            my $user_plan = $self->search( { canceled_at => undef } )->next();
-            if ($user_plan) {
-                $user_plan->update(\%values);
-            }
-            if (!$user_plan) {
-                $user_plan = $self->create(\%values);
-            }
+            # TODO Se já tiver um plano anteriormente, verificar se devo cancelá-lo, ou se devo barrar a ação.
+            my $user_plan = $self->create(\%values);
 
             # Atualizando a informação no Korduv.
-            $user_plan->update_on_korduv();
+            $user_plan->update_on_korduv(restart_cycle => 1);
 
             # Ao criar ou atualizar o plano, atrelamos todos os libres órfãos ao id desse plano. Os que são mais
             # velhos que a env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS' permanecem como órfãos e nunca serão computados.

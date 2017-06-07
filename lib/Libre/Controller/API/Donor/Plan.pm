@@ -55,7 +55,7 @@ sub list_POST {
 
     my $user_plan = $c->stash->{collection}->execute(
         $c,
-        for  => "upsert",
+        for  => "create",
         with => $c->req->params,
     );
 

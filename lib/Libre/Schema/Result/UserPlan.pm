@@ -218,7 +218,7 @@ has _korduv => (
 );
 
 sub update_on_korduv {
-    my ($self) = @_;
+    my ($self, %opts) = @_;
 
     # Discard changes para obter o callback_url.
     my $callback_id = $self->discard_changes->callback_id;
@@ -248,6 +248,8 @@ sub update_on_korduv {
 
         timezone    => "America/Sao_Paulo",
         charge_time => "09:00",
+
+        %opts,
     );
 }
 
@@ -339,9 +341,7 @@ sub on_korduv_callback_fail {
 sub on_korduv_fail_forever {
     my ($self) = @_;
 
-    my $plan = $self->update(
-        {invalided_at => \"NOW()"}
-    );
+    $self->update( { invalided_at => \"NOW()" } );
 
     my $libres_rs     = $self->result_source->schema->resultset("Libre");
     my $orphan_libres = $libres_rs->search(
