@@ -222,6 +222,7 @@ sub update_on_korduv {
 
     # Discard changes para obter o callback_url.
     my $callback_id = $self->discard_changes->callback_id;
+    my $user_id = $self->user->id;
 
     return $self->_korduv->setup_subscription(
         api_key => $ENV{LIBRE_KORDUV_API_KEY},
@@ -229,7 +230,7 @@ sub update_on_korduv {
         payment_interval_class => "each_n_days",
         payment_interval_value => 30,
 
-        remote_subscription_id => $self->user->id,
+        remote_subscription_id => "user:$user_id",
 
         currency       => "bra",
         pricing_schema => "linear",
