@@ -3,8 +3,6 @@ use common::sense;
 use FindBin qw($RealBin $Script);
 use lib "$RealBin/../../lib";
 
-use DateTime;
-use File::Temp;
 use Log::Log4perl qw(:easy);
 use Libre::Utils;
 use Libre::SchemaConnected;
@@ -25,7 +23,6 @@ Log::Log4perl->easy_init({
 INFO "Iniciando $Script...";
 
 my $schema = get_schema;
-my $now    = DateTime->now(time_zone => "America/Sao_Paulo");
 
 INFO "Orfanizando libres...";
 
