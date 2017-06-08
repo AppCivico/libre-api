@@ -100,6 +100,11 @@ __PACKAGE__->table("user_plan");
   default_value: true
   is_nullable: 0
 
+=head2 updated_at
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -138,6 +143,8 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "first_korduv_sync",
   { data_type => "boolean", default_value => \"true", is_nullable => 0 },
+  "updated_at",
+  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -200,8 +207,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-07 14:37:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BLTWoNlstd5dfIgaBf/uNw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-08 11:27:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HVBUSn3C6vtsL7qfENPJNw
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
@@ -209,6 +216,7 @@ BEGIN {
     $ENV{LIBRE_TAX_PERCENTAGE}        or die "missing env 'LIBRE_TAX_PERCENTAGE'.";
 }
 
+use Data::Verifier;
 use WebService::Korduv;
 use WebService::HttpCallback;
 use Libre::Utils;
@@ -225,12 +233,58 @@ has _korduv => (
     lazy_build => 1,
 );
 
+
+with 'Libre::Role::Verification';
+with 'Libre::Role::Verification::TransactionalActions::DBIC';
+
+sub verifiers_specs {
+    my $self = shift;
+
+    return {
+        update => Data::Verifier->new(
+            filters => [ qw(trim) ],
+            profile => {
+                amount => {
+                    required   => 1,
+                    type       => "Int",
+                    post_check  => sub {
+                        my $r = shift;
+
+                        my $amount = $r->get_value('amount');
+
+                        if ($amount < 2000 || $amount > 20000000) {
+                            return 0;
+                        }
+                        return 1;
+                    }
+                },
+            },
+        ),
+    };
+}
+
+sub action_specs {
+    my $self = shift;
+
+    return {
+        update => sub {
+            my $r = shift;
+
+            my %values = $r->valid_values;
+            not defined $values{$_} and delete $values{$_} for keys %values;
+
+            return $self->update( { %values, updated_at => \"NOW()" } );
+        },
+    };
+}
+
 sub update_on_korduv {
     my ($self) = @_;
 
     $self->result_source->schema->txn_do(sub {
         # Discard changes para obter o callback_url.
-        my $callback_id = $self->discard_changes->callback_id;
+        my $self = $self->discard_changes;
+        my $callback_id = $self->callback_id;
         my $user_id = $self->user->id;
         my $flotum_id = $self->user->donor->flotum_id;
         my $flotum_preferred_credit_card = $self->user->donor->flotum_preferred_credit_card;

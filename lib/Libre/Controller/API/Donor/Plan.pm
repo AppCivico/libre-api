@@ -7,6 +7,7 @@ BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
 with "CatalystX::Eta::Controller::AutoListGET";
 with "CatalystX::Eta::Controller::AutoResultGET";
+with "CatalystX::Eta::Controller::AutoResultPUT";
 
 __PACKAGE__->config(
     # AutoListGET
@@ -20,6 +21,9 @@ __PACKAGE__->config(
     build_row => sub {
         return { $_[0]->get_columns() };
     },
+
+    # AutoResultPUT.
+    #
 );
 
 sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
@@ -71,6 +75,8 @@ sub list_GET { }
 sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub result_GET { }
+
+sub result_PUT { }
 
 =encoding utf8
 
