@@ -273,7 +273,10 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            return $self->update( { %values, updated_at => \"NOW()" } );
+            my $user_plan = $self->update( { %values, updated_at => \"NOW()" } );
+            $user_plan->update_on_korduv();
+
+            return $user_plan;
         },
     };
 }
@@ -298,6 +301,8 @@ sub update_on_korduv {
 
             $self->update( { first_korduv_sync => "false" } );
         }
+
+        # TODO Criar uma flag para sinalizar que o plano foi cancelado.
 
         return $self->_korduv->setup_subscription(
             api_key => $ENV{LIBRE_KORDUV_API_KEY},
