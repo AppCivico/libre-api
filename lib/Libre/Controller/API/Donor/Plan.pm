@@ -70,20 +70,7 @@ sub list_GET { }
 
 sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub result_GET { 
-    my ($self, $c) = @_;
-
-    my $total_supports = $c->stash->{user_plan}->get_current_plan_total_supports;
-
-    # TODO retornar a data do próximo débito
-
-    return $self->status_ok(
-        $c,
-        entity => {
-            total_supports => $total_supports
-        },
-    );
-}
+sub result_GET { }
 
 =encoding utf8
 
