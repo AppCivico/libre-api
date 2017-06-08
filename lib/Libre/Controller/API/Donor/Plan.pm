@@ -21,9 +21,6 @@ __PACKAGE__->config(
     build_row => sub {
         return { $_[0]->get_columns() };
     },
-
-    # AutoResultPUT.
-    #
 );
 
 sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
@@ -77,19 +74,6 @@ sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { 
 sub result_GET { }
 
 sub result_PUT { }
-
-=encoding utf8
-
-=head1 AUTHOR
-
-eokoe-lucas,,,
-
-=head1 LICENSE
-
-This library is free software. You can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut
 
 __PACKAGE__->meta->make_immutable;
 
