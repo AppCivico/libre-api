@@ -34,3 +34,4 @@
 0030-money-transfer [0029-invalid-libres] 2017-06-06T20:14:36Z Junior Moraes <juniorfvox@gmail.com> # money-transfer
 0031-forgot-password [0030-money-transfer] 2017-06-06T20:48:53Z eokoe-lucas,,, <eokoe-lucas@eokoelucas-Lenovo-G400s> # Adding the forgot password table
 0032-user-plan-korduv-sync [0031-forgot-password] 2017-06-07T17:48:22Z Junior Moraes <juniorfvox@gmail.com> # user-plan-korduv-sync
+0033-user-plan-updated-at [0032-user-plan-korduv-sync] 2017-06-08T18:21:25Z Junior Moraes <juniorfvox@gmail.com> # user-plan-updated-at
