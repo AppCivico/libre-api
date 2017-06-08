@@ -89,9 +89,10 @@ sub http_callback_POST {
                       ->search( { 'me.token' => $token }, { for => 'update', columns => [ 'token', 'executed_at' ] } )
                       ->next;
 
-                    $self->$name( $c, $extra_args ) unless $locktoken->executed_at;
-
-                    $config->update( { executed_at => \'now()' } );
+                    if (!$locktoken->executed_at) {
+                        $self->$name( $c, $extra_args );
+                        $config->update( { executed_at => \'now()' } );
+                    }
                 }
             );
 
