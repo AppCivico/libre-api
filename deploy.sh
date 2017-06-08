@@ -21,9 +21,9 @@ up_server (){
     PORT="$2"
     WORKERS="$3"
 
-    ERROR_LOG="$GIT_DIR/log/libre.error.log"
-    STATUS="$GIT_DIR/log/libre.start_server.status"
-    PIDFILE="$GIT_DIR/log/libre.start_server.pid"
+    ERROR_LOG="/tmp/libre.error.log"
+    STATUS="/tmp/libre.start_server.status"
+    PIDFILE="/tmp/libre.start_server.pid"
 
     touch $ERROR_LOG
     touch $PIDFILE
