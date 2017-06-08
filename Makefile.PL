@@ -37,6 +37,7 @@ my %WriteMakefileArgs = (
     "CatalystX::Eta::Controller::AutoListPOST" => 0,
     "CatalystX::Eta::Controller::AutoObject" => 0,
     "CatalystX::Eta::Controller::AutoResultGET" => 0,
+    "CatalystX::Eta::Controller::AutoResultPUT" => 0,
     "CatalystX::Eta::Controller::REST" => 0,
     "CatalystX::Eta::Controller::TypesValidation" => 0,
     "Config::General" => 0,
@@ -116,7 +117,7 @@ my %WriteMakefileArgs = (
     "blib" => "1.01",
     "lib" => 0
   },
-  "VERSION" => 20170607,
+  "VERSION" => 20170608,
   "test" => {
     "TESTS" => "t/*.t t/donor/*.t t/journalist/*.t t/misc/*.t t/user/*.t t/worker/*.t"
   }
@@ -146,6 +147,7 @@ my %FallbackPrereqs = (
   "CatalystX::Eta::Controller::AutoListPOST" => 0,
   "CatalystX::Eta::Controller::AutoObject" => 0,
   "CatalystX::Eta::Controller::AutoResultGET" => 0,
+  "CatalystX::Eta::Controller::AutoResultPUT" => 0,
   "CatalystX::Eta::Controller::REST" => 0,
   "CatalystX::Eta::Controller::TypesValidation" => 0,
   "CatalystX::Eta::Test::REST" => 0,
