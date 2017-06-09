@@ -42,19 +42,16 @@ sub base : Chained('root') : PathPart('dashboard') : CaptureArgs(0) {
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub list_GET {
-    my ($self, $c, %opts) = @_;
+    my ($self, $c) = @_;
 
-    my $next_billing_at;
-    my $plan = $c->model("DB::UserPlan")->search(
-        {
-            user_id => $c->user->id,
-        }
-    )->next;
+    my $donor_id   = $c->user->id;
+    my $donor_rs   = $c->stash->{collection}->schema->resultset("Donor");
+    my $user_plan  = $donor_rs->find($donor_id)->get_current_plan();
 
     # TODO mostrar até libres órfãos, mas avisar que não serão doados se não tiverem plano
-    my $libres = $c->model("DB::Libre")->search(
+   my $libres = $c->model("DB::Libre")->search(
         {
-            user_plan_id => $plan->id,
+            user_plan_id => [ undef, $user_plan->id ],
             invalid      => "false",
         }
     )->count;
@@ -67,7 +64,7 @@ sub list_GET {
     return $self->status_ok(
         $c,
         entity => {
-            user_plan_amount => $plan->amount,
+            user_plan_amount => $user_plan->amount,
             libres_donated   => $libres,
         },
     );
