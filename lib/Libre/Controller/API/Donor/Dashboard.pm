@@ -68,32 +68,34 @@ sub list_GET {
         }
     )->count;
 
-    if (is_test()) {
-        $next_billing_at = DateTime->now(),
-    }
-    else {
-        my $res;
-        eval {
-            retry {
-                $res = $self->furl->get( $ENV{LIBRE_KORDUV_URL} . '/subscriptions');
-                die $res->decoded_content unless $res->is_success;
-            }
-            retry_of { shift() < 3 } catch { die $_; };
-        };
+    # TODO mostrar next_billing_at
+    # if (is_test()) {
+    #     $next_billing_at = DateTime->now(),
+    # }
 
-        die "Error: $@" if $@;
-        die "Cannot call GET on korduv" unless $res;
-        die "Request failed: " . $res->as_string unless $res->is_success;
+    # Isto não deve estar certo...
+    # else {
+    #     my $res;
+    #     eval {
+    #         retry {
+    #             $res = $self->furl->get( $ENV{LIBRE_KORDUV_URL} . '/subscriptions');
+    #             die $res->decoded_content unless $res->is_success;
+    #         }
+    #         retry_of { shift() < 3 } catch { die $_; };
+    #     };
 
-        $next_billing_at = decode_json( $res->decoded_content->status->next_billing_at );
-    }
+    #     die "Error: $@" if $@;
+    #     die "Cannot call GET on korduv" unless $res;
+    #     die "Request failed: " . $res->as_string unless $res->is_success;
+
+    #     $next_billing_at = decode_json( $res->decoded_content->status->next_billing_at );
+    # }
 
     return $self->status_ok(
         $c,
         entity => {
             user_plan_amount => $plan->amount,
             libres_donated   => $libres,
-            next_billing_at  => $next_billing_at,
         },
     );
 }

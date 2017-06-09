@@ -48,7 +48,6 @@ db_transaction {
         {
             libres_donated   => 3,
             user_plan_amount => $amount,
-            next_billing_at  => DateTime->now,
         },
         'Donor dashboard'
     );
