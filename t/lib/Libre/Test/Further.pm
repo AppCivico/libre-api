@@ -153,5 +153,15 @@ sub create_donor {
     );
 }
 
+sub fake_referer {
+    return sub {
+        my $fake_domain = fake_domain->();
+
+        return "http://"
+            . fake_domain()->()
+            . join("/", split(" ", fake_words(fake_int(2, 5)->())->()));
+    };
+}
+
 1;
 

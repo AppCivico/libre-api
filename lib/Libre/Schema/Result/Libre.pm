@@ -90,6 +90,16 @@ __PACKAGE__->table("libre");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 page_title
+
+  data_type: 'text'
+  is_nullable: 0
+
+=head2 page_referer
+
+  data_type: 'text'
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -119,6 +129,10 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "orphaned_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "page_title",
+  { data_type => "text", is_nullable => 0 },
+  "page_referer",
+  { data_type => "text", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -201,8 +215,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-01 18:05:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3ZfV+phguF0F6OzaSZcI+w
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-09 11:36:21
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uTmo/hqBvx+fE1Diav1urQ
 
 
 __PACKAGE__->meta->make_immutable;

@@ -30,8 +30,25 @@ db_transaction {
     }
 
     # Fazendo três doações para o jornalista 1, e duas doações para o jornalista 2.
-    rest_post "/api/journalist/$journalist_ids[0]/support", name => "support journalist 1" for 1 .. 3;
-    rest_post "/api/journalist/$journalist_ids[1]/support", name => "support journalist 2" for 1 .. 2;
+    for ( 1 .. 3 ) {
+        rest_post "/api/journalist/$journalist_ids[0]/support",
+            name => "support journalist 1",
+            [
+                page_title   => fake_sentences(1)->(),
+                page_referer => fake_referer->(),
+            ],
+        ;
+    }
+
+    for ( 1 .. 2 ) {
+        rest_post "/api/journalist/$journalist_ids[1]/support",
+            name => "support journalist 2",
+            [
+                page_title   => fake_sentences(1)->(),
+                page_referer => fake_referer->(),
+            ],
+        ;
+    }
 
     my $user_plan_id = (stash("user_plan")->{id});
     my $user_plan = $schema->resultset("UserPlan")->find($user_plan_id);

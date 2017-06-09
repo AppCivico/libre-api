@@ -45,6 +45,10 @@ db_transaction {
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donation",
         stash => "s2",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
     ;
 
     my $stashed_user_plan = stash "user_plan";

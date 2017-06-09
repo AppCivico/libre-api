@@ -33,6 +33,8 @@ __PACKAGE__->config(
         return {
             donor_id      => $c->user->id,
             journalist_id => $c->stash->{journalist}->id,
+            page_title    => $c->req->params->{page_title},
+            page_referer  => $c->req->params->{page_referer},
         };
     },
 );

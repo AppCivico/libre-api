@@ -21,6 +21,10 @@ db_transaction {
         rest_post "/api/journalist/$journalist_id/support",
             name  => "donate to a journalist",
             stash => "s1",
+            [
+                page_title   => fake_sentences(1)->(),
+                page_referer => fake_referer->(),
+            ],
         ;
 
         my $libre_rs = $schema->resultset("Libre");
@@ -37,6 +41,10 @@ db_transaction {
         rest_post "/api/journalist/$journalist_id/support",
             name  => "donate again",
             stash => "s2",
+            [
+                page_title   => fake_sentences(1)->(),
+                page_referer => fake_referer->(),
+            ],
         ;
 
         my $user_plan = stash "user_plan";
@@ -47,6 +55,10 @@ db_transaction {
             name    => "donate to a donor --fail",
             is_fail => 1,
             code    => 404,
+            [
+                page_title   => fake_sentences(1)->(),
+                page_referer => fake_referer->(),
+            ],
         ;
 
         die "rollback";
@@ -59,6 +71,10 @@ db_transaction {
         rest_post "/api/journalist/$journalist_id/support",
             name  => "support a journalist",
             stash => "s1",
+            [
+                page_title   => fake_sentences(1)->(),
+                page_referer => fake_referer->(),
+            ],
         ;
 
         # Os libres deve vir com user_plan_id null.
@@ -93,6 +109,10 @@ db_transaction {
         rest_post "/api/journalist/$journalist_id/support",
             name  => "support a journalist",
             stash => "s2",
+            [
+                page_title   => fake_sentences(1)->(),
+                page_referer => fake_referer->(),
+            ],
         ;
 
         ok (my $libre = $schema->resultset("Libre")->find(stash "s2.id"), "select donation");

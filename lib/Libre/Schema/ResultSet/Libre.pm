@@ -39,6 +39,14 @@ sub verifiers_specs {
                         $self->result_source->schema->resultset("User")->find($journalist_user_id)->is_journalist();
                     }
                 },
+                page_title => {
+                    type     => "Str",
+                    required => 1,
+                },
+                page_referer => {
+                    type     => "Str",
+                    required => 1,
+                },
             },
         ),
     };
@@ -61,7 +69,7 @@ sub action_specs {
 
             my $support = $self->create(
                 {
-                    ( map { $_ => $values{$_} } qw(donor_id journalist_id) ),
+                    ( map { $_ => $values{$_} } qw(donor_id journalist_id page_title page_referer) ),
                     (
                         $donor_plan
                         ? ( user_plan_id => $donor_plan->id )
@@ -82,11 +90,11 @@ sub invalid_libres {
         {
             created_at   => { "<" =>  \"(NOW() - '$ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} day'::interval)"},
             user_plan_id => undef,
-            invalid      => 0,
+            invalid      => "false",
         }
     )->update(
         {
-            invalid      => 1,
+            invalid      => "true",
             invalided_at => \"NOW()",
         }
     );

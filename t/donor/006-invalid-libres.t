@@ -18,16 +18,28 @@ db_transaction {
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donate to a journalist",
         stash => "s1",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
     ;
 
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donate to a journalist",
         stash => "s2",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
     ;
 
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donate to a journalist",
         stash => "s3",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
     ;
 
     # Alterando a data de criação de apenas 1 dos 3 libres distribuidos
