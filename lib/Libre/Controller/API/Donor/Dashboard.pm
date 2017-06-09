@@ -4,13 +4,9 @@ use Moose;
 use namespace::autoclean;
 
 use Libre::Utils;
-use Furl;
 use DateTime;
 
-BEGIN {
-    extends 'CatalystX::Eta::Controller::REST';
-    $ENV{LIBRE_KORDUV_URL} or die "missing env 'LIBRE_KORDUV_URL'.";
-}
+BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
 with "CatalystX::Eta::Controller::AutoListGET";
 
@@ -27,10 +23,6 @@ __PACKAGE__->config(
         return { $_[0]->get_columns() };
     },
 );
-
-has 'furl' => ( is => 'rw', lazy => 1, builder => '_build_furl' );
-
-sub _build_furl { Furl->new }
 
 sub root : Chained('/api/donor/object') : PathPart('')  : CaptureArgs(0) { 
     my ($self, $c) = @_;
@@ -58,37 +50,18 @@ sub list_GET {
             user_id => $c->user->id,
         }
     )->next;
-    
+
     # TODO mostrar até libres órfãos, mas avisar que não serão doados se não tiverem plano
     my $libres = $c->model("DB::Libre")->search(
         {
             user_plan_id => $plan->id,
-            invalid      => 0,
-            orphaned_at  => \"IS NULL",
+            invalid      => "false",
         }
     )->count;
 
     # TODO mostrar next_billing_at
     # if (is_test()) {
     #     $next_billing_at = DateTime->now(),
-    # }
-
-    # Isto não deve estar certo...
-    # else {
-    #     my $res;
-    #     eval {
-    #         retry {
-    #             $res = $self->furl->get( $ENV{LIBRE_KORDUV_URL} . '/subscriptions');
-    #             die $res->decoded_content unless $res->is_success;
-    #         }
-    #         retry_of { shift() < 3 } catch { die $_; };
-    #     };
-
-    #     die "Error: $@" if $@;
-    #     die "Cannot call GET on korduv" unless $res;
-    #     die "Request failed: " . $res->as_string unless $res->is_success;
-
-    #     $next_billing_at = decode_json( $res->decoded_content->status->next_billing_at );
     # }
 
     return $self->status_ok(
