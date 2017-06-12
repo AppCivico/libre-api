@@ -65,4 +65,39 @@ db_transaction {
     );
 };
 
-done_testing();
+db_transaction {
+    # Testando a resposta caso não haja um user_plan criado
+    create_journalist;
+    create_donor;
+    api_auth_as user_id => stash "donor.id";
+
+    my $journalist_id = stash "journalist.id";
+    my $donor_id      = stash "donor.id";
+
+    rest_post "/api/journalist/$journalist_id/support",
+        name  => "donate to a journalist",
+    ;
+
+    rest_post "/api/journalist/$journalist_id/support",
+        name  => "donate to a journalist",
+    ;
+
+    rest_post "/api/journalist/$journalist_id/support",
+        name  => "donate to a journalist",
+    ;
+
+    rest_get "/api/donor/$donor_id/dashboard",
+        name  => "donor dashboard",
+        stash => "donor_dashboard"
+    ;
+
+    is_deeply(
+        (stash "donor_dashboard"),
+        {
+            libres_donated   => 3,
+            user_plan_amount => undef,
+        },
+        'Donor dashboard'
+    );
+};
+
