@@ -105,6 +105,18 @@ __PACKAGE__->table("user_plan");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 cancel_on_korduv
+
+  data_type: 'boolean'
+  default_value: false
+  is_nullable: 0
+
+=head2 canceled
+
+  data_type: 'boolean'
+  default_value: false
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -145,6 +157,10 @@ __PACKAGE__->add_columns(
   { data_type => "boolean", default_value => \"true", is_nullable => 0 },
   "updated_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "cancel_on_korduv",
+  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
+  "canceled",
+  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -207,8 +223,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-08 11:27:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HVBUSn3C6vtsL7qfENPJNw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-12 16:55:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UxcMZr284t20fU+bKCdZ9w
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
@@ -281,6 +297,23 @@ sub action_specs {
     };
 }
 
+sub cancel {
+    my ($self) = @_;
+
+    $self->result_source->schema->txn_do(sub {
+        die \["plan_id", "plan already canceled"] if $self->canceled;
+
+        $self->update(
+            {
+                canceled         => "true",
+                canceled_at      => \"NOW()",
+                cancel_on_korduv => "true",
+            }
+        );
+        $self->update_on_korduv();
+    });
+}
+
 sub update_on_korduv {
     my ($self) = @_;
 
@@ -303,6 +336,10 @@ sub update_on_korduv {
         }
 
         # TODO Criar uma flag para sinalizar que o plano foi cancelado.
+        if ($self->cancel_on_korduv) {
+
+            $self->update( { cancel_on_korduv => "false" } );
+        }
 
         return $self->_korduv->setup_subscription(
             api_key => $ENV{LIBRE_KORDUV_API_KEY},
