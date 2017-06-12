@@ -76,14 +76,26 @@ db_transaction {
 
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donate to a journalist",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
     ;
 
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donate to a journalist",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
     ;
 
     rest_post "/api/journalist/$journalist_id/support",
         name  => "donate to a journalist",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
     ;
 
     rest_get "/api/donor/$donor_id/dashboard",
@@ -101,3 +113,4 @@ db_transaction {
     );
 };
 
+done_testing();
