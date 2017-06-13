@@ -111,6 +111,11 @@ __PACKAGE__->table("user_plan");
   default_value: false
   is_nullable: 0
 
+=head2 cancel_reason
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -153,6 +158,8 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "canceled",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
+  "cancel_reason",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -215,8 +222,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-13 11:26:23
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:slskaecA1OAc3YG5iOgjiQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-13 16:17:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:L8mhXdsWehdQxrwpVzkCMw
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
@@ -297,8 +304,9 @@ sub cancel {
 
         $self->update(
             {
-                canceled    => "true",
-                canceled_at => \"NOW()",
+                canceled      => "true",
+                canceled_at   => \"NOW()",
+                cancel_reason => "cancelled-by-user",
             }
         );
         $self->update_on_korduv();
@@ -328,7 +336,7 @@ sub update_on_korduv {
 
         if ($self->canceled) {
             $opts{cancel} = 1;
-            $opts{cancel_reason} = "cancelled-by-user";
+            $opts{cancel_reason} = $self->cancel_reason;
         }
 
         return $self->_korduv->setup_subscription(

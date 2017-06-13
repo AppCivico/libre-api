@@ -51,6 +51,7 @@ db_transaction {
     is ($Libre::Test::Further::korduv->{cancel}, 1, "cancel on korduv");
 
     is ($donor->get_current_plan(), undef, "get_current_plan=undef");
+    is ($user_plan->cancel_reason, "cancelled-by-user", "cancel_reason=cancelled-by-user");
 };
 
 done_testing();
