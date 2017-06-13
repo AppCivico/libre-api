@@ -24,7 +24,7 @@ __PACKAGE__->config(
     },
 );
 
-sub root : Chained('/api/donor/object') : PathPart('')  : CaptureArgs(0) { 
+sub root : Chained('/api/donor/object') : PathPart('')  : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     eval { $c->assert_user_roles(qw/donor/) };
