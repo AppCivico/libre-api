@@ -134,6 +134,12 @@ sub has_credit_card {
     }
 }
 
+=head2 get_current_plan()
+
+Retorna o plano vigente do I<donor>.
+
+=cut
+
 sub get_current_plan {
     my ($self) = @_;
 
@@ -146,6 +152,26 @@ sub get_current_plan {
     )
     ->next();
 }
+
+=head2 get_last_plan()
+
+Retorna o último plano do doador, independente se ele foi cancelado ou não.
+
+=cut
+
+sub get_last_plan {
+    my ($self) = @_;
+
+    return $self->user->user_plans->search(
+        {},
+        {
+            order_by  => { '-desc' => "created_at" },
+            rows      => 1,
+        }
+    )
+    ->next();
+}
+
 
 __PACKAGE__->meta->make_immutable;
 1;
