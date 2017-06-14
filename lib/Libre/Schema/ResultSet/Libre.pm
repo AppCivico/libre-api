@@ -67,16 +67,20 @@ sub action_specs {
 
             my $donor_plan = $self->result_source->schema->resultset("Donor")->find($donor_id)->get_current_plan();
 
-            my $support = $self->create(
-                {
-                    ( map { $_ => $values{$_} } qw(donor_id journalist_id page_title page_referer) ),
-                    (
-                        $donor_plan
-                        ? ( user_plan_id => $donor_plan->id )
-                        : ()
-                    ),
-                }
-            );
+            my $support = $self->search(\%values)->next;
+
+            if (!ref $support) {
+                $support = $self->create(
+                    {
+                        ( map { $_ => $values{$_} } qw(donor_id journalist_id page_title page_referer) ),
+                        (
+                            $donor_plan
+                            ? ( user_plan_id => $donor_plan->id )
+                            : ()
+                        ),
+                    }
+                );
+            }
 
             return $support;
         },
