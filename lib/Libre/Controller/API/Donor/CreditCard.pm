@@ -82,6 +82,11 @@ sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { 
 sub result_DELETE {
     my ($self, $c) = @_;
 
+    if (ref $c->stash->{donor}->get_current_plan()) {
+        $self->status_bad_request($c, message => "you have an active plan.");
+        $c->detach();
+    }
+
     my $cc = Net::Flotum::Object::CreditCard->new(
         flotum               => $c->stash->{flotum},
         id                   => $c->stash->{cc_id},
@@ -95,7 +100,7 @@ sub result_DELETE {
         $self->status_bad_request($c, error => "Cannot remove credit-card.");
     }
 
-    $c->stash->{donor}->user->donor->update({ flotum_preferred_credit_card => undef });
+    $c->stash->{donor}->user->donor->update( { flotum_preferred_credit_card => undef } );
 
     $self->status_no_content($c);
 }
