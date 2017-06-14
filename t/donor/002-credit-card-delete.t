@@ -47,14 +47,15 @@ db_transaction {
         $callback = URI->new($res->{href})->query_param('callback');
     };
 
+
     # Cadastrando um plano antes de invocar o callback do httpcb para que possamos atualizar no korduv também.
-    rest_post "/api/donor/$donor_id/plan",
-        name   => "Plano de um doador",
-        stash  => "user_plan",
-        params => {
-            amount => fake_int(2001, 100000)->(),
-        },
-    ;
+    #rest_post "/api/donor/$donor_id/plan",
+    #    name   => "Plano de um doador",
+    #    stash  => "user_plan",
+    #    params => {
+    #        amount => fake_int(2001, 100000)->(),
+    #    },
+    #;
 
     # Simulando o callback.
     rest_post [ $callback ],
@@ -66,33 +67,29 @@ db_transaction {
 
     ok (my $donor = $schema->resultset("Donor")->find($donor_id));
 
-    my $content_as_json = decode_json $content;
-    is_deeply(
-        decode_json($donor->flotum_preferred_credit_card),
-        {
-            map { $_ => $content_as_json->{$_} }
-              qw(conjecture_brand created_at id mask validity)
-        },
-        "flotum preferred creditcard"
-    );
+    ## Deletando cartão de crédito.
+    #rest_delete [ "/api/donor", $donor_id, "credit-card", $credit_card_id ],
+    #    name => "delete credit card",
+    #    code => 204,
+    #;
 
-    # Listagem.
-    rest_get [ "/api/donor", $donor_id, "credit-card" ],
-        name  => "list credit card",
-        stash => "l1",
-    ;
+    #is(
+    #    $donor->discard_changes->flotum_preferred_credit_card,
+    #    undef,
+    #    "user has no preferred credit card",
+    #);
 
-    my $credit_card_id;
-    stash_test "l1" => sub {
-        my $res = shift;
+    #rest_get [ "/api/donor", $donor_id, "credit-card" ],
+    #    name  => "list credit card again",
+    #    stash => "l2",
+    #;
 
-        is_deeply(
-            $res->{credit_cards},
-            [ $content_as_json ],
-        );
+    #is_deeply(
+    #    stash "l2",
+    #    { credit_cards => [] },
+    #    "empty credit card list",
+    #);
 
-        $credit_card_id = $res->{credit_cards}->[0]->{id};
-    };
 };
 
 done_testing();
