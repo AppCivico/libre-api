@@ -96,8 +96,8 @@ sub result_DELETE {
     eval { $cc->remove() };
     if ($@) {
         $c->error->log($@);
-
         $self->status_bad_request($c, error => "Cannot remove credit-card.");
+        $c->detach();
     }
 
     $c->stash->{donor}->user->donor->update( { flotum_preferred_credit_card => undef } );
@@ -108,10 +108,11 @@ sub result_DELETE {
 sub _load_customer {
     my ($self, $c) = @_;
 
-    my $user = $c->stash->{donor}->user;
+    my $donor = $c->stash->{donor};
+    my $user  = $donor->user;
 
-    if ($user->donor->flotum_id) {
-        return $c->stash->{flotum}->load_customer(id => $user->donor->flotum_id);
+    if ($donor->flotum_id) {
+        return $c->stash->{flotum}->load_customer(id => $donor->flotum_id);
     }
     else {
         my $customer = $c->stash->{flotum}->new_customer(
@@ -120,7 +121,7 @@ sub _load_customer {
             legal_document => $user->cpf || "missing",
         );
 
-        $user->donor->update({ flotum_id => $customer->id });
+        $donor->update( { flotum_id => $customer->id } );
 
         return $customer;
     }
