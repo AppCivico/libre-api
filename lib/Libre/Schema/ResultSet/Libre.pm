@@ -21,24 +21,6 @@ sub verifiers_specs {
         create => Data::Verifier->new(
             filters => [ qw(trim) ],
             profile => {
-                donor_id => {
-                    type       => "Int",
-                    required   => 1,
-                    post_check => sub {
-                        my $donor_user_id = $_[0]->get_value("donor_id");
-
-                        $self->result_source->schema->resultset("User")->find($donor_user_id)->is_donor();
-                    },
-                },
-                journalist_id => {
-                    type       => "Int",
-                    required   => 1,
-                    post_check => sub {
-                        my $journalist_user_id = $_[0]->get_value("journalist_id");
-
-                        $self->result_source->schema->resultset("User")->find($journalist_user_id)->is_journalist();
-                    }
-                },
                 page_title => {
                     type     => "Str",
                     required => 1,
@@ -63,7 +45,8 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             # Verificando se o doador possui um plano corrente.
-            my $donor_id = $values{donor_id};
+            my $donor_id = $self->{attrs}->{where}->{donor_id} || $self->{attrs}->{where}->{'me.donor_id'};
+            die "without 'donor_id'." unless $donor_id;
 
             my $donor_plan = $self->result_source->schema->resultset("Donor")->find($donor_id)->get_current_plan();
 
@@ -72,7 +55,7 @@ sub action_specs {
             if (!ref $support) {
                 $support = $self->create(
                     {
-                        ( map { $_ => $values{$_} } qw(donor_id journalist_id page_title page_referer) ),
+                        ( map { $_ => $values{$_} } qw(page_title page_referer) ),
                         (
                             $donor_plan
                             ? ( user_plan_id => $donor_plan->id )

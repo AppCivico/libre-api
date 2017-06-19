@@ -14,11 +14,11 @@ db_transaction {
     my $journalist_id = stash "journalist.id";
     my $donor_id      = stash "donor.id";
 
+    my $fake_title   = fake_sentences(1)->();
+    my $fake_referer = fake_referer->();
+
     db_transaction {
         diag "testando fluxo normal de libres";
-
-        my $fake_title   = fake_sentences(1)->();
-        my $fake_referer = fake_referer->();
 
         # Gerando uma doação sem plano.
         rest_post "/api/journalist/$journalist_id/support",
@@ -165,6 +165,15 @@ db_transaction {
             "libre user_plan_id=null",
         );
         die "rollback";
+    };
+
+    db_transaction {
+        diag "testando o valor minimo do libre.";
+
+        # Sem plano.
+        for ( 1 .. 13 ) {
+            rest_post "/api/journalist/$journalist_id/support", [ page_title => $fake_title, page_referer => $fake_referer ];
+        }
     };
 };
 
