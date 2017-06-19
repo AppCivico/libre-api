@@ -47,14 +47,29 @@ sub list_GET {
     my $donor_id   = $c->user->id;
     my $donor_rs   = $c->stash->{collection}->schema->resultset("Donor");
     my $user_plan  = $donor_rs->find($donor_id)->get_current_plan();
+    my ($libres, $amount);
 
-    # TODO mostrar até libres órfãos, mas avisar que não serão doados se não tiverem plano
-   my $libres = $c->model("DB::Libre")->search(
-        {
-            user_plan_id => [ undef, $user_plan->id ],
-            invalid      => "false",
-        }
-    )->count;
+    if ($user_plan) {
+        $libres = $c->model("DB::Libre")->search(
+            {
+                user_plan_id => [ undef, $user_plan->id ],
+                invalid      => "false",
+            }
+        )->count;
+
+        $amount = $user_plan->amount;
+    }
+    else {
+        $libres = $c->model("DB::Libre")->search(
+            {
+                user_plan_id => undef,
+                invalid      => "false",
+                donor_id     => $c->user->id,
+            }
+        )->count;
+
+        $amount = $user_plan;
+    }
 
     # TODO mostrar next_billing_at
     # if (is_test()) {
@@ -64,7 +79,7 @@ sub list_GET {
     return $self->status_ok(
         $c,
         entity => {
-            user_plan_amount => $user_plan->amount,
+            user_plan_amount => $amount,
             libres_donated   => $libres,
         },
     );
