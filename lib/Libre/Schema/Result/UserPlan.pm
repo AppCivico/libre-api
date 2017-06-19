@@ -384,7 +384,7 @@ sub on_korduv_callback_success {
         my $payment = $self->user->payments->create(
             {
                 donor_id     => $self->user_id,
-                amount       => ($amount / 100),
+                amount       => $amount,
                 user_plan_id => $self->id,
                 gateway_tax  => $ENV{LIBRE_TAX_PERCENTAGE},
             }
@@ -447,7 +447,7 @@ SQL_QUERY
                 name    => $self->user->name,
                 surname => $self->user->surname,
                 cpf     => $self->user->cpf,
-                amoumt  => $amount,
+                amount  => ($amount/100),
                 day     => DateTime->today->day,
                 month   => DateTime->today->month,
                 year    => DateTime->today->year,
