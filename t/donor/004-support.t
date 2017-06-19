@@ -17,13 +17,16 @@ db_transaction {
     db_transaction {
         diag "testando fluxo normal de libres";
 
+        my $fake_title   = fake_sentences(1)->();
+        my $fake_referer = fake_referer->();
+
         # Gerando uma doação sem plano.
         rest_post "/api/journalist/$journalist_id/support",
             name  => "donate to a journalist",
             stash => "s1",
             [
-                page_title   => fake_sentences(1)->(),
-                page_referer => fake_referer->(),
+                page_title   => $fake_title,
+                page_referer => $fake_referer,
             ],
         ;
 
@@ -56,10 +59,32 @@ db_transaction {
             is_fail => 1,
             code    => 404,
             [
-                page_title   => fake_sentences(1)->(),
-                page_referer => fake_referer->(),
+                page_title   => $fake_title,
+                page_referer => $fake_referer,
             ],
         ;
+
+        # Listagem de libres do ciclo.
+        rest_get "/api/journalist/$journalist_id/support",
+            name  => "list support",
+            stash => "l1",
+        ;
+
+        is (scalar(@{ stash "l1" }), 2, "two itens listed");
+
+        # Filtrando por page_title e page_referer. Esse endpoint pode ser usado pelo frontend para saber se um libre
+        # já foi doado para aquela página.
+        rest_get "/api/journalist/$journalist_id/support",
+            name  => "list support",
+            stash => "l2",
+            params => {
+                page_title   => $fake_title,
+                page_referer => $fake_referer,
+            },
+        ;
+
+        is (scalar(@{ stash "l2" }), 1, "only one");
+        is ( (stash "l2")->[0]->{id}, stash "s1.id" );
 
         die "rollback";
     };

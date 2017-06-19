@@ -5,6 +5,7 @@ use namespace::autoclean;
 
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
+with 'CatalystX::Eta::Controller::Search';
 with "CatalystX::Eta::Controller::AutoBase";
 with "CatalystX::Eta::Controller::AutoObject";
 with "CatalystX::Eta::Controller::AutoResultGET";
@@ -37,6 +38,12 @@ __PACKAGE__->config(
             page_referer  => $c->req->params->{page_referer},
         };
     },
+
+    # Search.
+    search_ok => {
+        page_title   => "Str",
+        page_referer => "Str",
+    },
 );
 
 sub root : Chained('/api/journalist/object') : PathPart('') : CaptureArgs(0) {
@@ -53,6 +60,31 @@ sub base : Chained('root') : PathPart('support') : CaptureArgs(0) { }
 sub object : Chained('base') : PathPart('') : CaptureArgs(1) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
+
+sub list_GET {
+    my ($self, $c) = @_;
+
+    my $donor_plan = $c->user->obj->donor->get_current_plan();
+
+    return $self->status_ok(
+        $c,
+        entity => [
+            $c->stash->{collection}->is_valid->search(
+                {
+                    donor_id      => $c->user->id,
+                    journalist_id => $c->stash->{journalist}->id,
+                    user_plan_id  => $donor_plan ? [ $donor_plan->id, undef ] : undef, 
+                },
+                {
+                    columns => [ qw/id donor_id created_at page_referer page_title user_plan_id donor_id journalist_id/ ],
+                    order_by => { '-desc' => "created_at" },
+                    result_class => "DBIx::Class::ResultClass::HashRefInflator",
+                }
+            )
+            ->all(),
+        ]
+    );
+}
 
 sub list_POST { }
 

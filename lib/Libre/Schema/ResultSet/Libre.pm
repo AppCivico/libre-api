@@ -104,4 +104,15 @@ sub invalid_libres {
     );
 }
 
+sub is_valid {
+    my ($self) = @_;
+
+    return $self->search(
+        {
+            invalid     => "false",
+            orphaned_at => undef,
+        }
+    );
+}
+
 1;
