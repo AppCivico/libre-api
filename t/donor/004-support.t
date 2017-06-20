@@ -65,7 +65,7 @@ db_transaction {
         ;
 
         # Listagem de libres do ciclo.
-        rest_get "/api/journalist/$journalist_id/support",
+        rest_get "/api/donor/$donor_id/list-supports",
             name  => "list support",
             stash => "l1",
         ;
@@ -74,7 +74,7 @@ db_transaction {
 
         # Filtrando por page_title e page_referer. Esse endpoint pode ser usado pelo frontend para saber se um libre
         # já foi doado para aquela página.
-        rest_get "/api/journalist/$journalist_id/support",
+        rest_get "/api/donor/$donor_id/list-supports",
             name  => "list support",
             stash => "l2",
             params => {
