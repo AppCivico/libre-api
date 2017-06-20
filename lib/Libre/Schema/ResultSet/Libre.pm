@@ -9,6 +9,7 @@ with "Libre::Role::Verification";
 with "Libre::Role::Verification::TransactionalActions::DBIC";
 
 BEGIN {
+    $ENV{LIBRE_MIN_AMOUNT}                  or die "missing env 'LIBRE_MIN_AMOUNT'.";
     $ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} or die "missing env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS'.";
 }
 
@@ -52,7 +53,10 @@ sub action_specs {
             my $donor_plan = $donor->get_current_plan();
 
             # Verificando o limite mínimo do valor do libre.
-            use DDP; p $donor->get_current_libre_price();
+            my $libre_min_amount = $ENV{LIBRE_MIN_AMOUNT};
+            if ($donor->get_price_of_next_libre() < $libre_min_amount) {
+                die \["support", "min libre price reached."];
+            }
 
             my $support = $self->search(\%values)->next;
             $support ||= $self->create(
