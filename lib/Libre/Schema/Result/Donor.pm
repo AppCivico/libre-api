@@ -172,6 +172,20 @@ sub get_last_plan {
     ->next();
 }
 
+sub get_current_libre_price {
+    my ($self) = @_;
+
+    my $user_plan = $self->get_current_plan();
+    my $user_plan_amount = 2000;
+    if (ref $user_plan) {
+        $user_plan_amount = $user_plan->amount;
+    }
+
+    $self->user->libre_donors
+        ->is_valid
+        ->search( { user_plan_id => ref($user_plan) ? [ $user_plan->id, undef ] : undef } )
+        ->count;
+}
 
 __PACKAGE__->meta->make_immutable;
 1;

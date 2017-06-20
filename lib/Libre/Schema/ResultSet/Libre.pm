@@ -48,22 +48,19 @@ sub action_specs {
             my $donor_id = $self->{attrs}->{where}->{donor_id} || $self->{attrs}->{where}->{'me.donor_id'};
             die "without 'donor_id'." unless $donor_id;
 
-            my $donor_plan = $self->result_source->schema->resultset("Donor")->find($donor_id)->get_current_plan();
+            my $donor = $self->result_source->schema->resultset("Donor")->find($donor_id);
+            my $donor_plan = $donor->get_current_plan();
+
+            # Verificando o limite mínimo do valor do libre.
+            use DDP; p $donor->get_current_libre_price();
 
             my $support = $self->search(\%values)->next;
-
-            if (!ref $support) {
-                $support = $self->create(
-                    {
-                        ( map { $_ => $values{$_} } qw(page_title page_referer) ),
-                        (
-                            $donor_plan
-                            ? ( user_plan_id => $donor_plan->id )
-                            : ()
-                        ),
-                    }
-                );
-            }
+            $support ||= $self->create(
+                {
+                    ( map { $_ => $values{$_} } qw(page_title page_referer) ),
+                    user_plan_id => $donor_plan ? $donor_plan->id : undef,
+                }
+            );
 
             return $support;
         },

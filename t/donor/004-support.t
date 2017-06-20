@@ -171,7 +171,7 @@ db_transaction {
         diag "testando o valor minimo do libre.";
 
         # Sem plano.
-        for ( 1 .. 13 ) {
+        for ( 1 .. 20 ) {
             rest_post "/api/journalist/$journalist_id/support", [ page_title => $fake_title, page_referer => $fake_referer ];
         }
     };
