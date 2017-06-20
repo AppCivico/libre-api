@@ -105,6 +105,17 @@ __PACKAGE__->table("user_plan");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 canceled
+
+  data_type: 'boolean'
+  default_value: false
+  is_nullable: 0
+
+=head2 cancel_reason
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -145,6 +156,10 @@ __PACKAGE__->add_columns(
   { data_type => "boolean", default_value => \"true", is_nullable => 0 },
   "updated_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "canceled",
+  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
+  "cancel_reason",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -207,8 +222,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-08 11:27:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HVBUSn3C6vtsL7qfENPJNw
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-13 16:17:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:L8mhXdsWehdQxrwpVzkCMw
 
 BEGIN {
     $ENV{LIBRE_KORDUV_API_KEY}        or die "missing env 'LIBRE_KORDUV_API_KEY'.";
@@ -220,6 +235,7 @@ use Data::Verifier;
 use WebService::Korduv;
 use WebService::HttpCallback;
 use Libre::Utils;
+use DateTime;
 
 has _httpcb => (
     is         => "ro",
@@ -281,6 +297,23 @@ sub action_specs {
     };
 }
 
+sub cancel {
+    my ($self) = @_;
+
+    $self->result_source->schema->txn_do(sub {
+        return if $self->canceled;
+
+        $self->update(
+            {
+                canceled      => "true",
+                canceled_at   => \"NOW()",
+                cancel_reason => "cancelled-by-user",
+            }
+        );
+        $self->update_on_korduv();
+    });
+}
+
 sub update_on_korduv {
     my ($self) = @_;
 
@@ -302,7 +335,10 @@ sub update_on_korduv {
             $self->update( { first_korduv_sync => "false" } );
         }
 
-        # TODO Criar uma flag para sinalizar que o plano foi cancelado.
+        if ($self->canceled) {
+            $opts{cancel} = 1;
+            $opts{cancel_reason} = $self->cancel_reason;
+        }
 
         return $self->_korduv->setup_subscription(
             api_key => $ENV{LIBRE_KORDUV_API_KEY},
@@ -398,6 +434,29 @@ SQL_QUERY
             method     => "post",
             wait_until => $wait_until->get_column("wait_until_epoch"),
         );
+
+        # TODO enviar recibo p/ doador
+        my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
+
+        my $email = Libre::Mailer::Template->new(
+            to       => $self->user->email,
+            from     => 'no-reply@libre.org.br',
+            subject  => "Libre - Recibo de seu pagamento",
+            template => get_data_section('donor-receipt.tt'),
+            vars     => {
+                name    => $self->user->name,
+                surname => $self->user->surname,
+                cpf     => $self->user->cpf,
+                amount  => ($amount/100),
+                day     => DateTime->today->day,
+                month   => DateTime->today->month,
+                year    => DateTime->today->year,
+            },
+        )->build_email();
+
+        my $queued = $email_queue_rs->create({ body => $email->as_string });
+
+        return $queued;
     });
 }
 
@@ -480,6 +539,91 @@ __DATA__
                                                                 <br></span>
                                                             </p>
                                                             <p> <strong> </strong>Recebemos a sinalização de que o seu pagamento falhou.<br><br>O pagamento tentará ser realizado novamente. Após 3 falhas o pagamento deverá ser realizado novamente manualmente.
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="30"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
+                                                            <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
+                                                                <p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+                                                                Equipe Libre
+                                                            </strong>
+                                                            <a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="30"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
+                                            <span><strong>Libre</strong></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div></div>
+    </body>
+</html>
+
+@@ donor-receipt.tt
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
+                                <tbody>
+                                    <tr>
+                                        <td height="50"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><a href="midialibre.com.br"><img src="http://imgur.com/a/vTl7s" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
+                                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
+                                                <tbody>
+                                                    <tr>
+                                                        <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+                                                            <p><span><b>Olá [% name %], </b><br>
+                                                                <br></span>
+                                                            </p>
+                                                            <p> <strong>Recebemos a sinalização de que o seu pagamento foi efetuado com sucesso.</strong><br><br>Abaixo está o seu recibo
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+                                                            <p>
+                                                                O Libre, inscrito no CNPJ sob o nº 19.131.243/0001-97, recebeu de [% name %] [% surname %], inscrito no CPF sob o nº [% cpf %], a importância de R$ [% amount %], concernete à venda de um plano de financiamento jornalístico.
+                                                                <br><br>
+                                                                São Paulo, [% day %] do [% month %] de [% year %].
+                                                                <br><br>
+                                                                Libre
                                                             </p>
                                                         </td>
                                                     </tr>

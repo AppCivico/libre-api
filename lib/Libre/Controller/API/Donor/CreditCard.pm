@@ -82,6 +82,11 @@ sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { 
 sub result_DELETE {
     my ($self, $c) = @_;
 
+    if (ref $c->stash->{donor}->get_current_plan()) {
+        $self->status_bad_request($c, message => "you have an active plan.");
+        $c->detach();
+    }
+
     my $cc = Net::Flotum::Object::CreditCard->new(
         flotum               => $c->stash->{flotum},
         id                   => $c->stash->{cc_id},
@@ -91,11 +96,11 @@ sub result_DELETE {
     eval { $cc->remove() };
     if ($@) {
         $c->error->log($@);
-
         $self->status_bad_request($c, error => "Cannot remove credit-card.");
+        $c->detach();
     }
 
-    $c->stash->{donor}->user->donor->update({ flotum_preferred_credit_card => undef });
+    $c->stash->{donor}->user->donor->update( { flotum_preferred_credit_card => undef } );
 
     $self->status_no_content($c);
 }
@@ -103,10 +108,11 @@ sub result_DELETE {
 sub _load_customer {
     my ($self, $c) = @_;
 
-    my $user = $c->stash->{donor}->user;
+    my $donor = $c->stash->{donor};
+    my $user  = $donor->user;
 
-    if ($user->donor->flotum_id) {
-        return $c->stash->{flotum}->load_customer(id => $user->donor->flotum_id);
+    if ($donor->flotum_id) {
+        return $c->stash->{flotum}->load_customer(id => $donor->flotum_id);
     }
     else {
         my $customer = $c->stash->{flotum}->new_customer(
@@ -115,7 +121,7 @@ sub _load_customer {
             legal_document => $user->cpf || "missing",
         );
 
-        $user->donor->update({ flotum_id => $customer->id });
+        $donor->update( { flotum_id => $customer->id } );
 
         return $customer;
     }

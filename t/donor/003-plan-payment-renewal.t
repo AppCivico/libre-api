@@ -98,6 +98,8 @@ db_transaction {
         name => "http callback triggered",
         code => 200,
     ;
+
+    is($schema->resultset("EmailQueue")->count, 1, 'email queued');
 };
 
 done_testing();

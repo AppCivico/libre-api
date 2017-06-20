@@ -47,6 +47,7 @@ db_transaction {
         $callback = URI->new($res->{href})->query_param('callback');
     };
 
+
     # Cadastrando um plano antes de invocar o callback do httpcb para que possamos atualizar no korduv também.
     rest_post "/api/donor/$donor_id/plan",
         name   => "Plano de um doador",
@@ -66,33 +67,45 @@ db_transaction {
 
     ok (my $donor = $schema->resultset("Donor")->find($donor_id));
 
-    my $content_as_json = decode_json $content;
-    is_deeply(
-        decode_json($donor->flotum_preferred_credit_card),
-        {
-            map { $_ => $content_as_json->{$_} }
-              qw(conjecture_brand created_at id mask validity)
-        },
-        "flotum preferred creditcard"
+    my $flotum_preferred_credit_card = decode_json $donor->flotum_preferred_credit_card;
+    my $credit_card_id = $flotum_preferred_credit_card->{id};
+
+    # Não devo poder deletar o cartão de crédito sem antes cancelar o plano.
+    rest_delete [ "/api/donor", $donor_id, "credit-card", $credit_card_id ],
+        name    => "delete credit card",
+        is_fail => 1,
+        code    => 400,
+    ;
+
+    # Cancelando o plano.
+    my $plan_id = stash "user_plan.id";
+    rest_post [ "api", "donor", $donor_id, "plan", stash "user_plan.id", "cancel" ],
+        name => "cancel plan",
+        code => 200
+    ;
+
+    # Deletando cartão de crédito.
+    rest_delete [ "/api/donor", $donor_id, "credit-card", $credit_card_id ],
+        name => "delete credit card",
+        code => 204,
+    ;
+
+    is(
+        $donor->discard_changes->flotum_preferred_credit_card,
+        undef,
+        "user has no preferred credit card",
     );
 
-    # Listagem.
     rest_get [ "/api/donor", $donor_id, "credit-card" ],
         name  => "list credit card",
         stash => "l1",
     ;
 
-    my $credit_card_id;
-    stash_test "l1" => sub {
-        my $res = shift;
-
-        is_deeply(
-            $res->{credit_cards},
-            [ $content_as_json ],
-        );
-
-        $credit_card_id = $res->{credit_cards}->[0]->{id};
-    };
+    is_deeply(
+        stash "l1",
+        { credit_cards => [] },
+        "empty credit card list",
+    );
 };
 
 done_testing();

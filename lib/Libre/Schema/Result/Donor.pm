@@ -134,17 +134,57 @@ sub has_credit_card {
     }
 }
 
+=head2 get_current_plan()
+
+Retorna o plano vigente do I<donor>.
+
+=cut
+
 sub get_current_plan {
     my ($self) = @_;
 
     return $self->user->user_plans->search(
-        { canceled_at => undef },
+        { canceled => "false", invalided_at => undef },
         {
             order_by  => { '-desc' => "created_at" },
             rows      => 1,
         }
     )
     ->next();
+}
+
+=head2 get_last_plan()
+
+Retorna o último plano do doador, independente se ele foi cancelado ou não.
+
+=cut
+
+sub get_last_plan {
+    my ($self) = @_;
+
+    return $self->user->user_plans->search(
+        {},
+        {
+            order_by  => { '-desc' => "created_at" },
+            rows      => 1,
+        }
+    )
+    ->next();
+}
+
+sub get_current_libre_price {
+    my ($self) = @_;
+
+    my $user_plan = $self->get_current_plan();
+    my $user_plan_amount = 2000;
+    if (ref $user_plan) {
+        $user_plan_amount = $user_plan->amount;
+    }
+
+    $self->user->libre_donors
+        ->is_valid
+        ->search( { user_plan_id => ref($user_plan) ? [ $user_plan->id, undef ] : undef } )
+        ->count;
 }
 
 __PACKAGE__->meta->make_immutable;
