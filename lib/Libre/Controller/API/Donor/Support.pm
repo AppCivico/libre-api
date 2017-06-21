@@ -1,4 +1,4 @@
-package Libre::Controller::API::Donor::Support::List;
+package Libre::Controller::API::Donor::Support;
 use common::sense;
 use Moose;
 use namespace::autoclean;
@@ -16,7 +16,7 @@ __PACKAGE__->config(
     },
 );
 
-sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) { 
+sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     eval { $c->assert_user_roles(qw/donor/) };
@@ -25,7 +25,7 @@ sub root : Chained('/api/donor/object') : PathPart('') : CaptureArgs(0) {
     }
 }
 
-sub base : Chained('root') : PathPart('list-supports') : CaptureArgs(0) {
+sub base : Chained('root') : PathPart('support') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
     $c->stash->{collection} = $c->model("DB::Libre")->search(
@@ -40,7 +40,7 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 sub list_GET {
     my ($self, $c) = @_;
 
-    # Isto necessita de um módulo mais organizado 
+    # TODO Isto necessita de um módulo mais organizado
     # com métodos específicos para jornalista e doador
 
     my $donor_plan = $c->user->obj->donor->get_current_plan();
@@ -54,7 +54,9 @@ sub list_GET {
                     columns => [ qw/id donor_id created_at page_referer page_title user_plan_id donor_id journalist_id/ ],
                     order_by => { '-desc' => "created_at" },
                     result_class => "DBIx::Class::ResultClass::HashRefInflator",
-                }
+                    page => 1,
+                    rows => 2,
+                },
             )
             ->all(),
         ]
