@@ -51,11 +51,11 @@ sub list_GET {
             $c->stash->{collection}->is_valid->search(
                 { user_plan_id  => $donor_plan ? [ $donor_plan->id, undef ] : undef },
                 {
-                    columns => [ qw/id donor_id created_at page_referer page_title user_plan_id donor_id journalist_id/ ],
-                    order_by => { '-desc' => "created_at" },
+                    columns      => [ qw/id donor_id created_at page_referer page_title user_plan_id donor_id journalist_id/ ],
+                    order_by     => { '-desc' => "created_at" },
                     result_class => "DBIx::Class::ResultClass::HashRefInflator",
-                    page => 1,
-                    rows => 2,
+                    page         => 1,
+                    rows         => 10,
                 },
             )
             ->all(),
