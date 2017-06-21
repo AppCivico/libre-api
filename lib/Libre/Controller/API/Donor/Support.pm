@@ -45,6 +45,9 @@ sub list_GET {
 
     my $donor_plan = $c->user->obj->donor->get_current_plan();
 
+    my $page   = $c->req->params->{page}    || 1;
+    my $offset = $c->req->params->{results} || 20;
+
     return $self->status_ok(
         $c,
         entity => [
@@ -54,8 +57,8 @@ sub list_GET {
                     columns      => [ qw/id donor_id created_at page_referer page_title user_plan_id donor_id journalist_id/ ],
                     order_by     => { '-desc' => "created_at" },
                     result_class => "DBIx::Class::ResultClass::HashRefInflator",
-                    page         => 1,
-                    rows         => 10,
+                    page         => $page,
+                    rows         => $offset,
                 },
             )
             ->all(),

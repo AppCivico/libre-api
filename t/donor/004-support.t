@@ -86,6 +86,38 @@ db_transaction {
         is (scalar(@{ stash "l2" }), 1, "only one");
         is ( (stash "l2")->[0]->{id}, stash "s1.id" );
 
+        rest_get "/api/donor/$donor_id/support",
+            name  => "list support",
+            stash => "l3",
+            [
+                page    => 1,
+                results => 1,
+            ]
+        ;
+
+        is (scalar(@{ stash "l3" }), 1, "only one result");
+
+        rest_get "/api/donor/$donor_id/support",
+            name  => "list support",
+            stash => "l4",
+            [
+                page    => 1,
+                results => 2,
+            ]
+        ;
+
+        is (scalar(@{ stash "l4" }), 2, "two results");
+
+        rest_get "/api/donor/$donor_id/support",
+            name  => "list support",
+            stash => "l5",
+            [
+                page    => 5,
+            ]
+        ;
+
+        is (scalar(@{ stash "l5" }), 0, "none, due to not enough results");
+
         die "rollback";
     };
 
