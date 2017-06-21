@@ -115,7 +115,15 @@ use Data::Printer;
 sub has_plan {
     my ($self) = @_;
 
-    if ($self->user->user_plans->search() >= 1) {
+    my $plan = $self->user->user_plans->search( 
+        { 
+            user_id      => $self->user_id,
+            canceled     => 0,
+            invalided_at => undef,
+        }
+    )->next;
+
+    if ($plan) {
         return 1;
     }
     else {
