@@ -115,8 +115,8 @@ use Data::Printer;
 sub has_plan {
     my ($self) = @_;
 
-    my $plan = $self->user->user_plans->search( 
-        { 
+    my $plan = $self->user->user_plans->search(
+        {
             user_id      => $self->user_id,
             canceled     => 0,
             invalided_at => undef,
