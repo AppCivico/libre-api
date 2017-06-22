@@ -297,6 +297,12 @@ sub action_specs {
     };
 }
 
+sub get_last_payment {
+    my ($self) = @_;
+
+    return $self->payments->search( {}, { order_by => { '-desc' => "created_at" } } )->next();
+}
+
 sub cancel {
     my ($self) = @_;
 
@@ -435,7 +441,6 @@ SQL_QUERY
             wait_until => $wait_until->get_column("wait_until_epoch"),
         );
 
-        # TODO enviar recibo p/ doador
         my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
 
         my $email = Libre::Mailer::Template->new(

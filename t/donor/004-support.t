@@ -65,7 +65,7 @@ db_transaction {
         ;
 
         # Listagem de libres do ciclo.
-        rest_get "/api/journalist/$journalist_id/support",
+        rest_get "/api/donor/$donor_id/support",
             name  => "list support",
             stash => "l1",
         ;
@@ -74,7 +74,7 @@ db_transaction {
 
         # Filtrando por page_title e page_referer. Esse endpoint pode ser usado pelo frontend para saber se um libre
         # já foi doado para aquela página.
-        rest_get "/api/journalist/$journalist_id/support",
+        rest_get "/api/donor/$donor_id/support",
             name  => "list support",
             stash => "l2",
             params => {
@@ -85,6 +85,38 @@ db_transaction {
 
         is (scalar(@{ stash "l2" }), 1, "only one");
         is ( (stash "l2")->[0]->{id}, stash "s1.id" );
+
+        rest_get "/api/donor/$donor_id/support",
+            name  => "list support",
+            stash => "l3",
+            [
+                page    => 1,
+                results => 1,
+            ]
+        ;
+
+        is (scalar(@{ stash "l3" }), 1, "only one result");
+
+        rest_get "/api/donor/$donor_id/support",
+            name  => "list support",
+            stash => "l4",
+            [
+                page    => 1,
+                results => 2,
+            ]
+        ;
+
+        is (scalar(@{ stash "l4" }), 2, "two results");
+
+        rest_get "/api/donor/$donor_id/support",
+            name  => "list support",
+            stash => "l5",
+            [
+                page    => 5,
+            ]
+        ;
+
+        is (scalar(@{ stash "l5" }), 0, "none, due to not enough results");
 
         die "rollback";
     };
@@ -170,11 +202,71 @@ db_transaction {
     db_transaction {
         diag "testando o valor minimo do libre.";
 
+        local $ENV{LIBRE_MIN_AMOUNT} = 100;
+
         # Sem plano.
-        for ( 1 .. 13 ) {
-            rest_post "/api/journalist/$journalist_id/support", [ page_title => $fake_title, page_referer => $fake_referer ];
-        }
+        db_transaction {
+            for ( 1 .. 18 ) {
+                rest_post "/api/journalist/$journalist_id/support",
+                    name => "support $_",
+                    [
+                        page_title   => fake_sentences(1)->(),
+                        page_referer => fake_referer->(),
+                    ]
+                ;
+            }
+
+            rest_post "/api/journalist/$journalist_id/support",
+                name    => "support error --fail",
+                is_fail => 1,
+                code    => 400,
+                [ page_title => fake_sentences(1)->(), page_referer => fake_referer->() ]
+            ;
+        };
+
+        # Com plano.
+        db_transaction {
+            my $plan_amount = 5000;
+
+            rest_post "/api/donor/$donor_id/plan",
+                name  => "creating donor plan",
+                stash => "p1",
+                [ amount => $plan_amount ],
+            ;
+
+            # Fakeando um pagamento.
+            ok (
+                my $payment = $schema->resultset("Payment")->create(
+                    {
+                        donor_id     => $donor_id,
+                        user_plan_id => stash "p1.id",
+                        amount       => $plan_amount,
+                        gateway_tax  => 10.0,
+                    },
+                ),
+                "fake payment",
+            );
+
+            for ( 1 .. 45 ) {
+                rest_post "/api/journalist/$journalist_id/support",
+                    name => "support $_",
+                    [
+                        page_title   => fake_sentences(1)->(),
+                        page_referer => fake_referer->(),
+                    ]
+                ;
+            }
+
+            rest_post "/api/journalist/$journalist_id/support",
+                name    => "support error --fail",
+                is_fail => 1,
+                code    => 400,
+                [ page_title => fake_sentences(1)->(), page_referer => fake_referer->() ]
+            ;
+
+        };
     };
 };
 
 done_testing();
+

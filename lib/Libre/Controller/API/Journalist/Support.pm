@@ -52,26 +52,7 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
-sub list_GET {
-    my ($self, $c) = @_;
-
-    my $donor_plan = $c->user->obj->donor->get_current_plan();
-
-    return $self->status_ok(
-        $c,
-        entity => [
-            $c->stash->{collection}->is_valid->search(
-                { user_plan_id  => $donor_plan ? [ $donor_plan->id, undef ] : undef },
-                {
-                    columns => [ qw/id donor_id created_at page_referer page_title user_plan_id donor_id journalist_id/ ],
-                    order_by => { '-desc' => "created_at" },
-                    result_class => "DBIx::Class::ResultClass::HashRefInflator",
-                }
-            )
-            ->all(),
-        ]
-    );
-}
+sub list_GET { }
 
 sub list_POST {
     my ($self, $c) = @_;

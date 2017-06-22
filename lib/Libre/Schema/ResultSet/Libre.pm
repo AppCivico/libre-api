@@ -9,6 +9,7 @@ with "Libre::Role::Verification";
 with "Libre::Role::Verification::TransactionalActions::DBIC";
 
 BEGIN {
+    $ENV{LIBRE_MIN_AMOUNT}                  or die "missing env 'LIBRE_MIN_AMOUNT'.";
     $ENV{LIBRE_ORPHAN_EXPIRATION_TIME_DAYS} or die "missing env 'LIBRE_ORPHAN_EXPIRATION_TIME_DAYS'.";
 }
 
@@ -48,22 +49,22 @@ sub action_specs {
             my $donor_id = $self->{attrs}->{where}->{donor_id} || $self->{attrs}->{where}->{'me.donor_id'};
             die "without 'donor_id'." unless $donor_id;
 
-            my $donor_plan = $self->result_source->schema->resultset("Donor")->find($donor_id)->get_current_plan();
+            my $donor = $self->result_source->schema->resultset("Donor")->find($donor_id);
+            my $donor_plan = $donor->get_current_plan();
+
+            # Verificando o limite mínimo do valor do libre.
+            my $libre_min_amount = $ENV{LIBRE_MIN_AMOUNT};
+            if ($donor->get_price_of_next_libre() < $libre_min_amount) {
+                die \["support", "min libre price reached."];
+            }
 
             my $support = $self->search(\%values)->next;
-
-            if (!ref $support) {
-                $support = $self->create(
-                    {
-                        ( map { $_ => $values{$_} } qw(page_title page_referer) ),
-                        (
-                            $donor_plan
-                            ? ( user_plan_id => $donor_plan->id )
-                            : ()
-                        ),
-                    }
-                );
-            }
+            $support ||= $self->create(
+                {
+                    ( map { $_ => $values{$_} } qw(page_title page_referer) ),
+                    user_plan_id => $donor_plan ? $donor_plan->id : undef,
+                }
+            );
 
             return $support;
         },
