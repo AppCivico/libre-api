@@ -9,8 +9,6 @@ with 'CatalystX::Eta::Controller::Search';
 with "CatalystX::Eta::Controller::AutoObject";
 with "CatalystX::Eta::Controller::AutoResultGET";
 
-# TODO caso o valor do libre seja menor que X deve ser iniciado um fluxo a definir.
-
 __PACKAGE__->config(
     # AutoObject.
     object_key         => "support",

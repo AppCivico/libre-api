@@ -40,9 +40,6 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 sub list_GET {
     my ($self, $c) = @_;
 
-    # TODO Isto necessita de um módulo mais organizado
-    # com métodos específicos para jornalista e doador
-
     my $donor_plan = $c->user->obj->donor->get_current_plan();
 
     my $page   = $c->req->params->{page}    || 1;

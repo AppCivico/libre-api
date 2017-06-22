@@ -156,7 +156,6 @@ sub _update_credit_card {
 sub _compute_donations {
     my ($self, $c, $extra_args) = @_;
 
-    # TODO Esse é o callback que deve fechar o ciclo e iniciar a distribuição de libres.
     my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next };
     return unless ref $user;
 
@@ -172,7 +171,7 @@ sub _compute_donations {
     )->next();
 
     if (ref $user_plan) {
-        # TODO Obtendo todos os likes pendentes.
+        # Obtendo todos os likes pendentes.
         my $last_close_at = $user_plan->last_close_at;
 
         my $libre_rs = $c->model("DB::Libre")->search(
@@ -217,8 +216,6 @@ sub _compute_donations {
                 }
             );
         }
-
-        # TODO Registrar a doação para o próprio Libre.
     }
 }
 
