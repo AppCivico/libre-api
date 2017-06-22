@@ -49,7 +49,6 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            # TODO Se já tiver um plano anteriormente, verificar se devo cancelá-lo, ou se devo barrar a ação.
             my $user_plan = $self->create(\%values);
 
             # Atualizando a informação no Korduv.

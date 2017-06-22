@@ -38,6 +38,15 @@ db_transaction {
     is ($user_plan->canceled, 0, "not canceled yet");
     is ($user_plan->canceled_at, undef, "canceled_at=undef");
 
+    # Não deve ser possível criar um novo plano enquanto já houver um ativo. O usuário deve cancelar o plano vigente
+    # antes de criar um novo.
+    rest_post "/api/donor/$donor_id/plan",
+        name    => "create donor plan --fail",
+        is_fail => 1,
+        code    => 400,
+        [ amount => fake_int(2001, 100000)->() ],
+    ;
+
     # Cancelando o plano.
     rest_post "/api/donor/$donor_id/plan/$plan_id/cancel",
         name => "cancel plan",

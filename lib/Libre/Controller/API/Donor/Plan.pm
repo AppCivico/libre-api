@@ -54,6 +54,10 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 sub list_POST {
     my ($self, $c) = @_;
 
+    if (ref $c->stash->{donor}->get_current_plan()) {
+        die { error_code => 400, message => "you already have a plan.", msg => "" };
+    }
+
     my $user_plan = $c->stash->{collection}->execute(
         $c,
         for  => "create",
