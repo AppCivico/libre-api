@@ -202,11 +202,71 @@ db_transaction {
     db_transaction {
         diag "testando o valor minimo do libre.";
 
+        local $ENV{LIBRE_MIN_AMOUNT} = 100;
+
         # Sem plano.
-        for ( 1 .. 20 ) {
-            rest_post "/api/journalist/$journalist_id/support", [ page_title => $fake_title, page_referer => $fake_referer ];
-        }
+        db_transaction {
+            for ( 1 .. 18 ) {
+                rest_post "/api/journalist/$journalist_id/support",
+                    name => "support $_",
+                    [
+                        page_title   => fake_sentences(1)->(),
+                        page_referer => fake_referer->(),
+                    ]
+                ;
+            }
+
+            rest_post "/api/journalist/$journalist_id/support",
+                name    => "support error --fail",
+                is_fail => 1,
+                code    => 400,
+                [ page_title => fake_sentences(1)->(), page_referer => fake_referer->() ]
+            ;
+        };
+
+        # Com plano.
+        db_transaction {
+            my $plan_amount = 5000;
+
+            rest_post "/api/donor/$donor_id/plan",
+                name  => "creating donor plan",
+                stash => "p1",
+                [ amount => $plan_amount ],
+            ;
+
+            # Fakeando um pagamento.
+            ok (
+                my $payment = $schema->resultset("Payment")->create(
+                    {
+                        donor_id     => $donor_id,
+                        user_plan_id => stash "p1.id",
+                        amount       => $plan_amount,
+                        gateway_tax  => 10.0,
+                    },
+                ),
+                "fake payment",
+            );
+
+            for ( 1 .. 45 ) {
+                rest_post "/api/journalist/$journalist_id/support",
+                    name => "support $_",
+                    [
+                        page_title   => fake_sentences(1)->(),
+                        page_referer => fake_referer->(),
+                    ]
+                ;
+            }
+
+            rest_post "/api/journalist/$journalist_id/support",
+                name    => "support error --fail",
+                is_fail => 1,
+                code    => 400,
+                [ page_title => fake_sentences(1)->(), page_referer => fake_referer->() ]
+            ;
+
+        };
     };
 };
 
 done_testing();
+

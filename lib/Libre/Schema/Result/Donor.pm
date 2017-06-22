@@ -172,19 +172,36 @@ sub get_last_plan {
     ->next();
 }
 
-sub get_current_libre_price {
+sub get_price_of_next_libre {
     my ($self) = @_;
 
     my $user_plan = $self->get_current_plan();
-    my $user_plan_amount = 2000;
+
+    my $user_plan_amount    = 2000;
+    my $payment_gateway_tax = $ENV{LIBRE_TAX_PERCENTAGE};
+
+    # Se o usuário possui um plano, obtenho o valor contratado. Caso não possua, assumo o valor mínimo de um plano e
+    # a taxa corrente de taxa de gateway (que está setada na %ENV).
     if (ref $user_plan) {
-        $user_plan_amount = $user_plan->amount;
+        if (my $payment = $user_plan->get_last_payment()) {
+            $user_plan_amount    = $payment->amount;
+            $payment_gateway_tax = $payment->gateway_tax;
+        }
     }
 
-    $self->user->libre_donors
+    # Tirando a porcentagem do libre do amount.
+    my $libre_tax = ( $user_plan_amount * ( $payment_gateway_tax / 100 ) );
+    my $amount_without_libre_tax = $user_plan_amount - $libre_tax;
+
+    my $libres_count = $self->user->libre_donors
         ->is_valid
         ->search( { user_plan_id => ref($user_plan) ? [ $user_plan->id, undef ] : undef } )
-        ->count;
+        ->count
+    || 1;
+
+    $libres_count += 1;
+
+    return int($amount_without_libre_tax / $libres_count);
 }
 
 __PACKAGE__->meta->make_immutable;
