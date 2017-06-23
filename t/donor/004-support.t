@@ -202,6 +202,7 @@ db_transaction {
     db_transaction {
         diag "testando o valor minimo do libre.";
 
+        local $ENV{LIBRE_TAX_PERCENTAGE} = 10.0;
         local $ENV{LIBRE_MIN_AMOUNT} = 100;
 
         # Sem plano.
