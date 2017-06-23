@@ -92,6 +92,23 @@ db_transaction {
         valid_until => \"(NOW() + '1 days'::interval)",
     });
 
+    # Nova senha não pode ser vazia ou menor que 4 digitos
+    rest_post "/api/login/forgot_password/reset/$token",
+        name    => "empty password must fail",
+        is_fail => 1,
+        params  => {
+            new_password => "",
+        },
+    ;
+
+    rest_post "/api/login/forgot_password/reset/$token",
+        name    => "password with less than 4 chars must fail",
+        is_fail => 1,
+        params  => {
+            new_password => "abc",
+        },
+    ;
+
     rest_post "/api/login/forgot_password/reset/$token",
         name   => "reset password",
         code   => 200,
