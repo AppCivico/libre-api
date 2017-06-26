@@ -8,7 +8,7 @@ extends "DBIx::Class::ResultSet";
 with "Libre::Role::Verification";
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
-use Libre::Types qw(EmailAddress PhoneNumber);
+use Libre::Types qw(EmailAddress PhoneNumber CPF);
 
 use Data::Verifier;
 use Number::Phone::BR;
@@ -44,6 +44,10 @@ sub verifiers_specs {
                     required => 0,
                     type     => PhoneNumber,
                 },
+                cpf => {
+                    required => 1,
+                    type     => CPF,
+                },
             },
         ),
     };
@@ -59,13 +63,15 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            my $user = $self->result_source->schema->resultset("User")->create({
-                ( map { $_ => $values{$_} } qw(name surname email password) ),
-                verified    => 1,
-                verified_at => \"now()",
-            });
+            my $user = $self->result_source->schema->resultset("User")->create(
+                {
+                    ( map { $_ => $values{$_} } qw(name surname email password cpf) ),
+                    verified    => 1,
+                    verified_at => \"NOW()",
+                }
+            );
 
-            $user->add_to_roles({ id => 3 });
+            $user->add_to_roles( { id => 3 } );
 
             return $self->create({
                 ( map { $_ => $values{$_} } qw(phone) ),
