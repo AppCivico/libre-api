@@ -108,9 +108,59 @@ __PACKAGE__->belongs_to(
 
 # Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-12 17:10:31
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MFuvND+lYdFDi0XHImqkvQ
-use Libre::Utils;
 
-use Data::Printer;
+use Libre::Utils;
+use Libre::Types qw(EmailAddress PhoneNumber CPF);
+
+with 'Libre::Role::Verification';
+with 'Libre::Role::Verification::TransactionalActions::DBIC';
+
+sub verifiers_specs {
+    my $self = shift;
+
+    return {
+        update => Data::Verifier->new(
+            filters => [ qw(trim) ],
+            profile => {
+                name => {
+                    required => 0,
+                    type     => "Str",
+                },
+                surname => {
+                    required => 0,
+                    type     => "Str",
+                },
+                phone => {
+                    required => 0,
+                    type     => PhoneNumber,
+                },
+                cpf => {
+                    required => 0,
+                    type     => CPF,
+                },
+            },
+        ),
+    };
+}
+
+sub action_specs {
+    my ($self) = @_;
+
+    return {
+        update => sub {
+            my $r = shift;
+
+            my %values = $r->valid_values;
+            not defined $values{$_} and delete $values{$_} for keys %values;
+
+            my %user_params;
+            defined($values{$_}) and $user_params{$_} = delete $values{$_} for qw/name surname/;
+
+            $self->update(\%values);
+            $self->user->update(\%user_params) if %user_params;
+        },
+    };
+}
 
 sub has_plan {
     my ($self) = @_;
