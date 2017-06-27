@@ -356,7 +356,7 @@ sub update_on_korduv {
             flotum_customer_id     => $flotum_id,
             flotum_credit_card_id  => $flotum_preferred_credit_card,
 
-            currency       => "bra",
+            currency       => "brl",
             pricing_schema => "linear",
 
             on_charge_renewed          => get_libre_api_url_for('/korduv/success-renewal/' . $callback_id ),
