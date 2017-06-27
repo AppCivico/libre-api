@@ -47,7 +47,9 @@ db_transaction {
         is ($res->{name}, "Carlos", "name updated");
         is ($res->{phone}, "+5511980000000", "phone updated");
     };
-};
 
+    create_donor;
+    rest_get [ "api", "donor", stash "donor.id" ], name => "other donor", is_fail => 1, code => 403;
+};
 
 done_testing();

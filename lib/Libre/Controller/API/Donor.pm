@@ -30,7 +30,7 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
     $c->stash->{is_me} = int($c->user->id == $user->id);
     $c->stash->{donor} = $user;
 
-    $c->detach("/forbidden") unless $c->stash->{is_me};
+    $c->detach("/api/forbidden") unless $c->stash->{is_me};
 }
 
 sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
