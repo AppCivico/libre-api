@@ -12,44 +12,48 @@ db_transaction {
     my $donor_id = stash "donor.id";
 
     rest_get "/api/donor/$donor_id",
-        name    => "get when logged off --fail",
-        is_fail => 1,
-        code    => 403,
-    ;
+      name    => "get when logged off --fail",
+      is_fail => 1,
+      code    => 403,
+      ;
 
     api_auth_as user_id => stash "donor.id";
     rest_get "/api/donor/$donor_id",
-        name  => "get donor",
-        list  => 1,
-        stash => "get_donor",
-    ;
+      name  => "get donor",
+      list  => 1,
+      stash => "get_donor",
+      ;
 
     stash_test "get_donor" => sub {
         my $res = shift;
 
-        is ($res->{name}, "Junior");
-        is ($res->{surname}, "Moraes");
+        is($res->{name},    "Junior");
+        is($res->{surname}, "Moraes");
     };
 
     # Editando o donor.
     rest_put [ "api", "donor", $donor_id ],
-        name => "update donor",
-        [
-            name  => "Carlos",
-            phone => "+5511980000000",
-        ],
-    ;
+      name => "update donor", [
+        name  => "Carlos",
+        phone => "+5511980000000",
+      ],
+      ;
 
     rest_reload_list "get_donor";
     stash_test "get_donor.list" => sub {
         my $res = shift;
 
-        is ($res->{name}, "Carlos", "name updated");
-        is ($res->{phone}, "+5511980000000", "phone updated");
+        is($res->{name},  "Carlos",         "name updated");
+        is($res->{phone}, "+5511980000000", "phone updated");
     };
 
     create_donor;
-    rest_get [ "api", "donor", stash "donor.id" ], name => "other donor", is_fail => 1, code => 403;
+    rest_get [ "api", "donor", stash "donor.id" ], name => "can't get other donor", is_fail => 1, code => 403;
+    rest_put [ "api", "donor", stash "donor.id" ],
+      name    => "can't put other donor",
+      is_fail => 1,
+      code    => 403,
+      [ name => fake_name()->() ];
 };
 
 done_testing();
