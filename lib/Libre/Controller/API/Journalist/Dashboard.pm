@@ -58,8 +58,8 @@ sub list_GET {
             $c->stash->{collection}->is_valid->search(
                 { journalist_id => $journalist_id },
                 {
-                    columns      => 
-                        [ 
+                    columns      =>
+                        [
                             'page_referer',
                             'page_title',
                             { times_supported => { count => \'1' } },

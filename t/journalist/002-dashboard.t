@@ -90,7 +90,6 @@ db_transaction {
         ok(defined($times_supported_second), 'second article supports');
         is($times_supported_second, 3);
     };
-    
 };
 
 done_testing();
