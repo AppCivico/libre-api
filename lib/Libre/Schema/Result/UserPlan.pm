@@ -385,9 +385,9 @@ sub on_korduv_callback_success {
     my ($self, $data) = @_;
 
     $self->result_source->schema->txn_do(sub {
-        die "invalid request" unless ref($data) eq "HASH" && defined($data->{last_subscription_charge});
+        die "invalid request" unless ref($data) eq "HASH" && defined($data->{status}->{last_subscription_charge});
 
-        my $amount = $data->{last_subscription_charge}->{charge_amount};
+        my $amount = $data->{status}->{last_subscription_charge}->{charge_amount};
 
         # Criando o registro na tabela payment.
         my $payment = $self->user->payments->create(
