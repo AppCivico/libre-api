@@ -45,7 +45,7 @@ db_transaction {
         [
             page_title   => fake_sentences(1)->(),
             page_referer => fake_referer->(),
-        ],
+       ],
     ;
 
     my $plan_id  = (stash("donor_plan")->{id});

@@ -33,43 +33,26 @@ sub root : Chained('/api/donor/object') : PathPart('')  : CaptureArgs(0) {
     }
 }
 
-sub base : Chained('root') : PathPart('dashboard') : CaptureArgs(0) {
-    my ($self, $c) = @_;
-
-    $c->stash->{collection} = $c->stash->{donor}->user->user_plans;
-}
+sub base : Chained('root') : PathPart('dashboard') : CaptureArgs(0) { }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 
 sub list_GET {
     my ($self, $c) = @_;
 
-    my $donor_id   = $c->user->id;
-    my $donor_rs   = $c->stash->{collection}->schema->resultset("Donor");
-    my $user_plan  = $donor_rs->find($donor_id)->get_current_plan();
-    my ($libres, $amount);
+    my $donor     = $c->stash->{donor};
+    my $donor_id  = $donor->id;
+    my $donor_rs  = $c->stash->{collection};
+    
+    my $user_plan  = $donor->get_current_plan();
 
-    if ($user_plan) {
-        $libres = $c->model("DB::Libre")->search(
-            {
-                user_plan_id => [ undef, $user_plan->id ],
-                invalid      => "false",
-            }
-        )->count;
-
-        $amount = $user_plan->amount;
-    }
-    else {
-        $libres = $c->model("DB::Libre")->search(
-            {
-                user_plan_id => undef,
-                invalid      => "false",
-                donor_id     => $c->user->id,
-            }
-        )->count;
-
-        $amount = $user_plan;
-    }
+    my $libres = $c->model("DB::Libre")->search(
+        {
+            user_plan_id => ref $user_plan ? [ $user_plan->id, undef ] : undef,
+            invalid      => "false",
+            donor_id     => $donor_id,
+        }
+    )->count;
 
     # TODO mostrar next_billing_at
     # if (is_test()) {
@@ -79,7 +62,7 @@ sub list_GET {
     return $self->status_ok(
         $c,
         entity => {
-            user_plan_amount => $amount,
+            user_plan_amount => ref $user_plan ? $user_plan->amount : undef,
             libres_donated   => $libres,
         },
     );

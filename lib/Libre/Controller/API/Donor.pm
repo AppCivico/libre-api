@@ -18,6 +18,8 @@ sub base : Chained('root') : PathPart('donor') : CaptureArgs(0) { }
 sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
     my ($self, $c, $user_id) = @_;
 
+    $c->stash->{collection} = $c->stash->{collection}->search( { user_id => $user_id } );
+
     my $user = $c->stash->{collection}->find($user_id);
     if (!$user) {
          $c->detach("/error_404");
