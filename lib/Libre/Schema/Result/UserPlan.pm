@@ -235,6 +235,7 @@ use Data::Verifier;
 use WebService::Korduv;
 use WebService::HttpCallback;
 use Libre::Utils;
+use JSON::MaybeXS;
 use DateTime;
 
 has _httpcb => (
@@ -333,6 +334,8 @@ sub update_on_korduv {
 
         return unless defined($flotum_id) && defined($flotum_preferred_credit_card);
 
+        $flotum_preferred_credit_card = decode_json($flotum_preferred_credit_card);
+
         my %opts = ();
         if ($self->first_korduv_sync) {
             $opts{restart_cycle}   = 1;
@@ -354,7 +357,7 @@ sub update_on_korduv {
 
             remote_subscription_id => "user:$user_id",
             flotum_customer_id     => $flotum_id,
-            flotum_credit_card_id  => $flotum_preferred_credit_card,
+            flotum_credit_card_id  => $flotum_preferred_credit_card->{id},
 
             currency       => "brl",
             pricing_schema => "linear",

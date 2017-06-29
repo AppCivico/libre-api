@@ -19,7 +19,7 @@ db_transaction {
         $donor->update({
             flotum_id => "587ef4d0-3316-4499-9f12-518a965248d7",
             flotum_preferred_credit_card =>
-'"{"validity":"201801","conjecture_brand":"mastercard","created_at":"2017-06-07T18:05:09","id":"3acd6d0c-58c0-40b9-9144-84a8b5f14806","mask":"5268*********853"}',
+'{"validity":"201801","conjecture_brand":"mastercard","created_at":"2017-06-07T18:05:09","id":"3acd6d0c-58c0-40b9-9144-84a8b5f14806","mask":"5268*********853"}',
         }),
         'mock credit card'
     );
