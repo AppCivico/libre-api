@@ -6,9 +6,15 @@ use namespace::autoclean;
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
 with "CatalystX::Eta::Controller::AutoBase";
+with "CatalystX::Eta::Controller::AutoResultPUT";
 
 __PACKAGE__->config(
-    result      => "DB::Donor",
+    # AutoBase.
+    result => "DB::Donor",
+
+    # AutoResultPUT.
+    object_key     => "donor",
+    result_put_for => "update",
 );
 
 sub root : Chained('/api/logged') : PathPart('') : CaptureArgs(0) { }
@@ -21,11 +27,12 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
     $c->stash->{collection} = $c->stash->{collection}->search( { user_id => $user_id } );
 
     my $user = $c->stash->{collection}->find($user_id);
-    if (!$user) {
-         $c->detach("/error_404");
-    }
+    $c->detach("/error_404") unless ref $user;
 
+    $c->stash->{is_me} = int($c->user->id == $user->id);
     $c->stash->{donor} = $user;
+
+    $c->detach("/api/forbidden") unless $c->stash->{is_me};
 }
 
 sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }
@@ -33,18 +40,23 @@ sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { 
 sub result_GET {
     my ($self, $c) = @_;
 
-    my $plan        = $c->stash->{donor}->has_plan;
+    my $has_plan    = $c->stash->{donor}->has_plan;
     my $credit_card = $c->stash->{donor}->has_credit_card;
 
     return $self->status_ok(
         $c,
         entity => {
-            donor_has_plan        => $plan,
+            ( map { $_ => $c->stash->{donor}->$_ } qw/phone flotum_id flotum_preferred_credit_card/ ),
+
+            ( map { $_ => $c->stash->{donor}->user->$_ } qw/id email created_at cpf name surname/ ),
+
+            donor_has_plan        => $has_plan,
             donor_has_credit_card => $credit_card,
         },
     );
-
 }
+
+sub result_PUT { }
 
 __PACKAGE__->meta->make_immutable;
 

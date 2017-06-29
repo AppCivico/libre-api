@@ -17,6 +17,7 @@ db_transaction {
             password => "fooquxbar1",
             name     => fake_first_name()->(),
             surname  => fake_surname()->(),
+            cpf      => random_cpf(),
             phone    => fake_digits("+551198#######")->(),
         },
     ;
@@ -35,6 +36,7 @@ db_transaction {
             password => "fooquxbar1",
             name     => fake_first_name()->(),
             surname  => fake_surname()->(),
+            cpf      => random_cpf(),
             phone    => fake_digits("+551198#######")->(),
         },
     ;
@@ -47,6 +49,7 @@ db_transaction {
             password => "fooquxbar1",
             name     => fake_first_name()->(),
             surname  => fake_surname()->(),
+            cpf      => random_cpf(),
             phone    => fake_digits("+551198#######")->(),
         },
     ;
@@ -58,6 +61,7 @@ db_transaction {
             password => "fooquxbar1",
             name     => fake_first_name()->(),
             surname  => fake_surname()->(),
+            cpf      => random_cpf(),
             phone    => "+551398200 23",
         },
     ;
