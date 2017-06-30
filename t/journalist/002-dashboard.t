@@ -14,7 +14,6 @@ db_transaction {
     api_auth_as user_id => $donor_id;
 
     my $journalist_id = stash "journalist.id";
-    my $donor_id      = stash "donor.id";
 
     my $fake_title_first   = fake_sentences(1)->();
     my $fake_referer_first = fake_referer->();
