@@ -45,7 +45,7 @@ sub verifiers_specs {
                     type     => PhoneNumber,
                 },
                 cpf => {
-                    required => 0,
+                    required => 1,
                     type     => CPF,
                 },
             },
