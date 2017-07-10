@@ -12,7 +12,15 @@ with 'Libre::Role::Verification::TransactionalActions::DBIC';
 # use Business::BR::CEP qw(teste_cep);
 use Libre::Types qw(CPF CNPJ EmailAddress PhoneNumber);
 
+use WebService::PicPay;
+
 use Data::Verifier;
+
+has picpay => (
+    is         => "rw",
+    isa        => "WebService::PicPay",
+    lazy_build => 1,
+);
 
 sub verifiers_specs {
     my $self = shift;
@@ -148,27 +156,46 @@ sub action_specs {
                 die \["cpf", "not allowed"];
             }
 
-            my $user = $self->result_source->schema->resultset("User")->create({
-                ( map { $_ => $values{$_} } qw(name surname email password) ),
-                verified    => 1,
-                verified_at => \"now()",
-            });
+            my $user = $self->result_source->schema->resultset("User")->create(
+                {
+                    ( map { $_ => $values{$_} } qw(name surname email password) ),
+                    verified    => 1,
+                    verified_at => \"now()",
+                }
+            );
 
             $user->add_to_roles({ id => 2 });
 
-            my $journalist = $self->create({
-                (
-                    map { $_ => $values{$_} } qw(
-                        cpf cnpj address_state address_city address_zipcode address_street
-                        address_residence_number vehicle
-                    )
-                ),
-                user_id => $user->id,
-            });
+            my $journalist = $self->create(
+                {
+                    (
+                        map { $_ => $values{$_} } qw(
+                            cpf cnpj address_state address_city address_zipcode address_street
+                            address_residence_number vehicle
+                        )
+                    ),
+                    user_id => $user->id,
+
+                    $self->_register_customer(),
+                }
+            );
 
             return $journalist;
         },
     };
+}
+
+sub _build_picpay { WebService::PicPay->new() }
+
+sub _register_customer {
+    my ($self) = @_;
+
+    my $register = $self->picpay->register();
+
+    return (
+        customer_id  => $register->{customer}->{id},
+        customer_key => $register->{customer}->{customer_key},
+    );
 }
 
 1;
