@@ -48,6 +48,30 @@ sub register {
     return decode_json $res->decoded_content;
 }
 
+sub authlink {
+    my ($self, %opts) = @_;
+
+    if (is_test()) {
+        return {
+            picpayconnect => {
+                authurl => "https://picpay.com/connect/authUser?1f4dee7a-b33a-452c-2c83-dbcf5f1adab3",
+            }
+        };
+    }
+
+    my $res = $self->furl->get(
+        $self->endpoint . "/authlink",
+        [
+            api_key   => $ENV{LIBRE_PICPAY_API_KEY},
+            client_id => $ENV{LIBRE_PICPAY_CLIENT_ID},
+            %opts,
+        ],
+    );
+    die $res->decoded_content unless $res->is_success;
+
+    return decode_json $res->decoded_content;
+}
+
 sub _build_furl { Furl->new }
 
 1;

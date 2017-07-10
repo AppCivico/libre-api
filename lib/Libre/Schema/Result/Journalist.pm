@@ -118,13 +118,11 @@ __PACKAGE__->table("journalist");
 =head2 customer_id
 
   data_type: 'text'
-  default_value: (empty string)
   is_nullable: 1
 
 =head2 customer_key
 
   data_type: 'text'
-  default_value: (empty string)
   is_nullable: 1
 
 =cut
@@ -159,9 +157,9 @@ __PACKAGE__->add_columns(
   "vehicle",
   { data_type => "boolean", is_nullable => 0 },
   "customer_id",
-  { data_type => "text", default_value => "", is_nullable => 1 },
+  { data_type => "text", is_nullable => 1 },
   "customer_key",
-  { data_type => "text", default_value => "", is_nullable => 1 },
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -243,10 +241,25 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-07-10 15:24:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i7WsWz7kNIXh863N7DAOpg
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-07-10 16:54:56
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wgcEBOEvX8mj7Nf3lRrxKg
 
+use WebService::PicPay;
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+has picpay => (
+    is         => "rw",
+    isa        => "WebService::PicPay",
+    lazy_build => 1,
+);
+
+sub _build_picpay { WebService::PicPay->new() }
+
+sub get_authlink {
+    my ($self) = @_;
+
+    return $self->picpay->authlink(customer_key => $self->customer_key);
+}
+
 __PACKAGE__->meta->make_immutable;
+
 1;
