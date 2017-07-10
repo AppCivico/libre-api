@@ -12,15 +12,7 @@ with 'Libre::Role::Verification::TransactionalActions::DBIC';
 # use Business::BR::CEP qw(teste_cep);
 use Libre::Types qw(CPF CNPJ EmailAddress PhoneNumber);
 
-use WebService::PicPay;
-
 use Data::Verifier;
-
-has picpay => (
-    is         => "rw",
-    isa        => "WebService::PicPay",
-    lazy_build => 1,
-);
 
 sub verifiers_specs {
     my $self = shift;
@@ -175,8 +167,6 @@ sub action_specs {
                         )
                     ),
                     user_id => $user->id,
-
-                    $self->_register_customer(),
                 }
             );
 
@@ -185,17 +175,5 @@ sub action_specs {
     };
 }
 
-sub _build_picpay { WebService::PicPay->new() }
-
-sub _register_customer {
-    my ($self) = @_;
-
-    my $register = $self->picpay->register();
-
-    return (
-        customer_id  => $register->{customer}->{id},
-        customer_key => $register->{customer}->{customer_key},
-    );
-}
-
 1;
+

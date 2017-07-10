@@ -11,6 +11,11 @@ db_transaction {
     my $journalist_id = stash "journalist.id";
     api_auth_as user_id => $journalist_id;
 
+    my $journalist = $schema->resultset("Journalist")->find($journalist_id);
+
+    ok (!defined($journalist->customer_id), 'no customer id');
+    ok (!defined($journalist->customer_key), 'no customer key');
+
     rest_get [ "api", "journalist", $journalist_id, "authlink" ],
         name  => "get authlink",
         stash => "authlink",
@@ -22,6 +27,10 @@ db_transaction {
         is (ref($res->{picpayconnect}), "HASH", 'picpayconnect');
         ok (defined($res->{picpayconnect}->{authurl}), 'auth url');
     };
+
+    ok ($journalist->discard_changes(), 'discard changes');
+    ok (defined($journalist->customer_id), 'customer id');
+    ok (defined($journalist->customer_key), 'customer key');
 };
 
 done_testing();

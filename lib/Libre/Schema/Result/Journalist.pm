@@ -246,18 +246,29 @@ __PACKAGE__->belongs_to(
 
 use WebService::PicPay;
 
-has picpay => (
+has _picpay => (
     is         => "rw",
     isa        => "WebService::PicPay",
     lazy_build => 1,
 );
 
-sub _build_picpay { WebService::PicPay->new() }
+sub _build__picpay { WebService::PicPay->new() }
 
 sub get_authlink {
     my ($self) = @_;
 
-    return $self->picpay->authlink(customer_key => $self->customer_key);
+    if (!defined($self->customer_id) && !defined($self->customer_key)) {
+        my $register = $self->_picpay->register();
+
+        $self->update(
+            {
+                customer_id  => $register->{customer}->{id},
+                customer_key => $register->{customer}->{customer_key},
+            }
+        );
+    }
+
+    return $self->_picpay->authlink(customer_key => $self->customer_key);
 }
 
 __PACKAGE__->meta->make_immutable;
