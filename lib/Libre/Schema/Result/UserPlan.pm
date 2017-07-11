@@ -454,7 +454,7 @@ SQL_QUERY
             vars     => {
                 name    => $self->user->name,
                 surname => $self->user->surname,
-                cpf     => $self->user->cpf,
+                cpf     => $self->user->donor->cpf,
                 amount  => ($amount/100),
                 day     => DateTime->today->day,
                 month   => DateTime->today->month,
