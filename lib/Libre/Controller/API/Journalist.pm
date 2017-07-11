@@ -8,8 +8,10 @@ BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 with "CatalystX::Eta::Controller::AutoBase";
 
 __PACKAGE__->config(
-    result      => "DB::User",
-    result_cond => { verified => "true" },
+    # AutoBase.
+    result      => "DB::Journalist",
+    result_cond => { 'user.verified' => "true" },
+    result_attr => { join => "user" },
 );
 
 sub root : Chained('/api/logged') : PathPart('') : CaptureArgs(0) { }
@@ -20,9 +22,7 @@ sub object : Chained('base') : PathPart('') : CaptureArgs(1) {
     my ($self, $c, $user_id) = @_;
 
     my $user = $c->stash->{collection}->find($user_id);
-    if (!$user || !$user->is_journalist()) {
-        $c->detach("/error_404");
-    }
+    $c->detach("/error_404") unless ref $user;
 
     $c->stash->{journalist} = $user;
 }

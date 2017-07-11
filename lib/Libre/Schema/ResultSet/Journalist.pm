@@ -148,23 +148,27 @@ sub action_specs {
                 die \["cpf", "not allowed"];
             }
 
-            my $user = $self->result_source->schema->resultset("User")->create({
-                ( map { $_ => $values{$_} } qw(name surname email password) ),
-                verified    => 1,
-                verified_at => \"now()",
-            });
+            my $user = $self->result_source->schema->resultset("User")->create(
+                {
+                    ( map { $_ => $values{$_} } qw(name surname email password) ),
+                    verified    => 1,
+                    verified_at => \"now()",
+                }
+            );
 
             $user->add_to_roles({ id => 2 });
 
-            my $journalist = $self->create({
-                (
-                    map { $_ => $values{$_} } qw(
-                        cpf cnpj address_state address_city address_zipcode address_street
-                        address_residence_number vehicle
-                    )
-                ),
-                user_id => $user->id,
-            });
+            my $journalist = $self->create(
+                {
+                    (
+                        map { $_ => $values{$_} } qw(
+                            cpf cnpj address_state address_city address_zipcode address_street
+                            address_residence_number vehicle
+                        )
+                    ),
+                    user_id => $user->id,
+                }
+            );
 
             return $journalist;
         },
@@ -172,3 +176,4 @@ sub action_specs {
 }
 
 1;
+
