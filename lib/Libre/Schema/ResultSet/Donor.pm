@@ -45,7 +45,7 @@ sub verifiers_specs {
                     type     => PhoneNumber,
                 },
                 cpf => {
-                    required => 0,
+                    required => 1,
                     type     => CPF,
                 },
             },
@@ -65,7 +65,7 @@ sub action_specs {
 
             my $user = $self->result_source->schema->resultset("User")->create(
                 {
-                    ( map { $_ => $values{$_} } qw(name surname email password cpf) ),
+                    ( map { $_ => $values{$_} } qw(name surname email password) ),
                     verified    => 1,
                     verified_at => \"NOW()",
                 }
@@ -74,7 +74,7 @@ sub action_specs {
             $user->add_to_roles( { id => 3 } );
 
             return $self->create({
-                ( map { $_ => $values{$_} } qw(phone) ),
+                ( map { $_ => $values{$_} } qw(phone cpf) ),
                 user_id => $user->id,
             });
         },
