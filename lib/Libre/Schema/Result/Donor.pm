@@ -63,6 +63,11 @@ __PACKAGE__->table("donor");
   data_type: 'text'
   is_nullable: 1
 
+=head2 cpf
+
+  data_type: 'text'
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -74,6 +79,8 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 1 },
   "flotum_preferred_credit_card",
   { data_type => "text", is_nullable => 1 },
+  "cpf",
+  { data_type => "text", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -87,6 +94,20 @@ __PACKAGE__->add_columns(
 =cut
 
 __PACKAGE__->set_primary_key("user_id");
+
+=head1 UNIQUE CONSTRAINTS
+
+=head2 C<donor_cpf_key>
+
+=over 4
+
+=item * L</cpf>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint("donor_cpf_key", ["cpf"]);
 
 =head1 RELATIONS
 
@@ -106,8 +127,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-12 17:10:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MFuvND+lYdFDi0XHImqkvQ
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-11 13:49:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dJ7HtN7udzqZRJy4XJ84Fg
 
 use Libre::Utils;
 use Libre::Types qw(EmailAddress PhoneNumber CPF);
