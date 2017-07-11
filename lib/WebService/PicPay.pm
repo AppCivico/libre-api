@@ -98,6 +98,21 @@ sub userdata {
     return decode_json $res->decoded_content;
 }
 
+sub customer {
+    my ($self, %opts) = @_;
+
+    my $req = HTTP::Request->new(
+        POST => $self->endpoint . "/customer",
+        [ 'Content-Type' => "application/json" ],
+        encode_json(\%opts),
+    );
+
+    my $res = $self->furl->request($req);
+    die $res->decoded_content unless $res->is_success;
+
+    return decode_json $res->decoded_content;
+}
+
 sub _build_furl { Furl->new }
 
 1;
