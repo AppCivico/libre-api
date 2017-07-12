@@ -158,6 +158,8 @@ sub action_specs {
 
             $user->add_to_roles({ id => 2 });
 
+            # TODO adicionar envio de e-mail de confirmação de cadastro
+
             my $journalist = $self->create(
                 {
                     (
