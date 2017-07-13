@@ -39,7 +39,7 @@ db_transaction {
 
     rest_put "/api/journalist/$journalist_id",
         name => "update journalist",
-        [ 
+        [
             surname      => "Da Silva",
             address_city => "Santos",
         ]
