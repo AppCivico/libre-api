@@ -79,7 +79,7 @@ sub run_once {
     if (ref $item) {
         my $ret;
         eval { $ret = $self->exec_item($item) };
-        ERROR $@ if $@;
+        $self->logger->error($@) if $self->logger && $@;
 
         return $ret;
     }
@@ -113,8 +113,8 @@ sub exec_item {
 }
 
 around 'exec_item' => sub {
-    my $self = shift;
     my $orig = shift;
+    my $self = shift;
     my @args = @_;
 
     return $self->schema->txn_do(sub { $self->$orig(@args) });
