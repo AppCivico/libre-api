@@ -8,7 +8,9 @@ UPDATE donor
     SET cpf = u.cpf
     FROM "user" as u
     WHERE donor.user_id = u.id;
+ALTER TABLE donor ALTER COLUMN cpf DEFAULT '';
 ALTER TABLE donor ALTER COLUMN cpf SET NOT NULL;
+ALTER TABLE donor ALTER COLUMN cpf DROP DEFAULT; 
 ALTER TABLE "user" DROP COLUMN cpf;
 
 COMMIT;
