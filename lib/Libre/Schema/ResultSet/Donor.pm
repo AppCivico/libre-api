@@ -73,6 +73,8 @@ sub action_specs {
 
             $user->add_to_roles( { id => 3 } );
 
+            # TODO adicionar envio de e-mail de confirmação de cadastro
+
             return $self->create({
                 ( map { $_ => $values{$_} } qw(phone cpf) ),
                 user_id => $user->id,

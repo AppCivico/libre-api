@@ -348,6 +348,28 @@ sub is_journalist {
     return $self->user_roles->search({ role_id => 2 })->count;
 }
 
+sub send_email_confirmation {
+    my ($self) = @_;
+
+    my $user_confirmation = $self->user_confirmations->create({
+        token       => sha1_hex(Time::HiRes::time()),
+        valid_until => \"(NOW() + '3 days'::interval)",
+    });
+
+    my $email = Saveh::Mailer::Template->new(
+        to       => $self->email,
+        from     => 'no-reply@midialibre.org',
+        subject  => "Libre - Confirmação de cadastro",
+        template => get_data_section('register_confirmation.tt'),
+        vars     => {
+            name  => $self->name,
+            token => $user_confirmation->token,
+        },
+    )->build_email();
+
+    return $self->result_source->schema->resultset('EmailQueue')->create({ body => $email->as_string });
+}
+
 sub send_email_forgot_password {
     my ($self, $token) = @_;
 
