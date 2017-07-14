@@ -3,7 +3,7 @@
 
 BEGIN;
 
-ALTER TABLE donor ADD COLUMN cpf TEXT UNIQUE;
+ALTER TABLE donor ADD COLUMN cpf TEXT;
 UPDATE donor
     SET cpf = u.cpf
     FROM "user" as u
