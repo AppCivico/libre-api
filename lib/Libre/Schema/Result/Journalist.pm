@@ -330,7 +330,7 @@ sub get_authlink {
     if (!defined($self->customer_id) && !defined($self->customer_key)) {
         my $register = $self->_picpay->register();
 
-        my $customer = $self->_picpay->customer(
+        $self->_picpay->customer(
             customer_key => $register->{customer}->{customer_key},
             customer => {
                 id_internal      => $self->id,
