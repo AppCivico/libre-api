@@ -3,8 +3,7 @@
 
 BEGIN;
 
-ALTER TABLE journalist ALTER COLUMN cellphone_number SET DEFAULT '';
+UPDATE journalist SET cellphone_number = '' WHERE cellphone_number IS NULL;
 ALTER TABLE journalist ALTER COLUMN cellphone_number SET NOT NULL;
-ALTER TABLE journalist ALTER COLUMN cellphone_number DROP DEFAULT;
 
 COMMIT;
