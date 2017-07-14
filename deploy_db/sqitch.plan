@@ -38,3 +38,7 @@
 0034-libre-page-data [0033-user-plan-updated-at] 2017-06-09T17:05:30Z Junior Moraes <juniorfvox@gmail.com> # libre-page-data
 0035-user-plan-canceled [0034-libre-page-data] 2017-06-13T18:06:15Z Junior Moraes <juniorfvox@gmail.com> # user-plan-canceled
 0036-user-plan-cancel-reason [0035-user-plan-canceled] 2017-06-13T19:17:25Z Junior Moraes <juniorfvox@gmail.com> # user-plan-cancel-reason
+0037-journalist-customer [0036-user-plan-cancel-reason] 2017-07-10T18:41:38Z Junior Moraes <juniorfvox@gmail.com> # journalist-customer
+0038-donor-cpf [0037-journalist-customer] 2017-07-11T16:43:54Z lucas-eokoe,,, <lucas-eokoe@lucaseokoe-Lenovo-G400s> # Adding the CPF on the donor table and removing it from the user table.
+0039-transfer-data [0038-donor-cpf] 2017-07-14T16:37:59Z Junior Moraes <juniorfvox@gmail.com> # transfer-data
+0040-vehicle-responsible [0039-transfer-data] 2017-07-14T19:36:43Z lucas-eokoe,,, <lucas-eokoe@lucaseokoe-Lenovo-G400s> # Adding the responsible fields.

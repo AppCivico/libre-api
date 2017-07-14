@@ -76,11 +76,6 @@ __PACKAGE__->table("user");
   data_type: 'timestamp'
   is_nullable: 1
 
-=head2 cpf
-
-  data_type: 'text'
-  is_nullable: 1
-
 =head2 name
 
   data_type: 'text'
@@ -116,8 +111,6 @@ __PACKAGE__->add_columns(
   { data_type => "boolean", is_nullable => 0 },
   "verified_at",
   { data_type => "timestamp", is_nullable => 1 },
-  "cpf",
-  { data_type => "text", is_nullable => 1 },
   "name",
   { data_type => "text", is_nullable => 0 },
   "surname",
@@ -298,8 +291,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-02 11:21:53
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dBoBEd9Mf0rsV1rTBC+e2Q
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-11 13:49:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:g3rIKa+33Gc6QXKPAOjlIg
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {
@@ -353,6 +346,28 @@ sub is_journalist {
     my ($self) = @_;
 
     return $self->user_roles->search({ role_id => 2 })->count;
+}
+
+sub send_email_confirmation {
+    my ($self) = @_;
+
+    my $user_confirmation = $self->user_confirmations->create({
+        token       => sha1_hex(Time::HiRes::time()),
+        valid_until => \"(NOW() + '3 days'::interval)",
+    });
+
+    my $email = Saveh::Mailer::Template->new(
+        to       => $self->email,
+        from     => 'no-reply@midialibre.org',
+        subject  => "Libre - Confirmação de cadastro",
+        template => get_data_section('register_confirmation.tt'),
+        vars     => {
+            name  => $self->name,
+            token => $user_confirmation->token,
+        },
+    )->build_email();
+
+    return $self->result_source->schema->resultset('EmailQueue')->create({ body => $email->as_string });
 }
 
 sub send_email_forgot_password {

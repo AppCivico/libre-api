@@ -118,7 +118,7 @@ sub _load_customer {
         my $customer = $c->stash->{flotum}->new_customer(
             name           => $user->name,
             remote_id      => $user->id,
-            legal_document => $user->cpf || "missing",
+            legal_document => $donor->cpf || "missing",
         );
 
         $donor->update( { flotum_id => $customer->id } );

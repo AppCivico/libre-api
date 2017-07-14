@@ -1,0 +1,1024 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+"CatalystX::Eta::Controller::AutoBase"	./lib/Libre/Controller/API/Donor.pm	/^with "CatalystX::Eta::Controller::AutoBase";$/;"	w
+"CatalystX::Eta::Controller::AutoBase"	./lib/Libre/Controller/API/Journalist.pm	/^with "CatalystX::Eta::Controller::AutoBase";$/;"	w
+"CatalystX::Eta::Controller::AutoBase"	./lib/Libre/Controller/API/Register/Donor.pm	/^with "CatalystX::Eta::Controller::AutoBase";$/;"	w
+"CatalystX::Eta::Controller::AutoBase"	./lib/Libre/Controller/API/Register/Journalist.pm	/^with "CatalystX::Eta::Controller::AutoBase";$/;"	w
+"CatalystX::Eta::Controller::AutoListGET"	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^with "CatalystX::Eta::Controller::AutoListGET";$/;"	w
+"CatalystX::Eta::Controller::AutoListGET"	./lib/Libre/Controller/API/Donor/Plan.pm	/^with "CatalystX::Eta::Controller::AutoListGET";$/;"	w
+"CatalystX::Eta::Controller::AutoObject"	./lib/Libre/Controller/API/Journalist/Support.pm	/^with "CatalystX::Eta::Controller::AutoObject";$/;"	w
+"CatalystX::Eta::Controller::AutoResultGET"	./lib/Libre/Controller/API/Donor/Plan.pm	/^with "CatalystX::Eta::Controller::AutoResultGET";$/;"	w
+"CatalystX::Eta::Controller::AutoResultGET"	./lib/Libre/Controller/API/Journalist/Support.pm	/^with "CatalystX::Eta::Controller::AutoResultGET";$/;"	w
+"CatalystX::Eta::Controller::AutoResultPUT"	./lib/Libre/Controller/API/Donor.pm	/^with "CatalystX::Eta::Controller::AutoResultPUT";$/;"	w
+"CatalystX::Eta::Controller::AutoResultPUT"	./lib/Libre/Controller/API/Donor/Plan.pm	/^with "CatalystX::Eta::Controller::AutoResultPUT";$/;"	w
+"CatalystX::Eta::Controller::AutoResultPUT"	./lib/Libre/Controller/API/Journalist.pm	/^with "CatalystX::Eta::Controller::AutoResultPUT";$/;"	w
+"CatalystX::Eta::Controller::TypesValidation"	./lib/Libre/Controller/API/Contact.pm	/^with "CatalystX::Eta::Controller::TypesValidation";$/;"	w
+"CatalystX::Eta::Controller::TypesValidation"	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^with "CatalystX::Eta::Controller::TypesValidation";$/;"	w
+"CatalystX::Eta::Controller::TypesValidation"	./lib/Libre/Controller/API/Login.pm	/^with "CatalystX::Eta::Controller::TypesValidation";$/;"	w
+"Libre::Role::Verification"	./lib/Libre/Schema/ResultSet/Donor.pm	/^with "Libre::Role::Verification";$/;"	w
+"Libre::Role::Verification"	./lib/Libre/Schema/ResultSet/Libre.pm	/^with "Libre::Role::Verification";$/;"	w
+"Libre::Role::Verification"	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^with "Libre::Role::Verification";$/;"	w
+"Libre::Role::Verification::TransactionalActions::DBIC"	./lib/Libre/Schema/ResultSet/Libre.pm	/^with "Libre::Role::Verification::TransactionalActions::DBIC";$/;"	w
+"Libre::Role::Verification::TransactionalActions::DBIC"	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^with "Libre::Role::Verification::TransactionalActions::DBIC";$/;"	w
+"Libre::Worker"	./lib/Libre/Worker/BankTeller.pm	/^with "Libre::Worker";$/;"	w
+"Libre::Worker"	./lib/Libre/Worker/Email.pm	/^with "Libre::Worker";$/;"	w
+'CatalystX::Eta::Controller::Search'	./lib/Libre/Controller/API/Donor/Support.pm	/^with 'CatalystX::Eta::Controller::Search';$/;"	w
+'CatalystX::Eta::Controller::Search'	./lib/Libre/Controller/API/Journalist/Support.pm	/^with 'CatalystX::Eta::Controller::Search';$/;"	w
+'Libre::Role::Verification'	./lib/Libre/Schema/Result/Donor.pm	/^with 'Libre::Role::Verification';$/;"	w
+'Libre::Role::Verification'	./lib/Libre/Schema/Result/Journalist.pm	/^with 'Libre::Role::Verification';$/;"	w
+'Libre::Role::Verification'	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^with 'Libre::Role::Verification';$/;"	w
+'Libre::Role::Verification'	./lib/Libre/Schema/Result/UserPlan.pm	/^with 'Libre::Role::Verification';$/;"	w
+'Libre::Role::Verification'	./lib/Libre/Schema/ResultSet/Journalist.pm	/^with 'Libre::Role::Verification';$/;"	w
+'Libre::Role::Verification'	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^with 'Libre::Role::Verification';$/;"	w
+'Libre::Role::Verification::TransactionalActions'	./lib/Libre/Role/Verification/TransactionalActions/DBIC.pm	/^with 'Libre::Role::Verification::TransactionalActions';$/;"	w
+'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/Result/Donor.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
+'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/Result/Journalist.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
+'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
+'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/Result/UserPlan.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
+'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/ResultSet/Donor.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
+'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/ResultSet/Journalist.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
+'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
+-- C<donor_cpf_key>	./lib/Libre/Schema/Result/Donor.pm	/^=head2 C<donor_cpf_key>$/;"	p
+-- C<journalist_cpf_key>	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 C<journalist_cpf_key>$/;"	p
+-- C<user_email_key>	./lib/Libre/Schema/Result/User.pm	/^=head2 C<user_email_key>$/;"	p
+-- C<user_session_api_key_key>	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 C<user_session_api_key_key>$/;"	p
+-- account	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 account$/;"	p
+-- action	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head2 action$/;"	p
+-- active	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 active$/;"	p
+-- address_city	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 address_city$/;"	p
+-- address_complement	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 address_complement$/;"	p
+-- address_residence_number	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 address_residence_number$/;"	p
+-- address_state	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 address_state$/;"	p
+-- address_street	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 address_street$/;"	p
+-- address_zipcode	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 address_zipcode$/;"	p
+-- agency	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 agency$/;"	p
+-- amount	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 amount$/;"	p
+-- amount	./lib/Libre/Schema/Result/Payment.pm	/^=head2 amount$/;"	p
+-- amount	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 amount$/;"	p
+-- api_key	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 api_key$/;"	p
+-- bank_institution	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 bank_institution$/;"	p
+-- bank_institution_id	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 bank_institution_id$/;"	p
+-- bcc	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head2 bcc$/;"	p
+-- body	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head2 body$/;"	p
+-- callback_id	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 callback_id$/;"	p
+-- cancel_reason	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 cancel_reason$/;"	p
+-- canceled	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 canceled$/;"	p
+-- canceled_at	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 canceled_at$/;"	p
+-- cellphone_number	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 cellphone_number$/;"	p
+-- cep	./lib/Libre/Schema/Result/City.pm	/^=head2 cep$/;"	p
+-- cities	./lib/Libre/Schema/Result/State.pm	/^=head2 cities$/;"	p
+-- cnpj	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 cnpj$/;"	p
+-- code	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head2 code$/;"	p
+-- code	./lib/Libre/Schema/Result/State.pm	/^=head2 code$/;"	p
+-- cpf	./lib/Libre/Schema/Result/Donor.pm	/^=head2 cpf$/;"	p
+-- cpf	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 cpf$/;"	p
+-- created_at	./lib/Libre/Schema/Result/Credit.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/Libre.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/Payment.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/User.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 created_at$/;"	p
+-- created_at	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 created_at$/;"	p
+-- credits	./lib/Libre/Schema/Result/Libre.pm	/^=head2 credits$/;"	p
+-- customer_id	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 customer_id$/;"	p
+-- customer_key	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 customer_key$/;"	p
+-- default	./lib/Libre/Controller/Root.pm	/^=head2 default$/;"	p
+-- donor	./lib/Libre/Schema/Result/Libre.pm	/^=head2 donor$/;"	p
+-- donor	./lib/Libre/Schema/Result/Payment.pm	/^=head2 donor$/;"	p
+-- donor	./lib/Libre/Schema/Result/User.pm	/^=head2 donor$/;"	p
+-- donor_id	./lib/Libre/Schema/Result/Libre.pm	/^=head2 donor_id$/;"	p
+-- donor_id	./lib/Libre/Schema/Result/Payment.pm	/^=head2 donor_id$/;"	p
+-- email	./lib/Libre/Schema/Result/User.pm	/^=head2 email$/;"	p
+-- executed_at	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head2 executed_at$/;"	p
+-- extra_args	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head2 extra_args$/;"	p
+-- first_korduv_sync	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 first_korduv_sync$/;"	p
+-- flotum_id	./lib/Libre/Schema/Result/Donor.pm	/^=head2 flotum_id$/;"	p
+-- flotum_preferred_credit_card	./lib/Libre/Schema/Result/Donor.pm	/^=head2 flotum_preferred_credit_card$/;"	p
+-- gateway_tax	./lib/Libre/Schema/Result/Payment.pm	/^=head2 gateway_tax$/;"	p
+-- get_current_plan()	./lib/Libre/Schema/Result/Donor.pm	/^=head2 get_current_plan()$/;"	p
+-- get_last_plan()	./lib/Libre/Schema/Result/Donor.pm	/^=head2 get_last_plan()$/;"	p
+-- id	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/City.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/Credit.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/Libre.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/Payment.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/Role.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/State.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/User.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 id$/;"	p
+-- id	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 id$/;"	p
+-- invalid	./lib/Libre/Schema/Result/Libre.pm	/^=head2 invalid$/;"	p
+-- invalided_at	./lib/Libre/Schema/Result/Libre.pm	/^=head2 invalided_at$/;"	p
+-- invalided_at	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 invalided_at$/;"	p
+-- is_test()	./lib/Libre/Utils.pm	/^=head2 is_test()$/;"	p
+-- journalist	./lib/Libre/Schema/Result/Libre.pm	/^=head2 journalist$/;"	p
+-- journalist	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 journalist$/;"	p
+-- journalist	./lib/Libre/Schema/Result/User.pm	/^=head2 journalist$/;"	p
+-- journalist_id	./lib/Libre/Schema/Result/Libre.pm	/^=head2 journalist_id$/;"	p
+-- journalist_id	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 journalist_id$/;"	p
+-- journalists	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 journalists$/;"	p
+-- last_close_at	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 last_close_at$/;"	p
+-- libre	./lib/Libre/Schema/Result/Credit.pm	/^=head2 libre$/;"	p
+-- libre_donors	./lib/Libre/Schema/Result/User.pm	/^=head2 libre_donors$/;"	p
+-- libre_id	./lib/Libre/Schema/Result/Credit.pm	/^=head2 libre_id$/;"	p
+-- libre_journalists	./lib/Libre/Schema/Result/User.pm	/^=head2 libre_journalists$/;"	p
+-- libres	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 libres$/;"	p
+-- money_transfers	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 money_transfers$/;"	p
+-- name	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head2 name$/;"	p
+-- name	./lib/Libre/Schema/Result/City.pm	/^=head2 name$/;"	p
+-- name	./lib/Libre/Schema/Result/Role.pm	/^=head2 name$/;"	p
+-- name	./lib/Libre/Schema/Result/State.pm	/^=head2 name$/;"	p
+-- name	./lib/Libre/Schema/Result/User.pm	/^=head2 name$/;"	p
+-- orphaned_at	./lib/Libre/Schema/Result/Libre.pm	/^=head2 orphaned_at$/;"	p
+-- page_referer	./lib/Libre/Schema/Result/Libre.pm	/^=head2 page_referer$/;"	p
+-- page_title	./lib/Libre/Schema/Result/Libre.pm	/^=head2 page_title$/;"	p
+-- paid	./lib/Libre/Schema/Result/Credit.pm	/^=head2 paid$/;"	p
+-- paid_at	./lib/Libre/Schema/Result/Credit.pm	/^=head2 paid_at$/;"	p
+-- password	./lib/Libre/Schema/Result/User.pm	/^=head2 password$/;"	p
+-- payments	./lib/Libre/Schema/Result/User.pm	/^=head2 payments$/;"	p
+-- payments	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 payments$/;"	p
+-- phone	./lib/Libre/Schema/Result/Donor.pm	/^=head2 phone$/;"	p
+-- role	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 role$/;"	p
+-- role_id	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 role_id$/;"	p
+-- roles	./lib/Libre/Schema/Result/User.pm	/^=head2 roles$/;"	p
+-- state	./lib/Libre/Schema/Result/City.pm	/^=head2 state$/;"	p
+-- state_id	./lib/Libre/Schema/Result/City.pm	/^=head2 state_id$/;"	p
+-- surname	./lib/Libre/Schema/Result/User.pm	/^=head2 surname$/;"	p
+-- token	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head2 token$/;"	p
+-- token	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head2 token$/;"	p
+-- transfer_id	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 transfer_id$/;"	p
+-- transfer_status	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 transfer_status$/;"	p
+-- transferred	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 transferred$/;"	p
+-- transferred_at	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head2 transferred_at$/;"	p
+-- updated_at	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 updated_at$/;"	p
+-- user	./lib/Libre/Schema/Result/Donor.pm	/^=head2 user$/;"	p
+-- user	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 user$/;"	p
+-- user	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head2 user$/;"	p
+-- user	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 user$/;"	p
+-- user	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 user$/;"	p
+-- user	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 user$/;"	p
+-- user_bank_account	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 user_bank_account$/;"	p
+-- user_bank_account_id	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 user_bank_account_id$/;"	p
+-- user_bank_accounts	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head2 user_bank_accounts$/;"	p
+-- user_forgot_passwords	./lib/Libre/Schema/Result/User.pm	/^=head2 user_forgot_passwords$/;"	p
+-- user_id	./lib/Libre/Schema/Result/Donor.pm	/^=head2 user_id$/;"	p
+-- user_id	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 user_id$/;"	p
+-- user_id	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head2 user_id$/;"	p
+-- user_id	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 user_id$/;"	p
+-- user_id	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 user_id$/;"	p
+-- user_id	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 user_id$/;"	p
+-- user_plan	./lib/Libre/Schema/Result/Libre.pm	/^=head2 user_plan$/;"	p
+-- user_plan	./lib/Libre/Schema/Result/Payment.pm	/^=head2 user_plan$/;"	p
+-- user_plan_id	./lib/Libre/Schema/Result/Libre.pm	/^=head2 user_plan_id$/;"	p
+-- user_plan_id	./lib/Libre/Schema/Result/Payment.pm	/^=head2 user_plan_id$/;"	p
+-- user_plans	./lib/Libre/Schema/Result/User.pm	/^=head2 user_plans$/;"	p
+-- user_roles	./lib/Libre/Schema/Result/Role.pm	/^=head2 user_roles$/;"	p
+-- user_roles	./lib/Libre/Schema/Result/User.pm	/^=head2 user_roles$/;"	p
+-- user_sessions	./lib/Libre/Schema/Result/User.pm	/^=head2 user_sessions$/;"	p
+-- users	./lib/Libre/Schema/Result/Role.pm	/^=head2 users$/;"	p
+-- valid_until	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head2 valid_until$/;"	p
+-- valid_until	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 valid_until$/;"	p
+-- valid_until	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 valid_until$/;"	p
+-- vehicle	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 vehicle$/;"	p
+-- verified	./lib/Libre/Schema/Result/User.pm	/^=head2 verified$/;"	p
+-- verified_at	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 verified_at$/;"	p
+-- verified_at	./lib/Libre/Schema/Result/User.pm	/^=head2 verified_at$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/City.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/Credit.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/Donor.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/Journalist.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/Libre.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/Payment.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/Role.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/State.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/User.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/UserPlan.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/UserRole.pm	/^=head1 ACCESSORS$/;"	p
+ACCESSORS	./lib/Libre/Schema/Result/UserSession.pm	/^=head1 ACCESSORS$/;"	p
+AUTHOR	./lib/Libre.pm	/^=head1 AUTHOR$/;"	p
+AUTHOR	./lib/Libre/Controller/API.pm	/^=head1 AUTHOR$/;"	p
+AUTHOR	./lib/Libre/Controller/API/Register.pm	/^=head1 AUTHOR$/;"	p
+AUTHOR	./lib/Libre/Controller/API/Register/Journalist.pm	/^=head1 AUTHOR$/;"	p
+AUTHOR	./lib/Libre/Controller/Root.pm	/^=head1 AUTHOR$/;"	p
+AUTHOR	./lib/Libre/Model/DB.pm	/^=head1 AUTHOR$/;"	p
+AUTHOR	./lib/Libre/Utils.pm	/^=head1 AUTHOR$/;"	p
+AUTHORS	./script/libre_cgi.pl	/^=head1 AUTHORS$/;"	p
+AUTHORS	./script/libre_create.pl	/^=head1 AUTHORS$/;"	p
+AUTHORS	./script/libre_fastcgi.pl	/^=head1 AUTHORS$/;"	p
+AUTHORS	./script/libre_server.pl	/^=head1 AUTHORS$/;"	p
+AUTHORS	./script/libre_test.pl	/^=head1 AUTHORS$/;"	p
+AnyEvent	./script/daemon/Emailsd	/^use AnyEvent;$/;"	u
+Business::BR::CEP qw(test_cep)	./lib/Libre/Types.pm	/^use Business::BR::CEP qw(test_cep);$/;"	u
+Business::BR::CNPJ qw(test_cnpj)	./lib/Libre/Types.pm	/^use Business::BR::CNPJ qw(test_cnpj);$/;"	u
+Business::BR::CPF qw(test_cpf)	./lib/Libre/Types.pm	/^use Business::BR::CPF qw(test_cpf);$/;"	u
+COMPONENTS LOADED	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/City.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/Credit.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/Donor.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/Journalist.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/Libre.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/Payment.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/Role.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/State.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/User.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/UserPlan.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/UserRole.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COMPONENTS LOADED	./lib/Libre/Schema/Result/UserSession.pm	/^=head1 COMPONENTS LOADED$/;"	p
+COPYRIGHT	./script/libre_cgi.pl	/^=head1 COPYRIGHT$/;"	p
+COPYRIGHT	./script/libre_create.pl	/^=head1 COPYRIGHT$/;"	p
+COPYRIGHT	./script/libre_fastcgi.pl	/^=head1 COPYRIGHT$/;"	p
+COPYRIGHT	./script/libre_server.pl	/^=head1 COPYRIGHT$/;"	p
+COPYRIGHT	./script/libre_test.pl	/^=head1 COPYRIGHT$/;"	p
+Catalyst	./lib/Libre.pm	/^extends 'Catalyst';$/;"	e
+Catalyst::Model	./lib/Libre/Model/Flotum.pm	/^use base 'Catalyst::Model';$/;"	e
+Catalyst::Model::DBIC::Schema	./lib/Libre/Model/DB.pm	/^use base 'Catalyst::Model::DBIC::Schema';$/;"	e
+Catalyst::Runtime 5.80	./lib/Libre.pm	/^use Catalyst::Runtime 5.80;$/;"	u
+Catalyst::ScriptRunner	./script/libre_cgi.pl	/^use Catalyst::ScriptRunner;$/;"	u
+Catalyst::ScriptRunner	./script/libre_create.pl	/^use Catalyst::ScriptRunner;$/;"	u
+Catalyst::ScriptRunner	./script/libre_fastcgi.pl	/^use Catalyst::ScriptRunner;$/;"	u
+Catalyst::ScriptRunner	./script/libre_server.pl	/^use Catalyst::ScriptRunner;$/;"	u
+Catalyst::ScriptRunner	./script/libre_test.pl	/^use Catalyst::ScriptRunner;$/;"	u
+Config::General	./lib/Libre/SchemaConnected.pm	/^use Config::General;$/;"	u
+Config::General	./script/daemon/Emailsd	/^use Config::General;$/;"	u
+Crypt::PRNG qw(random_string)	./lib/Libre/Utils.pm	/^use Crypt::PRNG qw(random_string);$/;"	u
+Crypt::PRNG qw/random_bytes_hex/	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^use Crypt::PRNG qw\/random_bytes_hex\/;$/;"	u
+DBIx::Class::Core	./lib/Libre/Schema/Result/BankInstitution.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/City.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/Credit.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/Donor.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/EmailQueue.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/Journalist.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/Libre.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/Payment.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/Role.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/State.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/User.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/UserBankAccount.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/UserPlan.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/UserRole.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::Core	./lib/Libre/Schema/Result/UserSession.pm	/^extends 'DBIx::Class::Core';$/;"	e
+DBIx::Class::ResultSet	./lib/Libre/Schema/ResultSet/Donor.pm	/^extends "DBIx::Class::ResultSet";$/;"	e
+DBIx::Class::ResultSet	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^extends 'DBIx::Class::ResultSet';$/;"	e
+DBIx::Class::ResultSet	./lib/Libre/Schema/ResultSet/Journalist.pm	/^extends 'DBIx::Class::ResultSet';$/;"	e
+DBIx::Class::ResultSet	./lib/Libre/Schema/ResultSet/Libre.pm	/^extends "DBIx::Class::ResultSet";$/;"	e
+DBIx::Class::ResultSet	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^extends 'DBIx::Class::ResultSet';$/;"	e
+DBIx::Class::ResultSet	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^extends "DBIx::Class::ResultSet";$/;"	e
+DBIx::Class::Schema	./lib/Libre/Schema.pm	/^extends 'DBIx::Class::Schema';$/;"	e
+DESCRIPTION	./lib/Libre.pm	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./lib/Libre/Controller/API.pm	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./lib/Libre/Controller/API/Register.pm	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./lib/Libre/Controller/Root.pm	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./lib/Libre/Model/DB.pm	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./script/libre_cgi.pl	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./script/libre_create.pl	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./script/libre_fastcgi.pl	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./script/libre_server.pl	/^=head1 DESCRIPTION$/;"	p
+DESCRIPTION	./script/libre_test.pl	/^=head1 DESCRIPTION$/;"	p
+Daemon::Generic	./script/daemon/Emailsd	/^use Daemon::Generic;$/;"	u
+Data::Diver qw(Dive)	./lib/Libre/Role/Verification.pm	/^use Data::Diver qw(Dive);$/;"	u
+Data::Dumper qw/Dumper/	./lib/Libre/Controller/Korduv.pm	/^use Data::Dumper qw\/Dumper\/;$/;"	u
+Data::Manager	./lib/Libre/Data/Manager.pm	/^extends 'Data::Manager';$/;"	e
+Data::Printer	./lib/Libre/Worker/BankTeller.pm	/^use Data::Printer;$/;"	u
+Data::Section::Simple qw(get_data_section)	./lib/Libre/Controller/API/Contact.pm	/^use Data::Section::Simple qw(get_data_section);$/;"	u
+Data::Section::Simple qw(get_data_section)	./lib/Libre/Utils.pm	/^use Data::Section::Simple qw(get_data_section);$/;"	u
+Data::Verifier	./lib/Data/Verifier.pm	/^package Data::Verifier;$/;"	p
+Data::Verifier	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^use Data::Verifier;$/;"	u
+Data::Verifier	./lib/Libre/Schema/Result/UserPlan.pm	/^use Data::Verifier;$/;"	u
+Data::Verifier	./lib/Libre/Schema/ResultSet/Donor.pm	/^use Data::Verifier;$/;"	u
+Data::Verifier	./lib/Libre/Schema/ResultSet/Journalist.pm	/^use Data::Verifier;$/;"	u
+Data::Verifier	./lib/Libre/Schema/ResultSet/Libre.pm	/^use Data::Verifier;$/;"	u
+Data::Verifier	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^use Data::Verifier;$/;"	u
+Data::Verifier	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^use Data::Verifier;$/;"	u
+Data::Verifier::Field	./lib/Data/Verifier.pm	/^use Data::Verifier::Field;$/;"	u
+Data::Verifier::Filters	./lib/Data/Verifier.pm	/^use Data::Verifier::Filters;$/;"	u
+Data::Verifier::Results	./lib/Data/Verifier.pm	/^use Data::Verifier::Results;$/;"	u
+Data::Visitor	./lib/Libre/Data/Visitor.pm	/^extends 'Data::Visitor';$/;"	e
+Data::Visitor::Callback	./lib/Libre/Role/Verification/TransactionalActions.pm	/^use Data::Visitor::Callback;$/;"	u
+DateTime	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^use DateTime;$/;"	u
+DateTime	./lib/Libre/Schema/Result/UserPlan.pm	/^use DateTime;$/;"	u
+DateTime	./lib/Libre/Types.pm	/^use DateTime;$/;"	u
+DateTime::Format::Pg	./lib/Libre/Types.pm	/^use DateTime::Format::Pg;$/;"	u
+DateTimeX::Easy qw(parse)	./lib/Libre/Types.pm	/^use DateTimeX::Easy qw(parse);$/;"	u
+Digest::SHA1 qw(sha1_hex)	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^use Digest::SHA1 qw(sha1_hex);$/;"	u
+EXPORT	./lib/Libre/SchemaConnected.pm	/^our @EXPORT = qw(get_schema get_connect_info);$/;"	o
+Email::Sender::Simple qw(sendmail)	./lib/Libre/Mailer.pm	/^use Email::Sender::Simple qw(sendmail);$/;"	u
+Email::Sender::Transport::SMTP::TLS	./lib/Libre/Mailer.pm	/^use Email::Sender::Transport::SMTP::TLS;$/;"	u
+Email::Valid	./lib/Libre/Types.pm	/^use Email::Valid;$/;"	u
+Encode	./lib/Libre/Mailer/Template.pm	/^use Encode;$/;"	u
+Exporter	./lib/Libre/SchemaConnected.pm	/^require Exporter;$/;"	r
+File::MimeInfo	./lib/Libre/Mailer/Template.pm	/^use File::MimeInfo;$/;"	u
+FindBin qw($RealBin $Script)	./script/crontab/orphanize_expired_libres.pl	/^use FindBin qw($RealBin $Script);$/;"	u
+FindBin qw($RealBin $Script)	./script/daemon/Emailsd	/^use FindBin qw($RealBin $Script);$/;"	u
+FindBin qw($RealBin)	./lib/Libre/SchemaConnected.pm	/^use FindBin qw($RealBin);$/;"	u
+Furl	./lib/WebService/HttpCallback.pm	/^use Furl;$/;"	u
+Furl	./lib/WebService/Korduv.pm	/^use Furl;$/;"	u
+Furl	./lib/WebService/PicPay.pm	/^use Furl;$/;"	u
+GENERATED BY	./lib/Libre/Model/DB.pm	/^=head1 GENERATED BY$/;"	p
+HTTP::Request	./lib/WebService/PicPay.pm	/^use HTTP::Request;$/;"	u
+ISA	./lib/Libre/SchemaConnected.pm	/^our @ISA    = qw(Exporter);$/;"	o
+JSON::MaybeXS	./lib/Libre/Controller/HttpCallback.pm	/^use JSON::MaybeXS;$/;"	u
+JSON::MaybeXS	./lib/Libre/Schema/Result/UserPlan.pm	/^use JSON::MaybeXS;$/;"	u
+JSON::MaybeXS	./lib/WebService/HttpCallback.pm	/^use JSON::MaybeXS;$/;"	u
+JSON::MaybeXS	./lib/WebService/Korduv.pm	/^use JSON::MaybeXS;$/;"	u
+JSON::MaybeXS	./lib/WebService/PicPay.pm	/^use JSON::MaybeXS;$/;"	u
+JSON::XS	./lib/Libre/Controller/Korduv.pm	/^use JSON::XS;$/;"	u
+JSON::XS	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^use JSON::XS;$/;"	u
+LICENSE	./lib/Libre.pm	/^=head1 LICENSE$/;"	p
+LICENSE	./lib/Libre/Controller/API.pm	/^=head1 LICENSE$/;"	p
+LICENSE	./lib/Libre/Controller/API/Register.pm	/^=head1 LICENSE$/;"	p
+LICENSE	./lib/Libre/Controller/API/Register/Journalist.pm	/^=head1 LICENSE$/;"	p
+LICENSE	./lib/Libre/Controller/Root.pm	/^=head1 LICENSE$/;"	p
+LICENSE	./lib/Libre/Model/DB.pm	/^=head1 LICENSE$/;"	p
+Libre	./lib/Libre.pm	/^package Libre;$/;"	p
+Libre::Controller::API	./lib/Libre/Controller/API.pm	/^package Libre::Controller::API;$/;"	p
+Libre::Controller::API::Contact	./lib/Libre/Controller/API/Contact.pm	/^package Libre::Controller::API::Contact;$/;"	p
+Libre::Controller::API::Donor	./lib/Libre/Controller/API/Donor.pm	/^package Libre::Controller::API::Donor;$/;"	p
+Libre::Controller::API::Donor::CreditCard	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^package Libre::Controller::API::Donor::CreditCard;$/;"	p
+Libre::Controller::API::Donor::Dashboard	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^package Libre::Controller::API::Donor::Dashboard;$/;"	p
+Libre::Controller::API::Donor::Plan	./lib/Libre/Controller/API/Donor/Plan.pm	/^package Libre::Controller::API::Donor::Plan;$/;"	p
+Libre::Controller::API::Donor::Plan::Cancel	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^package Libre::Controller::API::Donor::Plan::Cancel;$/;"	p
+Libre::Controller::API::Donor::Support	./lib/Libre/Controller/API/Donor/Support.pm	/^package Libre::Controller::API::Donor::Support;$/;"	p
+Libre::Controller::API::Journalist	./lib/Libre/Controller/API/Journalist.pm	/^package Libre::Controller::API::Journalist;$/;"	p
+Libre::Controller::API::Journalist::Authlink	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^package Libre::Controller::API::Journalist::Authlink;$/;"	p
+Libre::Controller::API::Journalist::Dashboard	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^package Libre::Controller::API::Journalist::Dashboard;$/;"	p
+Libre::Controller::API::Journalist::Support	./lib/Libre/Controller/API/Journalist/Support.pm	/^package Libre::Controller::API::Journalist::Support;$/;"	p
+Libre::Controller::API::Login	./lib/Libre/Controller/API/Login.pm	/^package Libre::Controller::API::Login;$/;"	p
+Libre::Controller::API::Login::ForgotPassword	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^package Libre::Controller::API::Login::ForgotPassword;$/;"	p
+Libre::Controller::API::Login::Reset	./lib/Libre/Controller/API/Login/Reset.pm	/^package Libre::Controller::API::Login::Reset;$/;"	p
+Libre::Controller::API::Register	./lib/Libre/Controller/API/Register.pm	/^package Libre::Controller::API::Register;$/;"	p
+Libre::Controller::API::Register::Donor	./lib/Libre/Controller/API/Register/Donor.pm	/^package Libre::Controller::API::Register::Donor;$/;"	p
+Libre::Controller::API::Register::Journalist	./lib/Libre/Controller/API/Register/Journalist.pm	/^package Libre::Controller::API::Register::Journalist;$/;"	p
+Libre::Controller::HttpCallback	./lib/Libre/Controller/HttpCallback.pm	/^package Libre::Controller::HttpCallback;$/;"	p
+Libre::Controller::Korduv	./lib/Libre/Controller/Korduv.pm	/^package Libre::Controller::Korduv;$/;"	p
+Libre::Controller::Root	./lib/Libre/Controller/Root.pm	/^package Libre::Controller::Root;$/;"	p
+Libre::Daemon::Emailsd	./script/daemon/Emailsd	/^package Libre::Daemon::Emailsd;$/;"	p
+Libre::Data::Manager	./lib/Libre/Data/Manager.pm	/^package Libre::Data::Manager;$/;"	p
+Libre::Data::Manager	./lib/Libre/Role/Verification.pm	/^use Libre::Data::Manager;$/;"	u
+Libre::Data::Visitor	./lib/Libre/Data/Manager.pm	/^use Libre::Data::Visitor;$/;"	u
+Libre::Data::Visitor	./lib/Libre/Data/Visitor.pm	/^package Libre::Data::Visitor;$/;"	p
+Libre::Mailer	./lib/Libre/Mailer.pm	/^package Libre::Mailer;$/;"	p
+Libre::Mailer	./lib/Libre/Worker/Email.pm	/^use Libre::Mailer;$/;"	u
+Libre::Mailer::Template	./lib/Libre/Controller/API/Contact.pm	/^use Libre::Mailer::Template;$/;"	u
+Libre::Mailer::Template	./lib/Libre/Mailer/Template.pm	/^package Libre::Mailer::Template;$/;"	p
+Libre::Model::DB	./lib/Libre/Model/DB.pm	/^package Libre::Model::DB;$/;"	p
+Libre::Model::Flotum	./lib/Libre/Model/Flotum.pm	/^package Libre::Model::Flotum;$/;"	p
+Libre::Role::Verification	./lib/Libre/Role/Verification.pm	/^package Libre::Role::Verification;$/;"	p
+Libre::Role::Verification::TransactionalActions	./lib/Libre/Role/Verification/TransactionalActions.pm	/^package Libre::Role::Verification::TransactionalActions;$/;"	p
+Libre::Role::Verification::TransactionalActions::DBIC	./lib/Libre/Role/Verification/TransactionalActions/DBIC.pm	/^package Libre::Role::Verification::TransactionalActions::DBIC;$/;"	p
+Libre::Schema	./lib/Libre/Schema.pm	/^package Libre::Schema;$/;"	p
+Libre::Schema	./lib/Libre/SchemaConnected.pm	/^use Libre::Schema;$/;"	u
+Libre::Schema::Result::BankInstitution	./lib/Libre/Schema/Result/BankInstitution.pm	/^package Libre::Schema::Result::BankInstitution;$/;"	p
+Libre::Schema::Result::City	./lib/Libre/Schema/Result/City.pm	/^package Libre::Schema::Result::City;$/;"	p
+Libre::Schema::Result::Credit	./lib/Libre/Schema/Result/Credit.pm	/^package Libre::Schema::Result::Credit;$/;"	p
+Libre::Schema::Result::Donor	./lib/Libre/Schema/Result/Donor.pm	/^package Libre::Schema::Result::Donor;$/;"	p
+Libre::Schema::Result::EmailQueue	./lib/Libre/Schema/Result/EmailQueue.pm	/^package Libre::Schema::Result::EmailQueue;$/;"	p
+Libre::Schema::Result::HttpCallbackToken	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^package Libre::Schema::Result::HttpCallbackToken;$/;"	p
+Libre::Schema::Result::Journalist	./lib/Libre/Schema/Result/Journalist.pm	/^package Libre::Schema::Result::Journalist;$/;"	p
+Libre::Schema::Result::Libre	./lib/Libre/Schema/Result/Libre.pm	/^package Libre::Schema::Result::Libre;$/;"	p
+Libre::Schema::Result::MoneyTransfer	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^package Libre::Schema::Result::MoneyTransfer;$/;"	p
+Libre::Schema::Result::Payment	./lib/Libre/Schema/Result/Payment.pm	/^package Libre::Schema::Result::Payment;$/;"	p
+Libre::Schema::Result::Role	./lib/Libre/Schema/Result/Role.pm	/^package Libre::Schema::Result::Role;$/;"	p
+Libre::Schema::Result::State	./lib/Libre/Schema/Result/State.pm	/^package Libre::Schema::Result::State;$/;"	p
+Libre::Schema::Result::User	./lib/Libre/Schema/Result/User.pm	/^package Libre::Schema::Result::User;$/;"	p
+Libre::Schema::Result::UserBankAccount	./lib/Libre/Schema/Result/UserBankAccount.pm	/^package Libre::Schema::Result::UserBankAccount;$/;"	p
+Libre::Schema::Result::UserForgotPassword	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^package Libre::Schema::Result::UserForgotPassword;$/;"	p
+Libre::Schema::Result::UserPlan	./lib/Libre/Schema/Result/UserPlan.pm	/^package Libre::Schema::Result::UserPlan;$/;"	p
+Libre::Schema::Result::UserRole	./lib/Libre/Schema/Result/UserRole.pm	/^package Libre::Schema::Result::UserRole;$/;"	p
+Libre::Schema::Result::UserSession	./lib/Libre/Schema/Result/UserSession.pm	/^package Libre::Schema::Result::UserSession;$/;"	p
+Libre::Schema::ResultSet::Donor	./lib/Libre/Schema/ResultSet/Donor.pm	/^package Libre::Schema::ResultSet::Donor;$/;"	p
+Libre::Schema::ResultSet::HttpCallbackToken	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^package Libre::Schema::ResultSet::HttpCallbackToken;$/;"	p
+Libre::Schema::ResultSet::Journalist	./lib/Libre/Schema/ResultSet/Journalist.pm	/^package Libre::Schema::ResultSet::Journalist;$/;"	p
+Libre::Schema::ResultSet::Libre	./lib/Libre/Schema/ResultSet/Libre.pm	/^package Libre::Schema::ResultSet::Libre;$/;"	p
+Libre::Schema::ResultSet::UserForgotPassword	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^package Libre::Schema::ResultSet::UserForgotPassword;$/;"	p
+Libre::Schema::ResultSet::UserPlan	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^package Libre::Schema::ResultSet::UserPlan;$/;"	p
+Libre::SchemaConnected	./lib/Libre/SchemaConnected.pm	/^package Libre::SchemaConnected;$/;"	p
+Libre::SchemaConnected	./script/crontab/orphanize_expired_libres.pl	/^use Libre::SchemaConnected;$/;"	u
+Libre::SchemaConnected	./script/daemon/Emailsd	/^use Libre::SchemaConnected;$/;"	u
+Libre::SchemaConnected qw(get_connect_info)	./lib/Libre/Model/DB.pm	/^use Libre::SchemaConnected qw(get_connect_info);$/;"	u
+Libre::Types	./lib/Libre/Types.pm	/^package Libre::Types;$/;"	p
+Libre::Types qw(CPF CNPJ EmailAddress PhoneNumber)	./lib/Libre/Schema/ResultSet/Journalist.pm	/^use Libre::Types qw(CPF CNPJ EmailAddress PhoneNumber);$/;"	u
+Libre::Types qw(CPF)	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^use Libre::Types qw(CPF);$/;"	u
+Libre::Types qw(EmailAddress PhoneNumber CPF)	./lib/Libre/Schema/Result/Donor.pm	/^use Libre::Types qw(EmailAddress PhoneNumber CPF);$/;"	u
+Libre::Types qw(EmailAddress PhoneNumber CPF)	./lib/Libre/Schema/ResultSet/Donor.pm	/^use Libre::Types qw(EmailAddress PhoneNumber CPF);$/;"	u
+Libre::Types qw(EmailAddress)	./lib/Libre/Controller/API/Contact.pm	/^use Libre::Types qw(EmailAddress);$/;"	u
+Libre::Types qw(EmailAddress)	./lib/Libre/Controller/API/Login.pm	/^use Libre::Types qw(EmailAddress);$/;"	u
+Libre::Types qw(EmailAddress)	./lib/Libre/Mailer/Template.pm	/^use Libre::Types qw(EmailAddress);$/;"	u
+Libre::Types qw(EmailAddress)	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^use Libre::Types qw(EmailAddress);$/;"	u
+Libre::Types qw(PositiveInt)	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^use Libre::Types qw(PositiveInt);$/;"	u
+Libre::Utils	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Mailer.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Model/Flotum.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Schema/Result/Donor.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Schema/Result/User.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Schema/Result/UserPlan.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/SchemaConnected.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/Libre/Utils.pm	/^package Libre::Utils;$/;"	p
+Libre::Utils	./lib/WebService/HttpCallback.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/WebService/Korduv.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./lib/WebService/PicPay.pm	/^use Libre::Utils;$/;"	u
+Libre::Utils	./script/crontab/orphanize_expired_libres.pl	/^use Libre::Utils;$/;"	u
+Libre::Worker	./lib/Libre/Worker.pm	/^package Libre::Worker;$/;"	p
+Libre::Worker::BankTeller	./lib/Libre/Worker/BankTeller.pm	/^package Libre::Worker::BankTeller;$/;"	p
+Libre::Worker::Email	./lib/Libre/Worker/Email.pm	/^package Libre::Worker::Email;$/;"	p
+Libre::Worker::Email	./script/daemon/Emailsd	/^use Libre::Worker::Email;$/;"	u
+Log::Log4perl qw(:easy)	./script/crontab/orphanize_expired_libres.pl	/^use Log::Log4perl qw(:easy);$/;"	u
+Log::Log4perl qw(:easy)	./script/daemon/Emailsd	/^use Log::Log4perl qw(:easy);$/;"	u
+METHODS	./lib/Libre/Controller/API.pm	/^=head1 METHODS$/;"	p
+METHODS	./lib/Libre/Controller/API/Register.pm	/^=head1 METHODS$/;"	p
+METHODS	./lib/Libre/Controller/Root.pm	/^=head1 METHODS$/;"	p
+METHODS	./lib/Libre/Utils.pm	/^=head1 METHODS$/;"	p
+MIME::Lite	./lib/Libre/Mailer/Template.pm	/^use MIME::Lite;$/;"	u
+Moose	./lib/Data/Verifier.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Contact.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Donor.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Donor/Plan.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Donor/Support.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Journalist.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Journalist/Support.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Login.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Login/Reset.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Register.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Register/Donor.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/API/Register/Journalist.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/HttpCallback.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/Korduv.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Controller/Root.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Data/Manager.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Data/Visitor.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Mailer.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Mailer/Template.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Model/Flotum.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/BankInstitution.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/City.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/Credit.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/Donor.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/EmailQueue.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/Journalist.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/Libre.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/Payment.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/Role.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/State.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/User.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/UserBankAccount.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/UserPlan.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/UserRole.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/Result/UserSession.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/ResultSet/Donor.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/ResultSet/Journalist.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/ResultSet/Libre.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Worker/BankTeller.pm	/^use Moose;$/;"	u
+Moose	./lib/Libre/Worker/Email.pm	/^use Moose;$/;"	u
+Moose::Role	./lib/Libre/Role/Verification.pm	/^use Moose::Role;$/;"	u
+Moose::Role	./lib/Libre/Role/Verification/TransactionalActions.pm	/^use Moose::Role;$/;"	u
+Moose::Role	./lib/Libre/Role/Verification/TransactionalActions/DBIC.pm	/^use Moose::Role;$/;"	u
+Moose::Role	./lib/Libre/Worker.pm	/^use Moose::Role;$/;"	u
+Moose::Util::TypeConstraints	./lib/Data/Verifier.pm	/^use Moose::Util::TypeConstraints;$/;"	u
+Moose::Util::TypeConstraints	./lib/Libre/Types.pm	/^use Moose::Util::TypeConstraints;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/BankInstitution.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/City.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/Credit.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/Donor.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/EmailQueue.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/Journalist.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/Libre.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/Payment.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/Role.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/State.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/User.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/UserBankAccount.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/UserPlan.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/UserRole.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/Result/UserSession.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::MarkAsMethods autoclean => 1	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^use MooseX::MarkAsMethods autoclean => 1;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/BankInstitution.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/City.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/Credit.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/Donor.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/EmailQueue.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/Journalist.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/Libre.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/Payment.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/Role.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/State.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/User.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/UserBankAccount.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/UserPlan.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/UserRole.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/Result/UserSession.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::NonMoose	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^use MooseX::NonMoose;$/;"	u
+MooseX::Singleton	./lib/WebService/HttpCallback.pm	/^use MooseX::Singleton;$/;"	u
+MooseX::Singleton	./lib/WebService/Korduv.pm	/^use MooseX::Singleton;$/;"	u
+MooseX::Singleton	./lib/WebService/PicPay.pm	/^use MooseX::Singleton;$/;"	u
+MooseX::Types::Common::String qw(NonEmptySimpleStr NonEmptyStr)	./lib/Libre/Types.pm	/^use MooseX::Types::Common::String qw(NonEmptySimpleStr NonEmptyStr);$/;"	u
+MooseX::Types::DateTime::MoreCoercions qw( DateTime )	./lib/Libre/Types.pm	/^use MooseX::Types::DateTime::MoreCoercions qw( DateTime );$/;"	u
+MooseX::Types::Moose qw(Str Int ArrayRef ScalarRef Num)	./lib/Libre/Types.pm	/^use MooseX::Types::Moose qw(Str Int ArrayRef ScalarRef Num);$/;"	u
+MooseX::Types::Structured qw(Dict Tuple Optional)	./lib/Libre/Types.pm	/^use MooseX::Types::Structured qw(Dict Tuple Optional);$/;"	u
+NAME	./lib/Libre.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Controller/API.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Controller/API/Register.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Controller/Root.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Model/DB.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/City.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/Credit.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/Donor.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/Journalist.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/Libre.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/Payment.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/Role.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/State.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/User.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/UserPlan.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/UserRole.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Schema/Result/UserSession.pm	/^=head1 NAME$/;"	p
+NAME	./lib/Libre/Utils.pm	/^=head1 NAME$/;"	p
+NAME	./script/libre_cgi.pl	/^=head1 NAME$/;"	p
+NAME	./script/libre_create.pl	/^=head1 NAME$/;"	p
+NAME	./script/libre_fastcgi.pl	/^=head1 NAME$/;"	p
+NAME	./script/libre_server.pl	/^=head1 NAME$/;"	p
+NAME	./script/libre_test.pl	/^=head1 NAME$/;"	p
+Net::Flotum	./lib/Libre/Model/Flotum.pm	/^use Net::Flotum;$/;"	u
+Number::Phone::BR	./lib/Libre/Schema/ResultSet/Donor.pm	/^use Number::Phone::BR;$/;"	u
+PRIMARY KEY	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/City.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/Credit.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/Donor.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/Journalist.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/Libre.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/Payment.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/Role.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/State.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/User.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/UserPlan.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/UserRole.pm	/^=head1 PRIMARY KEY$/;"	p
+PRIMARY KEY	./lib/Libre/Schema/Result/UserSession.pm	/^=head1 PRIMARY KEY$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/City.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/Credit.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/Donor.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/Journalist.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/Libre.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/Payment.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/Role.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/State.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/User.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/UserPlan.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/UserRole.pm	/^=head1 RELATIONS$/;"	p
+RELATIONS	./lib/Libre/Schema/Result/UserSession.pm	/^=head1 RELATIONS$/;"	p
+SEE ALSO	./lib/Libre.pm	/^=head1 SEE ALSO$/;"	p
+SYNOPSIS	./lib/Libre.pm	/^=head1 SYNOPSIS$/;"	p
+SYNOPSIS	./lib/Libre/Model/DB.pm	/^=head1 SYNOPSIS$/;"	p
+SYNOPSIS	./script/libre_cgi.pl	/^=head1 SYNOPSIS$/;"	p
+SYNOPSIS	./script/libre_create.pl	/^=head1 SYNOPSIS$/;"	p
+SYNOPSIS	./script/libre_fastcgi.pl	/^=head1 SYNOPSIS$/;"	p
+SYNOPSIS	./script/libre_server.pl	/^=head1 SYNOPSIS$/;"	p
+SYNOPSIS	./script/libre_test.pl	/^=head1 SYNOPSIS$/;"	p
+Scalar::Util qw(blessed)	./lib/Data/Verifier.pm	/^use Scalar::Util qw(blessed);$/;"	u
+TABLE: C<bank_institution>	./lib/Libre/Schema/Result/BankInstitution.pm	/^=head1 TABLE: C<bank_institution>$/;"	p
+TABLE: C<city>	./lib/Libre/Schema/Result/City.pm	/^=head1 TABLE: C<city>$/;"	p
+TABLE: C<credit>	./lib/Libre/Schema/Result/Credit.pm	/^=head1 TABLE: C<credit>$/;"	p
+TABLE: C<donor>	./lib/Libre/Schema/Result/Donor.pm	/^=head1 TABLE: C<donor>$/;"	p
+TABLE: C<email_queue>	./lib/Libre/Schema/Result/EmailQueue.pm	/^=head1 TABLE: C<email_queue>$/;"	p
+TABLE: C<http_callback_token>	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^=head1 TABLE: C<http_callback_token>$/;"	p
+TABLE: C<journalist>	./lib/Libre/Schema/Result/Journalist.pm	/^=head1 TABLE: C<journalist>$/;"	p
+TABLE: C<libre>	./lib/Libre/Schema/Result/Libre.pm	/^=head1 TABLE: C<libre>$/;"	p
+TABLE: C<money_transfer>	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^=head1 TABLE: C<money_transfer>$/;"	p
+TABLE: C<payment>	./lib/Libre/Schema/Result/Payment.pm	/^=head1 TABLE: C<payment>$/;"	p
+TABLE: C<role>	./lib/Libre/Schema/Result/Role.pm	/^=head1 TABLE: C<role>$/;"	p
+TABLE: C<state>	./lib/Libre/Schema/Result/State.pm	/^=head1 TABLE: C<state>$/;"	p
+TABLE: C<user>	./lib/Libre/Schema/Result/User.pm	/^=head1 TABLE: C<user>$/;"	p
+TABLE: C<user_bank_account>	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head1 TABLE: C<user_bank_account>$/;"	p
+TABLE: C<user_forgot_password>	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^=head1 TABLE: C<user_forgot_password>$/;"	p
+TABLE: C<user_plan>	./lib/Libre/Schema/Result/UserPlan.pm	/^=head1 TABLE: C<user_plan>$/;"	p
+TABLE: C<user_role>	./lib/Libre/Schema/Result/UserRole.pm	/^=head1 TABLE: C<user_role>$/;"	p
+TABLE: C<user_session>	./lib/Libre/Schema/Result/UserSession.pm	/^=head1 TABLE: C<user_session>$/;"	p
+Template	./lib/Libre/Mailer/Template.pm	/^use Template;$/;"	u
+Time::HiRes	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^use Time::HiRes;$/;"	u
+Try::Tiny::Retry	./lib/WebService/HttpCallback.pm	/^use Try::Tiny::Retry;$/;"	u
+Try::Tiny::Retry	./lib/WebService/Korduv.pm	/^use Try::Tiny::Retry;$/;"	u
+UNIQUE CONSTRAINTS	./lib/Libre/Schema/Result/Donor.pm	/^=head1 UNIQUE CONSTRAINTS$/;"	p
+UNIQUE CONSTRAINTS	./lib/Libre/Schema/Result/Journalist.pm	/^=head1 UNIQUE CONSTRAINTS$/;"	p
+UNIQUE CONSTRAINTS	./lib/Libre/Schema/Result/User.pm	/^=head1 UNIQUE CONSTRAINTS$/;"	p
+UNIQUE CONSTRAINTS	./lib/Libre/Schema/Result/UserSession.pm	/^=head1 UNIQUE CONSTRAINTS$/;"	p
+VERSION	./lib/Libre.pm	/^our $VERSION = '0.01';$/;"	o
+WebService::HttpCallback	./lib/Libre/Schema/Result/UserPlan.pm	/^use WebService::HttpCallback;$/;"	u
+WebService::HttpCallback	./lib/WebService/HttpCallback.pm	/^package WebService::HttpCallback;$/;"	p
+WebService::Korduv	./lib/Libre/Schema/Result/UserPlan.pm	/^use WebService::Korduv;$/;"	u
+WebService::Korduv	./lib/WebService/Korduv.pm	/^package WebService::Korduv;$/;"	p
+WebService::PicPay	./lib/Libre/Schema/Result/Journalist.pm	/^use WebService::PicPay;$/;"	u
+WebService::PicPay	./lib/Libre/Worker/BankTeller.pm	/^use WebService::PicPay;$/;"	u
+WebService::PicPay	./lib/WebService/PicPay.pm	/^package WebService::PicPay;$/;"	p
+_api_key	./lib/WebService/PicPay.pm	/^has _api_key => ($/;"	a
+_build__httpcb	./lib/Libre/Schema/Result/UserPlan.pm	/^sub _build__httpcb { WebService::HttpCallback->instance }$/;"	s
+_build__korduv	./lib/Libre/Schema/Result/UserPlan.pm	/^sub _build__korduv { WebService::Korduv->instance }$/;"	s
+_build__picpay	./lib/Libre/Schema/Result/Journalist.pm	/^sub _build__picpay { WebService::PicPay->new() }$/;"	s
+_build__picpay	./lib/Libre/Worker/BankTeller.pm	/^sub _build__picpay { WebService::PicPay->new() }$/;"	s
+_build__transport	./lib/Libre/Mailer.pm	/^sub _build__transport {$/;"	s
+_build_furl	./lib/WebService/HttpCallback.pm	/^sub _build_furl { Furl->new }$/;"	s
+_build_furl	./lib/WebService/Korduv.pm	/^sub _build_furl { Furl->new }$/;"	s
+_build_furl	./lib/WebService/PicPay.pm	/^sub _build_furl { Furl->new }$/;"	s
+_build_instance	./lib/Libre/Model/Flotum.pm	/^sub _build_instance {$/;"	s
+_build_mailer	./lib/Libre/Worker/Email.pm	/^sub _build_mailer {$/;"	s
+_client_id	./lib/WebService/PicPay.pm	/^has _client_id => ($/;"	a
+_compute_donations	./lib/Libre/Controller/HttpCallback.pm	/^sub _compute_donations {$/;"	s
+_endpoint	./lib/WebService/PicPay.pm	/^has _endpoint => ($/;"	a
+_filter_value	./lib/Data/Verifier.pm	/^sub _filter_value {$/;"	s
+_httpcb	./lib/Libre/Schema/Result/UserPlan.pm	/^has _httpcb => ($/;"	a
+_input	./lib/Libre/Data/Manager.pm	/^has _input => ( is => 'ro', isa => 'HashRef', init_arg => 'input' );$/;"	a
+_korduv	./lib/Libre/Schema/Result/UserPlan.pm	/^has _korduv => ($/;"	a
+_load_customer	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub _load_customer {$/;"	s
+_picpay	./lib/Libre/Schema/Result/Journalist.pm	/^has _picpay => ($/;"	a
+_picpay	./lib/Libre/Worker/BankTeller.pm	/^has _picpay => ($/;"	a
+_transport	./lib/Libre/Mailer.pm	/^has _transport => ($/;"	a
+_update_credit_card	./lib/Libre/Controller/HttpCallback.pm	/^sub _update_credit_card {$/;"	s
+_wrap_in_transaction	./lib/Libre/Role/Verification/TransactionalActions/DBIC.pm	/^sub _wrap_in_transaction {$/;"	s
+action_specs	./lib/Libre/Schema/Result/Donor.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/Result/Journalist.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/Result/UserPlan.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/ResultSet/Donor.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/ResultSet/Journalist.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/ResultSet/Libre.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^sub action_specs {$/;"	s
+action_specs	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^sub action_specs {$/;"	s
+actions	./lib/Libre/Data/Manager.pm	/^has actions => ($/;"	a
+actions	./lib/Libre/Role/Verification.pm	/^has actions => ($/;"	a
+add	./lib/WebService/HttpCallback.pm	/^sub add {$/;"	s
+apply	./lib/Libre/Data/Manager.pm	/^sub apply {$/;"	s
+attachments	./lib/Libre/Mailer/Template.pm	/^has attachments => ($/;"	a
+authlink	./lib/WebService/PicPay.pm	/^sub authlink {$/;"	s
+base	./lib/Libre/Controller/API/Contact.pm	/^sub base : Chained('root') : PathPart('contact') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Donor.pm	/^sub base : Chained('root') : PathPart('donor') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub base : Chained('root') : PathPart('credit-card') : CaptureArgs(0) {$/;"	s
+base	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^sub base : Chained('root') : PathPart('dashboard') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub base : Chained('root') : PathPart('plan') : CaptureArgs(0) {$/;"	s
+base	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^sub base : Chained('root') : PathPart('cancel') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Donor/Support.pm	/^sub base : Chained('root') : PathPart('support') : CaptureArgs(0) {$/;"	s
+base	./lib/Libre/Controller/API/Journalist.pm	/^sub base : Chained('root') : PathPart('journalist') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^sub base : Chained('root') : PathPart('authlink') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^sub base : Chained('root') : PathPart('dashboard') : CaptureArgs(0) {$/;"	s
+base	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub base : Chained('root') : PathPart('support') : CaptureArgs(0) {$/;"	s
+base	./lib/Libre/Controller/API/Login.pm	/^sub base : Chained('root') : PathPart('login') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^sub base : Chained('root') : PathPart('forgot_password') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Login/Reset.pm	/^sub base : Chained('root') : PathPart('forgot_password') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Register.pm	/^sub base :Chained('root') :PathPart('register') :CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Register/Donor.pm	/^sub base : Chained('root') : PathPart('donor') : CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/API/Register/Journalist.pm	/^sub base :Chained('root') :PathPart('journalist') :CaptureArgs(0) { }$/;"	s
+base	./lib/Libre/Controller/HttpCallback.pm	/^sub base : Chained('root') : PathPart('callback-for-token') : CaptureArgs(1) {$/;"	s
+base 'Catalyst::Model'	./lib/Libre/Model/Flotum.pm	/^use base 'Catalyst::Model';$/;"	u
+base 'Catalyst::Model::DBIC::Schema'	./lib/Libre/Model/DB.pm	/^use base 'Catalyst::Model::DBIC::Schema';$/;"	u
+build_email	./lib/Libre/Mailer/Template.pm	/^sub build_email {$/;"	s
+cancel	./lib/Libre/Schema/Result/UserPlan.pm	/^sub cancel {$/;"	s
+check	./lib/Libre/Role/Verification.pm	/^sub check {$/;"	s
+coercion	./lib/Data/Verifier.pm	/^sub coercion {$/;"	s
+common::sense	./lib/Libre/Controller/API/Contact.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Donor.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Donor/Plan.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Donor/Support.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Journalist.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Journalist/Support.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Login/Reset.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Register.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Register/Donor.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/API/Register/Journalist.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/HttpCallback.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Controller/Korduv.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Mailer.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Schema/ResultSet/Donor.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Schema/ResultSet/Journalist.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Schema/ResultSet/Libre.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/SchemaConnected.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Types.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Utils.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Worker/BankTeller.pm	/^use common::sense;$/;"	u
+common::sense	./lib/Libre/Worker/Email.pm	/^use common::sense;$/;"	u
+common::sense	./lib/WebService/HttpCallback.pm	/^use common::sense;$/;"	u
+common::sense	./lib/WebService/Korduv.pm	/^use common::sense;$/;"	u
+common::sense	./lib/WebService/PicPay.pm	/^use common::sense;$/;"	u
+common::sense	./script/crontab/orphanize_expired_libres.pl	/^use common::sense;$/;"	u
+common::sense	./script/daemon/Emailsd	/^use common::sense;$/;"	u
+config	./lib/Libre/Worker.pm	/^has config => ($/;"	a
+contact	./lib/Libre/Controller/API/Contact.pm	/^sub contact : Chained('base') : Args(0) : PathPart('') {$/;"	s
+create	./lib/Libre/Controller/API/Register/Donor.pm	/^sub create : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+create_POST	./lib/Libre/Controller/API/Register/Donor.pm	/^sub create_POST {$/;"	s
+create_for_action	./lib/Libre/Schema/ResultSet/HttpCallbackToken.pm	/^sub create_for_action {$/;"	s
+current_path	./lib/Libre/Data/Visitor.pm	/^has current_path => ($/;"	a
+customer	./lib/WebService/PicPay.pm	/^sub customer {$/;"	s
+default	./lib/Libre/Controller/Root.pm	/^sub default :Path {$/;"	s
+derived	./lib/Data/Verifier.pm	/^has 'derived' => ($/;"	a
+error_404	./lib/Libre/Controller/Root.pm	/^sub error_404 : Private {$/;"	s
+errors	./lib/Libre/Data/Manager.pm	/^sub errors {$/;"	s
+exec_item	./lib/Libre/Worker/BankTeller.pm	/^sub exec_item {$/;"	s
+exec_item	./lib/Libre/Worker/Email.pm	/^sub exec_item {$/;"	s
+execute	./lib/Libre/Role/Verification.pm	/^sub execute {$/;"	s
+fail	./lib/Libre/Controller/Korduv.pm	/^sub fail : Chained('root') : PathPart('fail') : Args(1) {$/;"	s
+fail_forever	./lib/Libre/Controller/Korduv.pm	/^sub fail_forever : Chained('root') : PathPart('fail-forever') : Args(1) {$/;"	s
+filters	./lib/Data/Verifier.pm	/^has 'filters' => ($/;"	a
+final_value	./lib/Libre/Data/Visitor.pm	/^has final_value => ($/;"	a
+forbidden	./lib/Libre/Controller/API.pm	/^sub forbidden : Private {$/;"	s
+forgot_password	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^sub forgot_password : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+forgot_password_POST	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^sub forgot_password_POST {$/;"	s
+from	./lib/Libre/Mailer/Template.pm	/^has from => ($/;"	a
+furl	./lib/WebService/HttpCallback.pm	/^has 'furl' => ( is => 'rw', lazy => 1, builder => '_build_furl' );$/;"	a
+furl	./lib/WebService/Korduv.pm	/^has 'furl' => ( is => 'rw', lazy => 1, builder => '_build_furl' );$/;"	a
+furl	./lib/WebService/PicPay.pm	/^has furl => ($/;"	a
+gd_preconfig	./script/daemon/Emailsd	/^sub gd_preconfig {$/;"	s
+gd_run	./script/daemon/Emailsd	/^sub gd_run {$/;"	s
+get_authlink	./lib/Libre/Schema/Result/Journalist.pm	/^sub get_authlink {$/;"	s
+get_connect_info	./lib/Libre/SchemaConnected.pm	/^sub get_connect_info {$/;"	s
+get_current_plan	./lib/Libre/Schema/Result/Donor.pm	/^sub get_current_plan {$/;"	s
+get_last_payment	./lib/Libre/Schema/Result/UserPlan.pm	/^sub get_last_payment {$/;"	s
+get_last_plan	./lib/Libre/Schema/Result/Donor.pm	/^sub get_last_plan {$/;"	s
+get_libre_api_url_for	./lib/Libre/Utils.pm	/^sub get_libre_api_url_for {$/;"	s
+get_price_of_next_libre	./lib/Libre/Schema/Result/Donor.pm	/^sub get_price_of_next_libre {$/;"	s
+get_schema	./lib/Libre/SchemaConnected.pm	/^sub get_schema {$/;"	s
+has_credit_card	./lib/Libre/Schema/Result/Donor.pm	/^sub has_credit_card {$/;"	s
+has_plan	./lib/Libre/Schema/Result/Donor.pm	/^sub has_plan {$/;"	s
+http_callback	./lib/Libre/Controller/HttpCallback.pm	/^sub http_callback : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+http_callback_POST	./lib/Libre/Controller/HttpCallback.pm	/^sub http_callback_POST {$/;"	s
+initialize_after_setup	./lib/Libre/Model/Flotum.pm	/^sub initialize_after_setup {$/;"	s
+instance	./lib/Libre/Model/Flotum.pm	/^has instance => ($/;"	a
+invalid_libres	./lib/Libre/Schema/ResultSet/Libre.pm	/^sub invalid_libres {$/;"	s
+is_donor	./lib/Libre/Schema/Result/User.pm	/^sub is_donor {$/;"	s
+is_journalist	./lib/Libre/Schema/Result/User.pm	/^sub is_journalist {$/;"	s
+is_test	./lib/Libre/Utils.pm	/^sub is_test {$/;"	s
+is_valid	./lib/Libre/Schema/ResultSet/Libre.pm	/^sub is_valid {$/;"	s
+lib "$RealBin/../../lib"	./script/crontab/orphanize_expired_libres.pl	/^use lib "$RealBin\/..\/..\/lib";$/;"	u
+lib "$RealBin/../../lib"	./script/daemon/Emailsd	/^use lib "$RealBin\/..\/..\/lib";$/;"	u
+list	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list	./lib/Libre/Controller/API/Donor/Support.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+list_GET	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub list_GET {$/;"	s
+list_GET	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^sub list_GET {$/;"	s
+list_GET	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub list_GET { }$/;"	s
+list_GET	./lib/Libre/Controller/API/Donor/Support.pm	/^sub list_GET {$/;"	s
+list_GET	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^sub list_GET {$/;"	s
+list_GET	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^sub list_GET {$/;"	s
+list_GET	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub list_GET { }$/;"	s
+list_POST	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub list_POST {$/;"	s
+list_POST	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub list_POST {$/;"	s
+list_POST	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^sub list_POST {$/;"	s
+list_POST	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub list_POST {$/;"	s
+listen_queue	./lib/Libre/Worker/BankTeller.pm	/^sub listen_queue {$/;"	s
+listen_queue	./lib/Libre/Worker/Email.pm	/^sub listen_queue {$/;"	s
+logged	./lib/Libre/Controller/API.pm	/^sub logged : Chained('root') : PathPart('') : CaptureArgs(0) {$/;"	s
+logger	./lib/Libre/Worker.pm	/^has logger => ($/;"	a
+login	./lib/Libre/Controller/API/Login.pm	/^sub login : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+login_POST	./lib/Libre/Controller/API/Login.pm	/^sub login_POST {$/;"	s
+mailer	./lib/Libre/Worker/Email.pm	/^has mailer => ($/;"	a
+namespace::autoclean	./lib/Libre.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Contact.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Donor.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Donor/Plan.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Donor/Support.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Journalist.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Journalist/Support.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Login.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Login/Reset.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Register.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Register/Donor.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/API/Register/Journalist.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/HttpCallback.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/Korduv.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Controller/Root.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Data/Manager.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Data/Visitor.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Mailer/Template.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Role/Verification.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Role/Verification/TransactionalActions.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Role/Verification/TransactionalActions/DBIC.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Schema/ResultSet/Donor.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Schema/ResultSet/Journalist.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Schema/ResultSet/Libre.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^use namespace::autoclean;$/;"	u
+namespace::autoclean	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^use namespace::autoclean;$/;"	u
+new_session	./lib/Libre/Schema/Result/User.pm	/^sub new_session {$/;"	s
+object	./lib/Libre/Controller/API/Donor.pm	/^sub object : Chained('base') : PathPart('') : CaptureArgs(1) {$/;"	s
+object	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub object : Chained('base') : PathPart('') : CaptureArgs(1) {$/;"	s
+object	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub object : Chained('base') : PathPart('') : CaptureArgs(1) {$/;"	s
+object	./lib/Libre/Controller/API/Journalist.pm	/^sub object : Chained('base') : PathPart('') : CaptureArgs(1) {$/;"	s
+object	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub object : Chained('base') : PathPart('') : CaptureArgs(1) { }$/;"	s
+on_korduv_callback_fail	./lib/Libre/Schema/Result/UserPlan.pm	/^sub on_korduv_callback_fail {$/;"	s
+on_korduv_callback_success	./lib/Libre/Schema/Result/UserPlan.pm	/^sub on_korduv_callback_success {$/;"	s
+on_korduv_fail_forever	./lib/Libre/Schema/Result/UserPlan.pm	/^sub on_korduv_fail_forever {$/;"	s
+profile	./lib/Data/Verifier.pm	/^has 'profile' => ($/;"	a
+register	./lib/Libre/Controller/API/Register/Journalist.pm	/^sub register :Chained('base') :PathPart('') :Args(0) :ActionClass('REST') { }$/;"	s
+register	./lib/WebService/PicPay.pm	/^sub register {$/;"	s
+register_POST	./lib/Libre/Controller/API/Register/Journalist.pm	/^sub register_POST {$/;"	s
+reset_password	./lib/Libre/Controller/API/Login/Reset.pm	/^sub reset_password : Chained('base') : PathPart('reset') : Args(1) : ActionClass('REST') { }$/;"	s
+reset_password_POST	./lib/Libre/Controller/API/Login/Reset.pm	/^sub reset_password_POST {$/;"	s
+result	./lib/Libre/Controller/API/Donor.pm	/^sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+result	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+result	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+result	./lib/Libre/Controller/API/Journalist.pm	/^sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') {$/;"	s
+result	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub result : Chained('object') : PathPart('') : Args(0) : ActionClass('REST') { }$/;"	s
+result_DELETE	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub result_DELETE {$/;"	s
+result_GET	./lib/Libre/Controller/API/Donor.pm	/^sub result_GET {$/;"	s
+result_GET	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub result_GET { }$/;"	s
+result_GET	./lib/Libre/Controller/API/Journalist.pm	/^sub result_GET {$/;"	s
+result_GET	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub result_GET { }$/;"	s
+result_PUT	./lib/Libre/Controller/API/Donor.pm	/^sub result_PUT { }$/;"	s
+result_PUT	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub result_PUT { }$/;"	s
+result_PUT	./lib/Libre/Controller/API/Journalist.pm	/^sub result_PUT { }$/;"	s
+root	./lib/Libre/Controller/API.pm	/^sub root : Chained('\/') : PathPart('api') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Contact.pm	/^sub root : Chained('\/api\/root') : PathPart('') : CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/API/Donor.pm	/^sub root : Chained('\/api\/logged') : PathPart('') : CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/API/Donor/CreditCard.pm	/^sub root : Chained('\/api\/donor\/object') : PathPart('') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Donor/Dashboard.pm	/^sub root : Chained('\/api\/donor\/object') : PathPart('')  : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Donor/Plan.pm	/^sub root : Chained('\/api\/donor\/object') : PathPart('') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Donor/Plan/Cancel.pm	/^sub root : Chained('\/api\/donor\/plan\/object') : PathPart('') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Donor/Support.pm	/^sub root : Chained('\/api\/donor\/object') : PathPart('') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Journalist.pm	/^sub root : Chained('\/api\/logged') : PathPart('') : CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/API/Journalist/Authlink.pm	/^sub root : Chained('\/api\/journalist\/object') : PathPart('') : CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/API/Journalist/Dashboard.pm	/^sub root : Chained('\/api\/journalist\/object') : PathPart('') : CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/API/Journalist/Support.pm	/^sub root : Chained('\/api\/journalist\/object') : PathPart('') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Login.pm	/^sub root : Chained('\/api\/root') : PathPart('') : CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/API/Login/ForgotPassword.pm	/^sub root : Chained('\/api\/login\/base') : PathPart('') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Login/Reset.pm	/^sub root : Chained('\/api\/login\/base') : PathPart('') : CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Register.pm	/^sub root :Chained('\/api\/root') :PathPart('') :CaptureArgs(0) {$/;"	s
+root	./lib/Libre/Controller/API/Register/Donor.pm	/^sub root : Chained('\/api\/register\/base') : PathPart('') : CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/API/Register/Journalist.pm	/^sub root :Chained('\/api\/register\/base') :PathPart('') :CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/HttpCallback.pm	/^sub root : Chained('\/') : PathPart('') CaptureArgs(0) { }$/;"	s
+root	./lib/Libre/Controller/Korduv.pm	/^sub root : Chained('\/') : PathPart('korduv') : CaptureArgs(0) { }$/;"	s
+run_once	./lib/Libre/Worker/BankTeller.pm	/^sub run_once {$/;"	s
+run_once	./lib/Libre/Worker/Email.pm	/^sub run_once {$/;"	s
+schema	./lib/Libre/Role/Verification/TransactionalActions/DBIC.pm	/^has schema => ($/;"	a
+schema	./lib/Libre/Worker/BankTeller.pm	/^has schema => ($/;"	a
+schema	./lib/Libre/Worker/Email.pm	/^has schema => ($/;"	a
+send	./lib/Libre/Mailer.pm	/^sub send {$/;"	s
+send_email_confirmation	./lib/Libre/Schema/Result/User.pm	/^sub send_email_confirmation {$/;"	s
+send_email_forgot_password	./lib/Libre/Schema/Result/User.pm	/^sub send_email_forgot_password {$/;"	s
+setup_subscription	./lib/WebService/Korduv.pm	/^sub setup_subscription {$/;"	s
+smtp_password	./lib/Libre/Mailer.pm	/^has smtp_password => ($/;"	a
+smtp_port	./lib/Libre/Mailer.pm	/^has smtp_port => ($/;"	a
+smtp_server	./lib/Libre/Mailer.pm	/^has smtp_server => ($/;"	a
+smtp_timeout	./lib/Libre/Mailer.pm	/^has smtp_timeout => ($/;"	a
+smtp_username	./lib/Libre/Mailer.pm	/^has smtp_username => ($/;"	a
+strict	./lib/Libre/Model/DB.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/BankInstitution.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/City.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/Credit.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/Donor.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/EmailQueue.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/Journalist.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/Libre.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/Payment.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/Role.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/State.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/User.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/UserBankAccount.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/UserPlan.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/UserRole.pm	/^use strict;$/;"	u
+strict	./lib/Libre/Schema/Result/UserSession.pm	/^use strict;$/;"	u
+strict	./script/libre_create.pl	/^use strict;$/;"	u
+subject	./lib/Libre/Mailer/Template.pm	/^has subject => ($/;"	a
+success_renewal	./lib/Libre/Controller/Korduv.pm	/^sub success_renewal : Chained('root') : PathPart('success-renewal') : Args(1) {$/;"	s
+template	./lib/Libre/Mailer/Template.pm	/^has template => ($/;"	a
+timer	./lib/Libre/Worker.pm	/^has timer => ($/;"	a
+timer	./lib/Libre/Worker/BankTeller.pm	/^has timer => ($/;"	a
+timer	./lib/Libre/Worker/Email.pm	/^has timer => ($/;"	a
+to	./lib/Libre/Mailer/Template.pm	/^has to => ($/;"	a
+transfer	./lib/WebService/PicPay.pm	/^sub transfer {$/;"	s
+truncate_money	./lib/Libre/Utils.pm	/^sub truncate_money {$/;"	s
+update_on_korduv	./lib/Libre/Schema/Result/UserPlan.pm	/^sub update_on_korduv {$/;"	s
+userdata	./lib/WebService/PicPay.pm	/^sub userdata {$/;"	s
+utf8	./lib/Libre/Schema.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/BankInstitution.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/City.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/Credit.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/Donor.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/EmailQueue.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/Journalist.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/Libre.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/Payment.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/Role.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/State.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/User.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/UserBankAccount.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/UserPlan.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/UserRole.pm	/^use utf8;$/;"	u
+utf8	./lib/Libre/Schema/Result/UserSession.pm	/^use utf8;$/;"	u
+vars	./lib/Libre/Mailer/Template.pm	/^has vars => ($/;"	a
+vars qw(@ISA @EXPORT)	./lib/Libre/Utils.pm	/^use vars qw(@ISA @EXPORT);$/;"	u
+verbose	./script/daemon/Emailsd	/^our $verbose = 0;$/;"	o
+verifiers	./lib/Libre/Role/Verification.pm	/^has verifiers => ($/;"	a
+verifiers_specs	./lib/Libre/Schema/Result/Donor.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/Result/Journalist.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/Result/UserPlan.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/ResultSet/Donor.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/ResultSet/Journalist.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/ResultSet/Libre.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^sub verifiers_specs {$/;"	s
+verifiers_specs	./lib/Libre/Schema/ResultSet/UserPlan.pm	/^sub verifiers_specs {$/;"	s
+verify	./lib/Data/Verifier.pm	/^sub verify {$/;"	s
+visit_hash	./lib/Libre/Data/Visitor.pm	/^sub visit_hash {$/;"	s
+warnings	./lib/Libre/Schema/Result/BankInstitution.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/City.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/Credit.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/Donor.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/EmailQueue.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/HttpCallbackToken.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/Journalist.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/Libre.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/MoneyTransfer.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/Payment.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/Role.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/State.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/User.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/UserBankAccount.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/UserForgotPassword.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/UserPlan.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/UserRole.pm	/^use warnings;$/;"	u
+warnings	./lib/Libre/Schema/Result/UserSession.pm	/^use warnings;$/;"	u
+warnings	./script/libre_create.pl	/^use warnings;$/;"	u

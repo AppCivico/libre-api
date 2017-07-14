@@ -7,39 +7,12 @@ use Libre::Utils;
 
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
-with "CatalystX::Eta::Controller::AutoListGET";
-
-__PACKAGE__->config(
-    # AutoListGET
-    list_key       => "journalist",
-    build_list_row => sub {
-        return { $_[0]->get_columns() }
-    },
-
-    # AutoResultGET.
-    #object_key => "journalist",
-    #build_row => sub {
-    #    return { $_[0]->get_columns() };
-    #},
-);
-
-sub root : Chained('/api/journalist/object') : PathPart('') : CaptureArgs(0) {
-    my ($self, $c) = @_;
-
-    eval { $c->assert_user_roles(qw/journalist/) };
-    if ($@) {
-        $c->forward("/api/forbidden");
-    }
-}
+sub root : Chained('/api/journalist/object') : PathPart('') : CaptureArgs(0) { }
 
 sub base : Chained('root') : PathPart('dashboard') : CaptureArgs(0) {
     my ($self, $c) = @_;
 
-    $c->stash->{collection} = $c->model("DB::Libre")->search(
-        {
-            journalist_id => $c->user->id,
-        },
-    );
+    $c->stash->{collection} = $c->model("DB::Libre")->search( { journalist_id => $c->stash->{journalist}->id } );
 }
 
 sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }

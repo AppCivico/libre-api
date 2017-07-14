@@ -46,9 +46,9 @@ sub result_GET {
     return $self->status_ok(
         $c,
         entity => {
-            ( map { $_ => $c->stash->{donor}->$_ } qw/phone flotum_id flotum_preferred_credit_card/ ),
+            ( map { $_ => $c->stash->{donor}->$_ } qw/phone flotum_id cpf flotum_preferred_credit_card/ ),
 
-            ( map { $_ => $c->stash->{donor}->user->$_ } qw/id email created_at cpf name surname/ ),
+            ( map { $_ => $c->stash->{donor}->user->$_ } qw/id email created_at name surname/ ),
 
             donor_has_plan        => $has_plan,
             donor_has_credit_card => $credit_card,

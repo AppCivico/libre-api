@@ -125,6 +125,23 @@ sub verifiers_specs {
                     required => 1,
                     type     => "Bool",
                 },
+                responsible_name => {
+                    required => 0,
+                    type     => 'Str',
+                },
+                responsible_email => {
+                    required   => 0,
+                    type       => EmailAddress,
+                    filters    => [ qw(lower) ],
+                    post_check => sub {
+                        my $email = $_[0]->get_value("responsible_email");
+                        $self->result_source->schema->resultset("Journalist")->search({ responsible_email => $email })->count == 0;
+                    }
+                },
+                responsible_cpf => {
+                    required => 0,
+                    type     => CPF,
+                },
             },
         ),
     };
@@ -148,23 +165,33 @@ sub action_specs {
                 die \["cpf", "not allowed"];
             }
 
-            my $user = $self->result_source->schema->resultset("User")->create({
-                ( map { $_ => $values{$_} } qw(name surname email password) ),
-                verified    => 1,
-                verified_at => \"now()",
-            });
+            if ($values{vehicle} && !$values{responsible_cpf}) {
+                die \["responsible_cpf", "must have a responsible"];
+            }
+
+            my $user = $self->result_source->schema->resultset("User")->create(
+                {
+                    ( map { $_ => $values{$_} } qw(name surname email password) ),
+                    verified    => 1,
+                    verified_at => \"now()",
+                }
+            );
 
             $user->add_to_roles({ id => 2 });
 
-            my $journalist = $self->create({
-                (
-                    map { $_ => $values{$_} } qw(
-                        cpf cnpj address_state address_city address_zipcode address_street
-                        address_residence_number vehicle
-                    )
-                ),
-                user_id => $user->id,
-            });
+            # TODO adicionar envio de e-mail de confirmação de cadastro
+
+            my $journalist = $self->create(
+                {
+                    (
+                        map { $_ => $values{$_} } qw(
+                            cpf cnpj address_state address_city address_zipcode address_street
+                            address_residence_number vehicle cellphone_number
+                        )
+                    ),
+                    user_id => $user->id,
+                }
+            );
 
             return $journalist;
         },
@@ -172,3 +199,4 @@ sub action_specs {
 }
 
 1;
+
