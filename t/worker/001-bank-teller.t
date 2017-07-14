@@ -11,7 +11,7 @@ db_transaction {
     use_ok 'Libre::Worker::BankTeller';
     use_ok 'Libre::Mailer::Template';
 
-    my $worker = new_ok('Libre::Worker::BankTeller', [ schema => $schema ]);
+    my $worker = new_ok('Libre::Worker::BankTeller', [ schema => $schema, log => Libre->log ]);
 
     ok( $worker->does('Libre::Worker'), 'Libre::Worker::BankTeller does Libre::Worker' );
 

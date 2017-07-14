@@ -2,18 +2,25 @@ package Libre::Worker::BankTeller;
 use common::sense;
 use Moose;
 
+use WebService::PicPay;
 use Data::Printer;
 
 with "Libre::Worker";
 
 has timer => (
     is      => "rw",
-    default => 5,
+    default => 3600, # 1 hour.
 );
 
 has schema => (
     is       => "rw",
     required => 1,
+);
+
+has _picpay => (
+    is => "rw",
+    isa => "WebService::PicPay",
+    lazy_build => 1,
 );
 
 sub listen_queue {
@@ -27,13 +34,21 @@ sub listen_queue {
             rows => 20,
             for  => "update",
         },
-    )->all;
+    )->all();
 
     if (@items) {
         $self->logger->info(sprintf("'%d' itens serão processados.", scalar @items)) if $self->logger;
 
         for my $item (@items) {
-            $self->exec_item($item);
+            eval { $self->exec_item($item) };
+            if ($@) {
+                $self->logger->error("Não foi possível realizar a transferência.") if $self->logger;
+                $self->logger->error($@)                                           if $self->logger;
+
+                $self->logger->debug("Provavelmente eu não tenho saldo para fazê-la.") if $self->logger;
+                $self->logger->debug("Tentarei novamente mais tarde.")                 if $self->logger;
+                last;
+            }
         }
 
         $self->logger->info("Todos os items foram processados com sucesso") if $self->logger;
@@ -46,12 +61,13 @@ sub listen_queue {
 sub run_once {
     my ($self, $item_id) = @_;
 
-    $self->schema->resultset("MoneyTransfer")->search({}, { for => "update" })->next;
-
     my $money_transfer_rs = $self->schema->resultset("MoneyTransfer")->search(
         { transferred => "false" },
         { order_by => [ { '-asc' => "created_at" } ] },
     );
+
+    $money_transfer_rs->search( {}, { for => "update" } )->next();
+
     my $item ;
     if (defined($item_id)) {
         $item = $money_transfer_rs->search( { 'me.id' => $item_id } )->next();
@@ -61,7 +77,11 @@ sub run_once {
     }
 
     if (ref $item) {
-        return $self->exec_item($item);
+        my $ret;
+        eval { $ret = $self->exec_item($item) };
+        ERROR $@ if $@;
+
+        return $ret;
     }
     return 0;
 }
@@ -71,17 +91,34 @@ sub exec_item {
 
     my $transfer_id = $item->id;
 
-    $self->logger->debug("Processando doação id '${\($item->id)}'...") if $self->logger;
+    $self->logger->debug("Processando transferência id '${\($item->id)}'...") if $self->logger;
 
+    my $transfer = $self->_picpay->transfer(
+        value       => $item->amount,
+        value       => 50,
+        destination => $item->journalist->customer_id,
+    );
     $item->update(
         {
-            transferred    => "true",
-            transferred_at => \"NOW()",
+            transferred     => "true",
+            transferred_at  => \"NOW()",
         }
     );
 
+    $self->logger->debug("Transferência id '${\($item->id)}' realizada com sucesso.") if $self->logger;
+
     return 1;
 }
+
+around 'exec_item' => sub {
+    my $self = shift;
+    my $orig = shift;
+    my @args = @_;
+
+    return $self->schema->txn_do(sub { $self->$orig(@args) });
+};
+
+sub _build__picpay { WebService::PicPay->new() }
 
 __PACKAGE__->meta->make_immutable;
 

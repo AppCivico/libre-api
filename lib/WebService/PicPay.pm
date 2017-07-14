@@ -3,7 +3,7 @@ use common::sense;
 use MooseX::Singleton;
 
 use Furl;
-use Try::Tiny::Retry;
+use HTTP::Request;
 use JSON::MaybeXS;
 use Libre::Utils;
 
@@ -24,6 +24,20 @@ has _endpoint => (
     default => "https://connect.picpay.com/v1",
 );
 
+has _client_id => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+    default  => $ENV{LIBRE_PICPAY_CLIENT_ID},
+);
+
+has _api_key => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+    default  => $ENV{LIBRE_PICPAY_API_KEY},
+);
+
 sub register {
     my ($self) = @_;
 
@@ -39,8 +53,9 @@ sub register {
     my $res = $self->furl->get(
         $self->endpoint . "/register",
         [
-            api_key   => $ENV{LIBRE_PICPAY_API_KEY},
-            client_id => $ENV{LIBRE_PICPAY_CLIENT_ID},
+            'Content-Type' => "application/json",
+            api_key   => $self->_api_key,
+            client_id => $self->_client_id,
         ],
     );
     die $res->decoded_content unless $res->is_success;
@@ -62,9 +77,10 @@ sub authlink {
     my $res = $self->furl->get(
         $self->endpoint . "/authlink",
         [
-            api_key   => $ENV{LIBRE_PICPAY_API_KEY},
-            client_id => $ENV{LIBRE_PICPAY_CLIENT_ID},
             %opts,
+            'Content-Type' => "application/json",
+            api_key   => $self->_api_key,
+            client_id => $self->_client_id,
         ],
     );
     die $res->decoded_content unless $res->is_success;
@@ -73,7 +89,7 @@ sub authlink {
 }
 
 sub userdata {
-    my ($self, %opts) = @_;
+    my ($self) = @_;
 
     if (is_test()) {
         return {
@@ -88,9 +104,9 @@ sub userdata {
     my $res = $self->furl->get(
         $self->endpoint . "/picpayuserdata",
         [
-            api_key   => $ENV{LIBRE_PICPAY_API_KEY},
-            client_id => $ENV{LIBRE_PICPAY_CLIENT_ID},
-            %opts,
+            'Content-Type' => "application/json",
+            api_key   => $self->_api_key,
+            client_id => $self->_client_id,
         ],
     );
     die $res->decoded_content unless $res->is_success;
@@ -101,13 +117,63 @@ sub userdata {
 sub customer {
     my ($self, %opts) = @_;
 
-    my $req = HTTP::Request->new(
-        POST => $self->endpoint . "/customer",
-        [ 'Content-Type' => "application/json" ],
+    if (is_test()) {
+        return {
+            customer => {
+                birth_date              =>  undef,
+                cellphone_number        =>  "+5511988713483",
+                cpf                     =>  75511600350,
+                email                   =>  'rose.garza@quosquis.com',
+                id                      =>  "cus_vs65ubY3X9983Z26960d91",
+                id_internal             =>  34,
+                matches_picpay_customer =>  [ "cpf" ],
+                name                    =>  "Junior Moraes",
+                phone_number            =>  undef,
+                user_since              =>  "1969-12-31T21:00:00-03:00"
+            }
+        }
+    }
+
+    my $customer_key = delete $opts{customer_key};
+
+    my $res = $self->furl->post(
+        $self->endpoint . "/customer",
+        [
+            'Content-Type' => "application/json",
+            api_key      => $self->_api_key,
+            client_id    => $self->_client_id,
+            customer_key => $customer_key,
+        ],
         encode_json(\%opts),
     );
+    die $res->decoded_content unless $res->is_success;
 
-    my $res = $self->furl->request($req);
+    return decode_json $res->decoded_content;
+}
+
+sub transfer {
+    my ($self, %opts) = @_;
+
+    if (is_test()) {
+        return {
+            transfer => {
+                balance =>  727,
+                id      =>  "tf_vs65ubYVS65USZ26960a2h",
+                status  =>  "concluida",
+                value   =>  50
+            },
+        };
+    }
+
+    my $res = $self->furl->post(
+        $self->endpoint . "/transfer",
+        [
+            'Content-Type' => "application/json",
+            api_key        => $self->_api_key,
+            client_id      => $self->_client_id,
+        ],
+        encode_json(\%opts),
+    );
     die $res->decoded_content unless $res->is_success;
 
     return decode_json $res->decoded_content;
