@@ -47,6 +47,7 @@ db_transaction {
             address_street           => "Rua Flores do Piauí",
             address_residence_number => 1 + int(rand(2000)),
             vehicle                  => 0,
+            cellphone_number         => fake_digits("+551198#######")->(),
         },
     ;
 
