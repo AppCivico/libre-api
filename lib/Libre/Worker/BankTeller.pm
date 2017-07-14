@@ -95,13 +95,15 @@ sub exec_item {
 
     my $transfer = $self->_picpay->transfer(
         value       => $item->amount,
-        value       => 50,
         destination => $item->journalist->customer_id,
     );
+
     $item->update(
         {
             transferred     => "true",
             transferred_at  => \"NOW()",
+            transfer_id     => $transfer->{transfer}->{id},
+            transfer_status => $transfer->{transfer}->{status},
         }
     );
 
