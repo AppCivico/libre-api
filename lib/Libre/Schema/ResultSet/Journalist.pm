@@ -118,7 +118,7 @@ sub verifiers_specs {
                     type       => 'Str',
                 },
                 cellphone_number => {
-                    required   => 0,
+                    required   => 1,
                     type       => PhoneNumber,
                 },
                 vehicle      => {
