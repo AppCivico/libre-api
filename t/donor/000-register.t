@@ -28,6 +28,18 @@ db_transaction {
         "created user and donor",
     );
 
+    # Deve ser obriǵatório o CPF
+    rest_post "/api/register/donor",
+        is_fail      => 1,
+        params              => {
+            email    => $email,
+            password => "fooquxbar1",
+            name     => fake_first_name()->(),
+            surname  => fake_surname()->(),
+            phone    => fake_digits("+551198#######")->(),
+        },
+    ;
+
     # Não deve ser possível cadastrar o mesmo email.
     rest_post "/api/register/donor",
         is_fail => 1,

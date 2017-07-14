@@ -78,6 +78,16 @@ __PACKAGE__->table("money_transfer");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 transfer_id
+
+  data_type: 'text'
+  is_nullable: 1
+
+=head2 transfer_status
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -103,6 +113,10 @@ __PACKAGE__->add_columns(
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "transferred_at",
   { data_type => "timestamp", is_nullable => 1 },
+  "transfer_id",
+  { data_type => "text", is_nullable => 1 },
+  "transfer_status",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -135,8 +149,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-01 18:05:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hNSLebuLv5jwi7N0MVselQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-07-14 11:36:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Hu/6z0gWiNwXTxWxfuUzXA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
