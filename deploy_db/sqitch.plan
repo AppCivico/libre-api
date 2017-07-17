@@ -43,3 +43,4 @@
 0039-transfer-data [0038-donor-cpf] 2017-07-14T16:37:59Z Junior Moraes <juniorfvox@gmail.com> # transfer-data
 0040-vehicle-responsible [0039-transfer-data] 2017-07-14T19:36:43Z lucas-eokoe,,, <lucas-eokoe@lucaseokoe-Lenovo-G400s> # Adding the responsible fields.
 0041-journalist-cellphone-number [0040-vehicle-responsible] 2017-07-14T20:14:30Z lucas-eokoe,,, <lucas-eokoe@lucaseokoe-Lenovo-G400s> # Setting the cellphone number of the journalist/vehicle to not null.
+0042-vehicle-name [0041-journalist-cellphone-number] 2017-07-17T18:41:23Z lucas-eokoe,,, <lucas-eokoe@lucaseokoe-Lenovo-G400s> # Removing the not null constraint for the surname.
