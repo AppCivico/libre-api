@@ -118,12 +118,29 @@ sub verifiers_specs {
                     type       => 'Str',
                 },
                 cellphone_number => {
-                    required   => 0,
+                    required   => 1,
                     type       => PhoneNumber,
                 },
                 vehicle      => {
                     required => 1,
                     type     => "Bool",
+                },
+                responsible_name => {
+                    required => 0,
+                    type     => 'Str',
+                },
+                responsible_email => {
+                    required   => 0,
+                    type       => EmailAddress,
+                    filters    => [ qw(lower) ],
+                    post_check => sub {
+                        my $email = $_[0]->get_value("responsible_email");
+                        $self->result_source->schema->resultset("Journalist")->search({ responsible_email => $email })->count == 0;
+                    }
+                },
+                responsible_cpf => {
+                    required => 0,
+                    type     => CPF,
                 },
             },
         ),
@@ -148,6 +165,10 @@ sub action_specs {
                 die \["cpf", "not allowed"];
             }
 
+            if ($values{vehicle} && !$values{responsible_cpf}) {
+                die \["responsible_cpf", "must have a responsible"];
+            }
+
             my $user = $self->result_source->schema->resultset("User")->create(
                 {
                     ( map { $_ => $values{$_} } qw(name surname email password) ),
@@ -157,6 +178,8 @@ sub action_specs {
             );
 
             $user->add_to_roles({ id => 2 });
+
+            # TODO adicionar envio de e-mail de confirmação de cadastro
 
             my $journalist = $self->create(
                 {

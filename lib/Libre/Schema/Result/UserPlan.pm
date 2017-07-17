@@ -319,6 +319,23 @@ sub cancel {
         );
         $self->update_on_korduv();
     });
+
+    my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
+
+        my $email = Libre::Mailer::Template->new(
+            to       => $self->user->email,
+            from     => 'no-reply@libre.org.br',
+            subject  => "Libre - Cancelamento de assinatura",
+            template => get_data_section('userplan-cancel.tt'),
+            vars     => {
+                name    => $self->user->name,
+                surname => $self->user->surname,
+            },
+        )->build_email();
+
+    my $queued = $email_queue_rs->create({ body => $email->as_string });
+
+    return $queued;
 }
 
 sub update_on_korduv {
@@ -520,157 +537,244 @@ __DATA__
 
 <!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
-                <tbody>
-                    <tr>
-                        <td>
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
-                                <tbody>
-                                    <tr>
-                                        <td height="50"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><a href="midialibre.com.br"><img src="http://imgur.com/a/vTl7s" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
-                                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
-                                                <tbody>
-                                                    <tr>
-                                                        <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-                                                            <p><span><b>Olá [% name %], </b><br>
-                                                                <br></span>
-                                                            </p>
-                                                            <p> <strong> </strong>Recebemos a sinalização de que o seu pagamento falhou.<br><br>O pagamento tentará ser realizado novamente. Após 3 falhas o pagamento deverá ser realizado novamente manualmente.
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td height="30"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
-                                                            <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-                                                                <p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
-                                                                Equipe Libre
-                                                            </strong>
-                                                            <a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td height="30"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
-                                <tbody>
-                                    <tr>
-                                        <td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
-                                            <span><strong>Libre</strong></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        </div>
-        </div></div>
-    </body>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td height="50"></td>
+</tr>
+<tr>
+<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+</tr>
+<tr>
+<td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+<p><span><b>Olá [% name %], </b><br>
+<br></span>
+</p>
+<p> <strong> </strong>Recebemos a sinalização de que o seu pagamento falhou.<br><br>O pagamento tentará ser realizado novamente. Após 3 falhas o pagamento deverá ser realizado novamente manualmente.
+</p>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+<tr>
+<td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
+<strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
+<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+Equipe Libre
+</strong>
+<a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
+<span><strong>Libre</strong></span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</body>
 </html>
 
 @@ donor-receipt.tt
 
 <!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
-                <tbody>
-                    <tr>
-                        <td>
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
-                                <tbody>
-                                    <tr>
-                                        <td height="50"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><a href="midialibre.com.br"><img src="http://imgur.com/a/vTl7s" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
-                                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
-                                                <tbody>
-                                                    <tr>
-                                                        <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-                                                            <p><span><b>Olá [% name %], </b><br>
-                                                                <br></span>
-                                                            </p>
-                                                            <p> <strong>Recebemos a sinalização de que o seu pagamento foi efetuado com sucesso.</strong><br><br>Abaixo está o seu recibo
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-                                                            <p>
-                                                                O Libre, inscrito no CNPJ sob o nº 19.131.243/0001-97, recebeu de [% name %] [% surname %], inscrito no CPF sob o nº [% cpf %], a importância de R$ [% amount %], concernete à venda de um plano de financiamento jornalístico.
-                                                                <br><br>
-                                                                São Paulo, [% day %] do [% month %] de [% year %].
-                                                                <br><br>
-                                                                Libre
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td height="30"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
-                                                            <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-                                                                <p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
-                                                                Equipe Libre
-                                                            </strong>
-                                                            <a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td height="30"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
-                                <tbody>
-                                    <tr>
-                                        <td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
-                                            <span><strong>Libre</strong></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        </div>
-        </div></div>
-    </body>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td height="50"></td>
+</tr>
+<tr>
+<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+</tr>
+<tr>
+<td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+<p><span><b>Olá [% name %], </b><br>
+<br></span>
+</p>
+<p> <strong>Recebemos a sinalização de que o seu pagamento foi efetuado com sucesso.</strong><br><br>Abaixo está o seu recibo
+</p>
+</td>
+</tr>
+<tr>
+<td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+<p>
+O Libre, inscrito no CNPJ sob o nº 19.131.243/0001-97, recebeu de [% name %] [% surname %], inscrito no CPF sob o nº [% cpf %], a importância de R$ [% amount %], concernete à venda de um plano de financiamento jornalístico.
+<br><br>
+São Paulo, [% day %] do [% month %] de [% year %].
+<br><br>
+Libre
+</p>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+<tr>
+<td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
+<strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
+<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+Equipe Libre
+</strong>
+<a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
+<span><strong>Libre</strong></span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</body>
+</html>
+
+@@ userplan-cancel.tt
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td height="50"></td>
+</tr>
+<tr>
+<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+</tr>
+<tr>
+<td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+<p><span><b>Olá [% name %], </b><br>
+<br></span>
+</p>
+<p> <strong>Sua assinatura conosco foi cancelada com sucesso.</strong><br><br>Agradecemos seu apoio até aqui.
+</p>
+</td>
+</tr>
+<tr>
+<td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+<p>
+Mas é importante para nós saber porque você está deixando nossa rede.
+<br><br>
+Pedimos que preencha <a href="https://eokoe2.typeform.com/to/LaXMpn" target="_blank" style="color:green"><b>esse breve questionário</b></a> para saber mais de você.
+<br><br>
+Sua opinião e experiência é fundamental para que possamos transformar o Libre em uma ferramenta cada vez melhor para a imprensa e o público interessado em apoiá-la.
+<br><br>
+Libre
+</p>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+<tr>
+<td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
+<strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
+<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+Equipe Libre
+</strong>
+<a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
+<span><strong>Libre</strong></span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</body>
 </html>

@@ -246,11 +246,81 @@ __PACKAGE__->belongs_to(
 
 use WebService::PicPay;
 
+with 'Libre::Role::Verification';
+with 'Libre::Role::Verification::TransactionalActions::DBIC';
+
 has _picpay => (
     is         => "rw",
     isa        => "WebService::PicPay",
     lazy_build => 1,
 );
+
+sub verifiers_specs {
+    my $self = shift;
+
+    return {
+        update => Data::Verifier->new(
+            filters => [ qw(trim) ],
+            profile => {
+                name => {
+                    required => 0,
+                    type     => "Str",
+                },
+                surname => {
+                    required => 0,
+                    type     => "Str",
+                },
+                address_state => {
+                    required => 0,
+                    type     => "Str",
+                },
+                address_city => {
+                    required => 0,
+                    type     => "Str",
+                },
+                address_zipcode => {
+                    required => 0,
+                    type     => "Str",
+                },
+                address_street => {
+                    required => 0,
+                    type     => "Str",
+                },
+                address_residence_number => {
+                    required => 0,
+                    type     => "Str",
+                },
+                address_complement => {
+                    required => 0,
+                    type     => "Str",
+                },
+                cellphone_number => {
+                    required => 0,
+                    type     => "Str",
+                }
+            },
+        )
+    };
+}
+
+sub action_specs {
+    my ($self) = @_;
+
+    return {
+        update => sub {
+            my $r = shift;
+
+            my %values = $r->valid_values;
+            not defined $values{$_} and delete $values{$_} for keys %values;
+
+            my %user_params;
+            defined($values{$_}) and $user_params{$_} = delete $values{$_} for qw/name surname/;
+
+            $self->update(\%values);
+            $self->user->update(\%user_params) if %user_params;
+        },
+    };
+}
 
 sub _build__picpay { WebService::PicPay->new() }
 
@@ -260,7 +330,7 @@ sub get_authlink {
     if (!defined($self->customer_id) && !defined($self->customer_key)) {
         my $register = $self->_picpay->register();
 
-        my $customer = $self->_picpay->customer(
+        $self->_picpay->customer(
             customer_key => $register->{customer}->{customer_key},
             customer => {
                 id_internal      => $self->id,
