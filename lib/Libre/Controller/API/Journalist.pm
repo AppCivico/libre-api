@@ -45,9 +45,22 @@ sub result_GET {
     return $self->status_ok(
         $c,
         entity => {
-            ( map { $_ => $c->stash->{journalist}->$_ } qw/address_state address_city address_zipcode address_street address_residence_number cellphone_number/ ),
+            (
+                map { $_ => $c->stash->{journalist}->$_ }
+                  qw(
+                  address_state address_city address_zipcode address_street address_residence_number
+                  cellphone_number
+                  )
+            ),
 
-            ( map { $_ => $c->stash->{journalist}->user->$_ } qw/id email created_at name surname/ ),
+            (
+                map { $_ => $c->stash->{journalist}->user->$_ }
+                  qw(
+                  id email created_at name surname
+                  )
+            ),
+
+            is_authlinked => $c->stash->{journalist}->is_authlinked(),
         }
     );
 }

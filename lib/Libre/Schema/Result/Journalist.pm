@@ -357,7 +357,11 @@ sub is_authlinked {
 
     local $@ = undef;
     eval { $self->_picpay->userdata(customer_key => $self->customer_key) };
-    p $@;
+    if ($@) {
+        return 0;
+    }
+
+    return 1;
 }
 
 __PACKAGE__->meta->make_immutable;
