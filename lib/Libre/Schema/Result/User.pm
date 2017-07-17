@@ -84,7 +84,7 @@ __PACKAGE__->table("user");
 =head2 surname
 
   data_type: 'text'
-  is_nullable: 0
+  is_nullable: 1
 
 =cut
 
@@ -114,7 +114,7 @@ __PACKAGE__->add_columns(
   "name",
   { data_type => "text", is_nullable => 0 },
   "surname",
-  { data_type => "text", is_nullable => 0 },
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -291,8 +291,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-11 13:49:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:g3rIKa+33Gc6QXKPAOjlIg
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-17 15:38:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BebVwndfSVLcFpfnNsAFMg
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {

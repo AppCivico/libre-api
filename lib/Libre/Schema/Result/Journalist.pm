@@ -92,7 +92,7 @@ __PACKAGE__->table("journalist");
 =head2 cellphone_number
 
   data_type: 'text'
-  is_nullable: 1
+  is_nullable: 0
 
 =head2 active
 
@@ -125,6 +125,21 @@ __PACKAGE__->table("journalist");
   data_type: 'text'
   is_nullable: 1
 
+=head2 responsible_name
+
+  data_type: 'text'
+  is_nullable: 1
+
+=head2 responsible_email
+
+  data_type: 'text'
+  is_nullable: 1
+
+=head2 responsible_cpf
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -147,7 +162,7 @@ __PACKAGE__->add_columns(
   "address_complement",
   { data_type => "text", is_nullable => 1 },
   "cellphone_number",
-  { data_type => "text", is_nullable => 1 },
+  { data_type => "text", is_nullable => 0 },
   "active",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "verified_at",
@@ -159,6 +174,12 @@ __PACKAGE__->add_columns(
   "customer_id",
   { data_type => "text", is_nullable => 1 },
   "customer_key",
+  { data_type => "text", is_nullable => 1 },
+  "responsible_name",
+  { data_type => "text", is_nullable => 1 },
+  "responsible_email",
+  { data_type => "text", is_nullable => 1 },
+  "responsible_cpf",
   { data_type => "text", is_nullable => 1 },
 );
 
@@ -187,6 +208,30 @@ __PACKAGE__->set_primary_key("user_id");
 =cut
 
 __PACKAGE__->add_unique_constraint("journalist_cpf_key", ["cpf"]);
+
+=head2 C<journalist_responsible_cpf_key>
+
+=over 4
+
+=item * L</responsible_cpf>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint("journalist_responsible_cpf_key", ["responsible_cpf"]);
+
+=head2 C<journalist_responsible_email_key>
+
+=over 4
+
+=item * L</responsible_email>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint("journalist_responsible_email_key", ["responsible_email"]);
 
 =head1 RELATIONS
 
@@ -241,8 +286,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-07-10 16:54:56
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wgcEBOEvX8mj7Nf3lRrxKg
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-17 15:38:31
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:w8RAoK6LfolSQQaOzwAF2A
 
 use WebService::PicPay;
 
