@@ -397,6 +397,18 @@ sub get_authlink {
     return $self->_picpay->authlink(customer_key => $self->customer_key);
 }
 
+sub is_authlinked {
+    my ($self) = @_;
+
+    local $@ = undef;
+    eval { $self->_picpay->userdata(customer_key => $self->customer_key) };
+    if ($@) {
+        return 0;
+    }
+
+    return 1;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;

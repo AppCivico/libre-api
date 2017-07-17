@@ -89,7 +89,7 @@ sub authlink {
 }
 
 sub userdata {
-    my ($self) = @_;
+    my ($self, %opts) = @_;
 
     if (is_test()) {
         return {
@@ -101,12 +101,15 @@ sub userdata {
         };
     }
 
+    my $customer_key = delete $opts{customer_key};
+
     my $res = $self->furl->get(
         $self->endpoint . "/picpayuserdata",
         [
             'Content-Type' => "application/json",
-            api_key   => $self->_api_key,
-            client_id => $self->_client_id,
+            api_key      => $self->_api_key,
+            client_id    => $self->_client_id,
+            customer_key => $customer_key,
         ],
     );
     die $res->decoded_content unless $res->is_success;

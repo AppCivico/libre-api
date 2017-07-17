@@ -34,7 +34,14 @@ db_transaction {
     stash_test "get_journalist" => sub {
         my $res = shift;
 
-        is($res->{id}, $schema->resultset("User")->find($journalist_id)->id);
+        is ($res->{id}, $journalist_id, 'id');
+        is ($res->{name}, "Lucas", 'name');
+        is ($res->{surname}, "Ansei", 'surname');
+        is ($res->{address_city}, "Taubaté", 'address_city');
+        is ($res->{address_state}, "São Paulo", 'address_state');
+        is ($res->{address_street}, "Rua Florival de Toledo", 'address_street');
+        is ($res->{address_residence_number}, "1", 'address_residence_number');
+        is ($res->{is_authlinked}, 1, 'is authlinked');
     };
 
     rest_put "/api/journalist/$journalist_id",
