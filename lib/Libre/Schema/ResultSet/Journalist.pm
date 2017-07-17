@@ -44,7 +44,7 @@ sub verifiers_specs {
                     type     => "Str",
                 },
                 surname => {
-                    required => 1,
+                    required => 0,
                     type     => "Str",
                 },
                 cpf => {
@@ -163,6 +163,10 @@ sub action_specs {
 
             if ($values{vehicle} && $values{cpf}) {
                 die \["cpf", "not allowed"];
+            }
+
+            if (!$values{vehicle} && !$values{surname}) {
+                die \["surname", "Journalist must have a surname"];
             }
 
             if ($values{vehicle} && !$values{responsible_cpf}) {
