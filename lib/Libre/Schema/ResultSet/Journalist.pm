@@ -156,6 +156,14 @@ sub action_specs {
                 die \["cpf", "Must have either CPF or CNPJ"];
             }
 
+            if ($values{cpf} && length $values{cpf} < 11) {
+                die \["cpf", "must have 11 numbers"];
+            }
+
+            if ($values{cnpj} && length $values{cnpj} < 14) {
+                die \["cnpj", "must have 14 numbers"];
+            }
+
             if ($values{vehicle} && $values{cpf}) {
                 die \["cpf", "not allowed"];
             }
