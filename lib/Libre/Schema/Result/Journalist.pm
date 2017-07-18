@@ -130,7 +130,7 @@ __PACKAGE__->table("journalist");
   data_type: 'text'
   is_nullable: 1
 
-=head2 responsible_email
+=head2 responsible_surname
 
   data_type: 'text'
   is_nullable: 1
@@ -177,7 +177,7 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 1 },
   "responsible_name",
   { data_type => "text", is_nullable => 1 },
-  "responsible_email",
+  "responsible_surname",
   { data_type => "text", is_nullable => 1 },
   "responsible_cpf",
   { data_type => "text", is_nullable => 1 },
@@ -220,18 +220,6 @@ __PACKAGE__->add_unique_constraint("journalist_cpf_key", ["cpf"]);
 =cut
 
 __PACKAGE__->add_unique_constraint("journalist_responsible_cpf_key", ["responsible_cpf"]);
-
-=head2 C<journalist_responsible_email_key>
-
-=over 4
-
-=item * L</responsible_email>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint("journalist_responsible_email_key", ["responsible_email"]);
 
 =head1 RELATIONS
 
@@ -286,8 +274,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-17 15:38:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:w8RAoK6LfolSQQaOzwAF2A
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-18 14:01:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uArs1OwYyY5KlgdxsRZ0zw
 
 use WebService::PicPay;
 
