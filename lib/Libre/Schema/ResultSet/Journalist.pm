@@ -172,6 +172,10 @@ sub action_specs {
                 die \["cellphone_number", "must have a responsible"];
             }
 
+            if ($values{vehicle} && $values{surname}) {
+                die \["surname", "Vehicle must'nt have a surname"];
+            }
+
             if (!$values{vehicle} && ($values{responsible_cpf} || $values{responsible_name} || $values{responsible_surname})) {
                 die \["responsible_cpf", "must not have a responsible"];
             }
