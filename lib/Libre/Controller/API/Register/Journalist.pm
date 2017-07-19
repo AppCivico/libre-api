@@ -21,12 +21,6 @@ sub register :Chained('base') :PathPart('') :Args(0) :ActionClass('REST') { }
 sub register_POST {
     my ($self, $c) = @_;
 
-    for (qw/cpf cnpj/) {
-        if (defined($c->req->params->{$_}) && $c->req->params->{$_} eq "") {
-            $c->req->params->{$_} = "_IS_INVALID_";
-        }
-    }
-
     my $user = $c->stash->{collection}->execute(
         $c,
         for   => 'create',

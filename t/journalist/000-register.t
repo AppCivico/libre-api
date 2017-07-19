@@ -159,45 +159,6 @@ db_transaction {
         },
     ;
 
-    # O CPF/CNPJ não pode ser vazio
-    rest_post "/api/register/journalist",
-        is_fail => 1,
-        name    => "Journalist with empty cpf",
-        params  => {
-            email                    => fake_email()->(),
-            password                 => "fooquxbar1",
-            name                     => fake_first_name()->(),
-            surname                  => fake_surname()->(),
-            cpf                      => "",
-            address_state            => "Rio de Janeiro",
-            address_city             => "Rio de Janeiro",
-            address_zipcode          => '02351-000',
-            address_street           => "Rua Flores do Piauí",
-            address_residence_number => 1 + int(rand(2000)),
-            cellphone_number         => fake_digits("+551198#######")->(),
-            vehicle                  => 0,
-        },
-    ;
-
-    rest_post "/api/register/journalist",
-        is_fail => 1,
-        name    => "Journalist with empty cpf",
-        params  => {
-            email                    => fake_email()->(),
-            password                 => "fooquxbar1",
-            name                     => fake_first_name()->(),
-            surname                  => fake_surname()->(),
-            cnpj                     => "",
-            address_state            => "Rio de Janeiro",
-            address_city             => "Rio de Janeiro",
-            address_zipcode          => '02351-000',
-            address_street           => "Rua Flores do Piauí",
-            address_residence_number => 1 + int(rand(2000)),
-            cellphone_number         => fake_digits("+551198#######")->(),
-            vehicle                  => 0,
-        },
-    ;
-
     # Criando um veículo de notícias.
     rest_post "/api/register/journalist",
         automatic_load_item => 0,
