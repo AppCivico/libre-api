@@ -3,14 +3,14 @@
 
 BEGIN;
 
-ALTER TABLE donor ADD COLUMN cpf TEXT UNIQUE;
+ALTER TABLE donor ADD COLUMN cpf TEXT;
 UPDATE donor
     SET cpf = u.cpf
     FROM "user" as u
     WHERE donor.user_id = u.id;
-ALTER TABLE donor ALTER COLUMN cpf SET DEFAULT '';
+
+UPDATE donor SET cpf = '' WHERE cpf IS NULL;
 ALTER TABLE donor ALTER COLUMN cpf SET NOT NULL;
-ALTER TABLE donor ALTER COLUMN cpf DROP DEFAULT; 
 ALTER TABLE "user" DROP COLUMN cpf;
 
 COMMIT;
