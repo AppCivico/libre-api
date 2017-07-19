@@ -44,6 +44,8 @@
 'Libre::Role::Verification::TransactionalActions::DBIC'	./lib/Libre/Schema/ResultSet/UserForgotPassword.pm	/^with 'Libre::Role::Verification::TransactionalActions::DBIC';$/;"	w
 -- C<donor_cpf_key>	./lib/Libre/Schema/Result/Donor.pm	/^=head2 C<donor_cpf_key>$/;"	p
 -- C<journalist_cpf_key>	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 C<journalist_cpf_key>$/;"	p
+-- C<journalist_responsible_cpf_key>	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 C<journalist_responsible_cpf_key>$/;"	p
+-- C<journalist_responsible_email_key>	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 C<journalist_responsible_email_key>$/;"	p
 -- C<user_email_key>	./lib/Libre/Schema/Result/User.pm	/^=head2 C<user_email_key>$/;"	p
 -- C<user_session_api_key_key>	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 C<user_session_api_key_key>$/;"	p
 -- account	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 account$/;"	p
@@ -148,6 +150,9 @@
 -- payments	./lib/Libre/Schema/Result/User.pm	/^=head2 payments$/;"	p
 -- payments	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 payments$/;"	p
 -- phone	./lib/Libre/Schema/Result/Donor.pm	/^=head2 phone$/;"	p
+-- responsible_cpf	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 responsible_cpf$/;"	p
+-- responsible_email	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 responsible_email$/;"	p
+-- responsible_name	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 responsible_name$/;"	p
 -- role	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 role$/;"	p
 -- role_id	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 role_id$/;"	p
 -- roles	./lib/Libre/Schema/Result/User.pm	/^=head2 roles$/;"	p
@@ -811,6 +816,7 @@ http_callback_POST	./lib/Libre/Controller/HttpCallback.pm	/^sub http_callback_PO
 initialize_after_setup	./lib/Libre/Model/Flotum.pm	/^sub initialize_after_setup {$/;"	s
 instance	./lib/Libre/Model/Flotum.pm	/^has instance => ($/;"	a
 invalid_libres	./lib/Libre/Schema/ResultSet/Libre.pm	/^sub invalid_libres {$/;"	s
+is_authlinked	./lib/Libre/Schema/Result/Journalist.pm	/^sub is_authlinked {$/;"	s
 is_donor	./lib/Libre/Schema/Result/User.pm	/^sub is_donor {$/;"	s
 is_journalist	./lib/Libre/Schema/Result/User.pm	/^sub is_journalist {$/;"	s
 is_test	./lib/Libre/Utils.pm	/^sub is_test {$/;"	s
