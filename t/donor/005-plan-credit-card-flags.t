@@ -18,8 +18,8 @@ db_transaction {
         stash => "l1",
     ;
 
-    is ( (stash "l1")->{donor_has_plan}, 0, "no plan");
-    is ( (stash "l1")->{donor_has_credit_card}, 0, "no credit card");
+    is ( (stash "l1")->{has_plan}, 0, "no plan");
+    is ( (stash "l1")->{has_credit_card}, 0, "no credit card");
 
     # Listando um doador com um plano mas sem cartão
     rest_post "/api/donor/$donor_id/plan",
@@ -32,8 +32,8 @@ db_transaction {
         stash => "l2",
     ;
 
-    is ( (stash "l2")->{donor_has_plan}, 1, "has plan");
-    is ( (stash "l2")->{donor_has_credit_card}, 0, "no credit card yet");
+    is ( (stash "l2")->{has_plan}, 1, "has plan");
+    is ( (stash "l2")->{has_credit_card}, 0, "no credit card yet");
 
     # Adicionando um cartão para o donor
     $schema->resultset("Donor")->find($donor_id)->update({
@@ -46,8 +46,8 @@ db_transaction {
         stash => "l3",
     ;
 
-    is ( (stash "l3")->{donor_has_plan}, 1, "has plan");
-    is ( (stash "l3")->{donor_has_credit_card}, 1, "has credit card");
+    is ( (stash "l3")->{has_plan}, 1, "has plan");
+    is ( (stash "l3")->{has_credit_card}, 1, "has credit card");
 };
 
 done_testing();

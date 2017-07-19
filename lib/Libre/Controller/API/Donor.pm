@@ -50,8 +50,8 @@ sub result_GET {
 
             ( map { $_ => $c->stash->{donor}->user->$_ } qw/id email created_at name surname/ ),
 
-            donor_has_plan        => $has_plan,
-            donor_has_credit_card => $credit_card,
+            has_plan        => $has_plan,
+            has_credit_card => $credit_card,
         },
     );
 }
