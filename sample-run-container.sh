@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # arquivo de exemplo para iniciar o container
-export SOURCE_DIR='/home/junior/projects/libre-api'
+export SOURCE_DIR='/home/libre/projects/libre-api'
 export DATA_DIR='/tmp/libre/data/'
 
 mkdir -p $DATA_DIR

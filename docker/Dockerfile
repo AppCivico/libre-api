@@ -37,4 +37,4 @@ RUN mkdir /etc/service/libre
 COPY libre.sh /etc/service/libre/run
 
 RUN mkdir /etc/service/libre-email
-COPY iota-email.sh /etc/service/iota-email/run
+COPY libre-email.sh /etc/service/libre-email/run
