@@ -116,7 +116,8 @@ sub http_callback_POST {
 sub _update_credit_card {
     my ( $self, $c, $extra_args ) = @_;
 
-    my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next; };
+    my $user_id = $extra_args->{user_id};
+    my $user = $c->model("DB::User")->search( { 'me.id' => $user_id }, { for => "update" } )->next;
     return unless $user;
 
     if ( $user->donor->flotum_preferred_credit_card && $user->donor->flotum_id ) {
