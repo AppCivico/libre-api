@@ -290,6 +290,8 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
+            $self->result_source->schema->resultset("User")->search({ 'me.id' => $self->user->id }, { for => "update" })->next,
+
             my $user_plan = $self->update( { %values, updated_at => \"NOW()" } );
             $user_plan->update_on_korduv();
 
@@ -309,6 +311,8 @@ sub cancel {
 
     $self->result_source->schema->txn_do(sub {
         return if $self->canceled;
+
+        $self->result_source->schema->resultset("User")->search({ 'me.id' => $self->user->id }, { for => "update" })->next,
 
         $self->update(
             {

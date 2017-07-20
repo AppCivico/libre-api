@@ -49,6 +49,11 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
+            my $user_id = $self->{attrs}->{where}->{'me.user_id'} || $self->{attrs}->{where}->{user_id};
+            die "missing 'user_id'" unless $user_id;
+
+            $self->result_source->schema->resultset("User")->search( { 'me.id' => $user_id }, { for => "update" })->next;
+
             my $user_plan = $self->create(\%values);
 
             # Atualizando a informação no Korduv.
