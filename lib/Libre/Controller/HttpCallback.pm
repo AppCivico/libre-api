@@ -157,7 +157,7 @@ sub _update_credit_card {
 sub _compute_donations {
     my ($self, $c, $extra_args) = @_;
 
-    my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, )->next };
+    my $user = eval { $c->model('DB::User')->search( { 'me.id' => $extra_args->{user_id} }, { for => "update" } )->next };
     return unless ref $user;
 
     my $donor_id     = $extra_args->{user_id};
