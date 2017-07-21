@@ -45,7 +45,6 @@
 -- C<donor_cpf_key>	./lib/Libre/Schema/Result/Donor.pm	/^=head2 C<donor_cpf_key>$/;"	p
 -- C<journalist_cpf_key>	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 C<journalist_cpf_key>$/;"	p
 -- C<journalist_responsible_cpf_key>	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 C<journalist_responsible_cpf_key>$/;"	p
--- C<journalist_responsible_email_key>	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 C<journalist_responsible_email_key>$/;"	p
 -- C<user_email_key>	./lib/Libre/Schema/Result/User.pm	/^=head2 C<user_email_key>$/;"	p
 -- C<user_session_api_key_key>	./lib/Libre/Schema/Result/UserSession.pm	/^=head2 C<user_session_api_key_key>$/;"	p
 -- account	./lib/Libre/Schema/Result/UserBankAccount.pm	/^=head2 account$/;"	p
@@ -151,8 +150,8 @@
 -- payments	./lib/Libre/Schema/Result/UserPlan.pm	/^=head2 payments$/;"	p
 -- phone	./lib/Libre/Schema/Result/Donor.pm	/^=head2 phone$/;"	p
 -- responsible_cpf	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 responsible_cpf$/;"	p
--- responsible_email	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 responsible_email$/;"	p
 -- responsible_name	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 responsible_name$/;"	p
+-- responsible_surname	./lib/Libre/Schema/Result/Journalist.pm	/^=head2 responsible_surname$/;"	p
 -- role	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 role$/;"	p
 -- role_id	./lib/Libre/Schema/Result/UserRole.pm	/^=head2 role_id$/;"	p
 -- roles	./lib/Libre/Schema/Result/User.pm	/^=head2 roles$/;"	p
