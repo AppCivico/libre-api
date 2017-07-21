@@ -33,7 +33,7 @@ sub login_POST {
 
     my $authenticate = $c->authenticate({
         ( map { $_ => $c->req->params->{$_} } qw(email password) ),
-        verified => 1,
+        verified => 0,
     });
 
     if ($authenticate) {

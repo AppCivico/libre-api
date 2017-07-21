@@ -69,6 +69,7 @@ __PACKAGE__->table("user");
 =head2 verified
 
   data_type: 'boolean'
+  default_value: false
   is_nullable: 0
 
 =head2 verified_at
@@ -108,7 +109,7 @@ __PACKAGE__->add_columns(
     original      => { default_value => \"now()" },
   },
   "verified",
-  { data_type => "boolean", is_nullable => 0 },
+  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "verified_at",
   { data_type => "timestamp", is_nullable => 1 },
   "name",
@@ -220,6 +221,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 user_confirmations
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::UserConfirmation>
+
+=cut
+
+__PACKAGE__->has_many(
+  "user_confirmations",
+  "Libre::Schema::Result::UserConfirmation",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user_forgot_passwords
 
 Type: has_many
@@ -291,8 +307,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-17 15:38:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BebVwndfSVLcFpfnNsAFMg
+# Created by DBIx::Class::Schema::Loader v0.07047 @ 2017-07-21 13:52:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:96S3IIMQp6YO/67mc09xDA
 __PACKAGE__->remove_column("password");
 __PACKAGE__->add_column(
     password => {
@@ -309,6 +325,7 @@ __PACKAGE__->add_column(
 );
 
 use Libre::Utils;
+use Digest::SHA1 qw(sha1_hex);
 
 sub new_session {
     my ($self) = @_;
@@ -356,7 +373,7 @@ sub send_email_confirmation {
         valid_until => \"(NOW() + '3 days'::interval)",
     });
 
-    my $email = Saveh::Mailer::Template->new(
+    my $email = Libre::Mailer::Template->new(
         to       => $self->email,
         from     => 'no-reply@midialibre.org',
         subject  => "Libre - Confirmação de cadastro",
@@ -415,7 +432,9 @@ __DATA__
 <td height="50"></td>
 </tr>
 <tr>
-<td colspan="2"><a href="https://www.midialibre.com.br"><img src="" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+<tr>
+<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+</tr>
 </tr>
 <tr>
 <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
@@ -438,6 +457,95 @@ __DATA__
 <tbody>
 <tr>
 <td align="center" valign="middle"><a href="https://www.midialibre.com.br/conta/trocar-senha/?token=[% token %]" target="_blank" class="x_btn" style="background:#4ab957; border-radius:8px; color:#ffffff; font-family:'Montserrat',Arial,sans-serif; font-size:15px; padding:16px 24px 15px 24px; text-decoration:none; text-transform:uppercase"><strong>TROCAR MINHA SENHA</strong></a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td height="40"></td>
+</tr>
+<tr>
+<td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px"><strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
+  <p>Caso você não tenha solicitado esta alteração de senha, por favor desconsidere esta mensagem, nenhuma alteração foi feita na sua conta.</p>
+  <p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+  Equipe Libre</strong><a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a></td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
+  <tbody>
+<tr>
+<td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
+<span><strong>Libre</strong></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</div></div>
+
+</body>
+</html>
+
+@@ register_confirmation.tt
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+<div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td height="50"></td>
+</tr>
+<tr>
+<tr>
+<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+</tr>
+</tr>
+<tr>
+<td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
+<tbody>
+<tr>
+  <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+    <p><span><b>Olá [% name %], </b><br>
+      <br></span></p>
+    <p> <strong> </strong>Agradecemos seu compromisso em valorizar a imprensa. Seu apoio é fundamental para que, juntos, jornalistas e o público criem uma mídia cada vez mais livre e democrática.
+</p>
+<p>Por favor confirme o seu e-mail para começar a utilizar a sua conta. Para confirmar seu e-mail basta clicar no botão abaixo.</p>
+  </td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+<tr>
+<td align="center" bgcolor="#ffffff" valign="top" style="padding-top:20px">
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate; border-radius:7px; margin:0">
+<tbody>
+<tr>
+<td align="center" valign="middle"><a href="https://www.midialibre.com.br/conta/trocar-senha/?token=[% token %]" target="_blank" class="x_btn" style="background:#4ab957; border-radius:8px; color:#ffffff; font-family:'Montserrat',Arial,sans-serif; font-size:15px; padding:16px 24px 15px 24px; text-decoration:none; text-transform:uppercase"><strong>CONFIRMAR MINHA CONTA</strong></a></td>
 </tr>
 </tbody>
 </table>

@@ -190,16 +190,12 @@ sub action_specs {
             }
 
             my $user = $self->result_source->schema->resultset("User")->create(
-                {
-                    ( map { $_ => $values{$_} } qw(name surname email password) ),
-                    verified    => 1,
-                    verified_at => \"now()",
-                }
+                { ( map { $_ => $values{$_} } qw(name surname email password) ) }
             );
 
             $user->add_to_roles({ id => 2 });
 
-            # TODO adicionar envio de e-mail de confirmação de cadastro
+            $user->send_email_confirmation();
 
             my $journalist = $self->create(
                 {

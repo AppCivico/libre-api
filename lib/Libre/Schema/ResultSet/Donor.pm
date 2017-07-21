@@ -64,16 +64,12 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             my $user = $self->result_source->schema->resultset("User")->create(
-                {
-                    ( map { $_ => $values{$_} } qw(name surname email password) ),
-                    verified    => 1,
-                    verified_at => \"NOW()",
-                }
+                { ( map { $_ => $values{$_} } qw(name surname email password) ), }
             );
 
             $user->add_to_roles( { id => 3 } );
 
-            # TODO adicionar envio de e-mail de confirmação de cadastro
+            $user->send_email_confirmation();
 
             return $self->create({
                 ( map { $_ => $values{$_} } qw(phone cpf) ),
