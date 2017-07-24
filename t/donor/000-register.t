@@ -22,6 +22,8 @@ db_transaction {
         },
     ;
 
+    is($schema->resultset("EmailQueue")->count, 1, 'email queued');
+
     is (
         $schema->resultset("Donor")->find(stash "d1.id")->user->email,
         $email,
