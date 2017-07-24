@@ -356,7 +356,7 @@ sub send_email_confirmation {
         valid_until => \"(NOW() + '3 days'::interval)",
     });
 
-    my $email = Saveh::Mailer::Template->new(
+    my $email = Libre::Mailer::Template->new(
         to       => $self->email,
         from     => 'no-reply@midialibre.org',
         subject  => "Libre - Confirmação de cadastro",
@@ -364,6 +364,22 @@ sub send_email_confirmation {
         vars     => {
             name  => $self->name,
             token => $user_confirmation->token,
+        },
+    )->build_email();
+
+    return $self->result_source->schema->resultset('EmailQueue')->create({ body => $email->as_string });
+}
+
+sub send_greetings_email {
+    my ($self) = @_;
+
+    my $email = Libre::Mailer::Template->new(
+        to       => $self->email,
+        from     => 'no-reply@midialibre.org',
+        subject  => "Libre - Boas vindas",
+        template => get_data_section('greetings.tt'),
+        vars     => {
+            name  => $self->name,
         },
     )->build_email();
 
@@ -478,5 +494,83 @@ __DATA__
 </div>
 </div></div>
 
+@@ greetings.tt
+
+</body>
+</html>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div leftmargin="0" marginheight="0" marginwidth="0" topmargin="0" style="background-color:#f5f5f5; font-family:'Montserrat',Arial,sans-serif; margin:0; padding:0; width:100%">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="600" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td height="50"></td>
+</tr>
+<tr>
+<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+</tr>
+<tr>
+<td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
+<p><span><b>Olá [% name %], </b><br>
+<br></span>
+</p>
+<p> <strong> </strong>Agradecemos seu compromisso em valorizar a imprensa. Seu apoio é fundamental para que, juntos, jornalistas e o público criem uma mídia cada vez mais livre e democrática.</p>
+<p>A partir de agora você poderá distribuir seus Libres com facilidade e segurança em toda a rede de veículos e jornalistas que utilizam nossa plataforma.</p>
+<p>Em seu perfil em nosso site, você pode acompanhar o balanço de sua conta, consultar e a lista de matérias, artigos e conteúdos que você apoiou.</p>
+<p>E fique de olho em nossos informes e atualizações. Libre é uma ferramenta nova e em constante evolução. Ao longo dos próximos meses vamos ampliar nossa rede de veículos, aprimorando o funcionamento e criando novas funcionalidades em nosso site.</p>
+<p>Qualquer dúvida procure nosso FAQ ou escreva para nós.
+<br><br>A mídia Libre conta com você!</p>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+<tr>
+<td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
+<strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
+<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+Equipe Libre
+</strong>
+<a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+</td>
+</tr>
+<tr>
+<td height="30"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="x_deviceWidth" width="540" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td align="center" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:11px; font-weight:300; line-height:16px; margin:0; padding:30px 0px">
+<span><strong>Libre</strong></span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
 </body>
 </html>

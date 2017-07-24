@@ -99,7 +99,8 @@ db_transaction {
         code => 200,
     ;
 
-    is($schema->resultset("EmailQueue")->count, 1, 'email queued');
+    # Há o e-mail do plan e o de boas-vindas.
+    is($schema->resultset("EmailQueue")->count, 2, 'email queued');
 };
 
 done_testing();
