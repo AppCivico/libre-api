@@ -12,3 +12,4 @@ if [ -e "$PIDFILE" ]; then
 fi
 
 pgrep -f Libre::Daemon::Emailsd | xargs kill -INT
+pgrep -f Libre::Daemon::BankTeller | xargs kill -INT
