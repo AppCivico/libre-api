@@ -11,4 +11,4 @@ if [ -e "$PIDFILE" ]; then
     kill -HUP $(cat $PIDFILE)
 fi
 
-./script/daemon/Emailsd stop -f;
+pgrep -f Libre::Daemon::Emailsd | xargs kill -INT
