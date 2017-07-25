@@ -8,7 +8,7 @@ use Libre::Mailer;
 
 has timer => (
     is      => "rw",
-    default => 5,
+    default => 60,
 );
 
 has mailer => (
