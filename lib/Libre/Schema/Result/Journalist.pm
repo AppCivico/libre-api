@@ -369,7 +369,7 @@ sub get_authlink {
                 id_internal      => $self->id,
                 name             => $self->user->name,
                 email            => $self->user->email,
-                cpf              => $self->cpf,
+                cpf              => ( $self->vehicle ? $self->responsible_cpf : $self->cpf ),
                 cellphone_number => $self->cellphone_number,
             },
         );

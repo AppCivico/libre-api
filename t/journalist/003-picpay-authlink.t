@@ -34,3 +34,4 @@ db_transaction {
 };
 
 done_testing();
+
