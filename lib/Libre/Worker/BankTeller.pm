@@ -18,8 +18,8 @@ has schema => (
 );
 
 has _picpay => (
-    is => "rw",
-    isa => "WebService::PicPay",
+    is         => "rw",
+    isa        => "WebService::PicPay",
     lazy_build => 1,
 );
 
