@@ -5,8 +5,10 @@ cd /src;
 source /home/app/perl5/perlbrew/etc/bashrc;
 source envfile.sh;
 
+sqitch deploy -t $SQITCH_DEPLOY
+
 if [ -e "$PIDFILE" ]; then
     kill -HUP $(cat $PIDFILE)
 fi
 
-./script/daemon/Emailsd stop -f;
+pgrep -f Libre::Daemon::Emailsd | xargs kill -INT

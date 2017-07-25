@@ -8,6 +8,8 @@ mkdir -p /data/log/;
 cd /src;
 source envfile.sh
 
+sqitch deploy -t $SQITCH_DEPLOY
+
 start_server \
   --pid-file=/tmp/start_server.pid \
   --signal-on-hup=QUIT \
