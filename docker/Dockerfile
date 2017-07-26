@@ -38,3 +38,6 @@ COPY libre.sh /etc/service/libre/run
 
 RUN mkdir /etc/service/libre-email
 COPY libre-email.sh /etc/service/libre-email/run
+
+RUN mkdir /etc/service/libre-bank-teller
+COPY libre-bank-teller.sh /etc/service/libre-bank-teller/run
