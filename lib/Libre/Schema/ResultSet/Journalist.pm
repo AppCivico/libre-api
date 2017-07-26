@@ -189,6 +189,10 @@ sub action_specs {
                 die \["responsible_cpf", "must not have a responsible"];
             }
 
+            if (length $values{password} < 4) {
+                die \["new_password", "cannot be empty"];
+            }
+
             my $user = $self->result_source->schema->resultset("User")->create(
                 {
                     ( map { $_ => $values{$_} } qw(name surname email password) ),

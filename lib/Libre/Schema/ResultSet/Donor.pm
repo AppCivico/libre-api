@@ -63,6 +63,10 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
+            if (length $values{password} < 4) {
+                die \["new_password", "cannot be empty"];
+            }
+
             my $user = $self->result_source->schema->resultset("User")->create(
                 {
                     ( map { $_ => $values{$_} } qw(name surname email password) ),

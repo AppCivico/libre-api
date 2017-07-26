@@ -30,6 +30,24 @@ db_transaction {
         },
     ;
 
+    rest_post '/api/register/journalist',
+        is_fail             => 1,
+        params              => {
+            email                    => $email,
+            password                 => "123",
+            name                     => fake_name()->(),
+            surname                  => "Foobarson",
+            cpf                      => random_cpf(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            vehicle                  => 0,
+            cellphone_number         => fake_digits("+551198#######")->(),
+        },
+    ;
+
     # Criando um jornalista com CPF igual.
     my $cpf = random_cpf(1);
 

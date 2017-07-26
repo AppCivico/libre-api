@@ -10,6 +10,18 @@ db_transaction {
     my $email = fake_email()->();
 
     rest_post "/api/register/donor",
+        is_fail => 1,
+        params  => {
+            email    => $email,
+            password => "123",
+            name     => fake_first_name()->(),
+            surname  => fake_surname()->(),
+            cpf      => random_cpf(),
+            phone    => fake_digits("+551198#######")->(),
+        },
+    ;
+
+    rest_post "/api/register/donor",
         stash               => "d1",
         automatic_load_item => 0,
         params              => {
