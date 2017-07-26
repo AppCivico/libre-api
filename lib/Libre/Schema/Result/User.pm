@@ -541,7 +541,7 @@ __DATA__
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://midialibre.org/ajuda/" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
 <a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
