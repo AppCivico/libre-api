@@ -67,6 +67,7 @@ sub build_email {
         Data     => $content,
         Encoding => 'base64',
     );
+    $email->attr('content-type.charset' => 'UTF-8');
 
     for my $attachment (@{ $self->attachments }) {
         if (!ref($attachment->{fh}) || !$attachment->{fh}->isa("IO::Handle")) {
