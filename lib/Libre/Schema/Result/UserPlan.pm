@@ -556,7 +556,7 @@ __DATA__
 <td height="50"></td>
 </tr>
 <tr>
-<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+<td colspan="2"><a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
 </tr>
 <tr>
 <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
@@ -577,10 +577,10 @@ __DATA__
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://www.midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
-<a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+<a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a>
 </td>
 </tr>
 <tr>
@@ -630,7 +630,7 @@ Equipe Libre
 <td height="50"></td>
 </tr>
 <tr>
-<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+<td colspan="2"><a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
 </tr>
 <tr>
 <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
@@ -662,7 +662,7 @@ Libre
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://www.midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
 <a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
@@ -715,7 +715,7 @@ Equipe Libre
 <td height="50"></td>
 </tr>
 <tr>
-<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+<td colspan="2"><a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
 </tr>
 <tr>
 <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
@@ -749,10 +749,10 @@ Libre
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://www.midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
-<a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+<a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a>
 </td>
 </tr>
 <tr>

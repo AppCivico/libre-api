@@ -431,7 +431,7 @@ __DATA__
 <td height="50"></td>
 </tr>
 <tr>
-<td colspan="2"><a href="https://www.midialibre.com.br"><img src="" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+<td colspan="2"><a href="https://midialibre.org/"><img src="" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
 </tr>
 <tr>
 <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
@@ -453,7 +453,7 @@ __DATA__
 <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate; border-radius:7px; margin:0">
 <tbody>
 <tr>
-<td align="center" valign="middle"><a href="https://www.midialibre.com.br/conta/trocar-senha/?token=[% token %]" target="_blank" class="x_btn" style="background:#4ab957; border-radius:8px; color:#ffffff; font-family:'Montserrat',Arial,sans-serif; font-size:15px; padding:16px 24px 15px 24px; text-decoration:none; text-transform:uppercase"><strong>TROCAR MINHA SENHA</strong></a></td>
+<td align="center" valign="middle"><a href="https://midialibre.org/conta/trocar-senha/?token=[% token %]" target="_blank" class="x_btn" style="background:#4ab957; border-radius:8px; color:#ffffff; font-family:'Montserrat',Arial,sans-serif; font-size:15px; padding:16px 24px 15px 24px; text-decoration:none; text-transform:uppercase"><strong>TROCAR MINHA SENHA</strong></a></td>
 </tr>
 </tbody>
 </table>
@@ -465,8 +465,8 @@ __DATA__
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px"><strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
   <p>Caso você não tenha solicitado esta alteração de senha, por favor desconsidere esta mensagem, nenhuma alteração foi feita na sua conta.</p>
-  <p>Dúvidas? Acesse <a href="https://www.midialibre.com.br/faq" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
-  Equipe Libre</strong><a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a></td>
+  <p>Dúvidas? Acesse <a href="https://midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+  Equipe Libre</strong><a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a></td>
 </tr>
 <tr>
 <td height="30"></td>
@@ -516,7 +516,7 @@ __DATA__
 <td height="50"></td>
 </tr>
 <tr>
-<td colspan="2"><a href="midialibre.com.br"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
+<td colspan="2"><a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/a628e4a3-8a26-4f8a-9d4d-7ccd8c0ef04b.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; float:left"></a></td>
 </tr>
 <tr>
 <td bgcolor="#ffffff" colspan="2" style="background-color:rgb(255,255,255); border-radius:0 0 7px 7px; font-family:'Montserrat',Arial,sans-serif; font-size:13px; font-weight:normal; line-height:24px; padding:30px 0; text-align:center; vertical-align:top">
@@ -544,7 +544,7 @@ __DATA__
 <p>Dúvidas? Acesse <a href="https://midialibre.org/ajuda/" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
-<a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
+<a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a>
 </td>
 </tr>
 <tr>
