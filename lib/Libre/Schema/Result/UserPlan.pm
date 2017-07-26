@@ -328,7 +328,7 @@ sub cancel {
 
         my $email = Libre::Mailer::Template->new(
             to       => $self->user->email,
-            from     => 'no-reply@libre.org.br',
+            from     => 'no-reply@midialibre.org',
             subject  => "Libre - Cancelamento de assinatura",
             template => get_data_section('userplan-cancel.tt'),
             vars     => {
@@ -469,7 +469,7 @@ SQL_QUERY
 
         my $email = Libre::Mailer::Template->new(
             to       => $self->user->email,
-            from     => 'no-reply@libre.org.br',
+            from     => 'no-reply@midialibre.org',
             subject  => "Libre - Recibo de seu pagamento",
             template => get_data_section('donor-receipt.tt'),
             vars     => {
@@ -496,7 +496,7 @@ sub on_korduv_callback_fail {
 
     my $email = Libre::Mailer::Template->new(
         to       => $self->user->email,
-        from     => 'no-reply@libre.org.br',
+        from     => 'no-reply@midialibre.org',
         subject  => "Libre - Seu pagamento não foi bem sucedido",
         template => get_data_section('payment-fail.tt'),
         vars     => {
@@ -564,7 +564,7 @@ __DATA__
 <tbody>
 <tr>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá [% name %], </b><br>
+<p><span><b>Olá, [% name %]. </b><br>
 <br></span>
 </p>
 <p> <strong> </strong>Recebemos a sinalização de que o seu pagamento falhou.<br><br>O pagamento tentará ser realizado novamente. Após 3 falhas o pagamento deverá ser realizado novamente manualmente.
@@ -638,7 +638,7 @@ Equipe Libre
 <tbody>
 <tr>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá [% name %], </b><br>
+<p><span><b>Olá, [% name %]. </b><br>
 <br></span>
 </p>
 <p> <strong>Recebemos a sinalização de que o seu pagamento foi efetuado com sucesso.</strong><br><br>Abaixo está o seu recibo
@@ -723,7 +723,7 @@ Equipe Libre
 <tbody>
 <tr>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá [% name %], </b><br>
+<p><span><b>Olá, [% name %]. </b><br>
 <br></span>
 </p>
 <p> <strong>Sua assinatura conosco foi cancelada com sucesso.</strong><br><br>Agradecemos seu apoio até aqui.
