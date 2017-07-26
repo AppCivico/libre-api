@@ -391,7 +391,7 @@ sub send_email_forgot_password {
 
     my $email = Libre::Mailer::Template->new(
         to       => $self->email,
-        from     => 'no-reply@libre.org.br',
+        from     => 'no-reply@midialibre.org',
         subject  => "Libre - Recuperação de senha",
         template => get_data_section('forgot_password.tt'),
         vars     => {
