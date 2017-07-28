@@ -189,8 +189,8 @@ sub action_specs {
                 die \["responsible_cpf", "must not have a responsible"];
             }
 
-            if (length $values{password} < 4) {
-                die \["new_password", "cannot be empty"];
+            if (length $values{password} < 6) {
+                die \["password", "must have at least 6 characters"];
             }
 
             my $user = $self->result_source->schema->resultset("User")->create(
