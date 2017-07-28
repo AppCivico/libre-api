@@ -12,8 +12,8 @@ db_transaction {
     rest_post "/api/register/donor",
         is_fail => 1,
         params  => {
-            email    => $email,
-            password => "123",
+            email    => fake_email()->(),
+            password => "12345",
             name     => fake_first_name()->(),
             surname  => fake_surname()->(),
             cpf      => random_cpf(),

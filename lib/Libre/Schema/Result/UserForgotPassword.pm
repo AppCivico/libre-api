@@ -151,7 +151,7 @@ sub action_specs {
             my %values = $r->valid_values;
             not defined $values{$_} and delete $values{$_} for keys %values;
 
-            if (length $values{new_password} < 4) {
+            if (length $values{new_password} < 6) {
                 die \["new_password", "cannot be empty"];
             }
 

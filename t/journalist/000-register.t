@@ -16,7 +16,7 @@ db_transaction {
         name                => "Jornalista com CPF invalido",
         is_fail             => 1,
         params              => {
-            email                    => $email,
+            email                    => fake_email()->(),
             password                 => "foobarpass",
             name                     => fake_name()->(),
             surname                  => "Foobarson",
@@ -33,8 +33,26 @@ db_transaction {
     rest_post '/api/register/journalist',
         is_fail             => 1,
         params              => {
-            email                    => $email,
-            password                 => "123",
+            email                    => fake_email()->(),
+            password                 => "12345",
+            name                     => fake_name()->(),
+            surname                  => "Foobarson",
+            cpf                      => random_cpf(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            vehicle                  => 0,
+            cellphone_number         => fake_digits("+551198#######")->(),
+        },
+    ;
+
+    rest_post '/api/register/journalist',
+        is_fail             => 0,
+        params              => {
+            email                    => fake_email()->(),
+            password                 => "123456",
             name                     => fake_name()->(),
             surname                  => "Foobarson",
             cpf                      => random_cpf(),
