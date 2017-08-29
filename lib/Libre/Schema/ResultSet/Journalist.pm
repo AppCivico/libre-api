@@ -214,7 +214,8 @@ sub action_specs {
                     (
                         map { $_ => $values{$_} } qw(
                             cpf cnpj address_state address_city address_zipcode address_street
-                            address_residence_number vehicle cellphone_number
+                            address_residence_number vehicle cellphone_number responsible_name
+                            responsible_surname responsible_cpf
                         )
                     ),
                     user_id => $user->id,
