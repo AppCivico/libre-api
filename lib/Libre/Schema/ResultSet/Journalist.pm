@@ -189,6 +189,10 @@ sub action_specs {
                 die \["responsible_cpf", "must not have a responsible"];
             }
 
+            if ($values{vehicle} && (!$values{responsible_cpf} || !$values{responsible_name} || !$values{responsible_surname})) {
+                die \["responsible_cpf", "must have a responsible"];
+            }
+
             if (length $values{password} < 6) {
                 die \["password", "must have at least 6 characters"];
             }
