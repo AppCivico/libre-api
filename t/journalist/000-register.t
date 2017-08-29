@@ -255,6 +255,24 @@ db_transaction {
         },
     ;
 
+     # Criando um veículo de notícias.
+    rest_post "/api/register/journalist",
+        is_fail => 1,
+        params  => {
+            email                    => fake_email()->(),
+            password                 => "fooquxbar1",
+            name                     => fake_first_name()->(),
+            cnpj                     => random_cnpj(),
+            address_state            => "Rio de Janeiro",
+            address_city             => "Rio de Janeiro",
+            address_zipcode          => '02351-000',
+            address_street           => "Rua Flores do Piauí",
+            address_residence_number => 1 + int(rand(2000)),
+            cellphone_number         => fake_digits("+551198#######")->(),
+            vehicle                  => 1,
+        },
+    ;
+
     # O usuário deve ter CPF ou CNPJ, nunca os dois ou nenhum.
     # Veículo de notícias deve ter apenas CNPJ
     rest_post "/api/register/journalist",
