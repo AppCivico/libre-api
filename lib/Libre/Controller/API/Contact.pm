@@ -59,7 +59,7 @@ sub contact : Chained('base') : Args(0) : PathPart('') {
         }
     )->build_email();
 
-    my $bcc = ['kogan.ariel@gmail.com'];
+    my $bcc = [$ENV{CONTACT_EMAIL_BCC}];
 
     my $queued = $c->model('DB::EmailQueue')->create(
         {

@@ -358,7 +358,7 @@ sub send_email_confirmation {
 
     my $email = Libre::Mailer::Template->new(
         to       => $self->email,
-        from     => 'no-reply@midialibre.org',
+        from     => 'no-reply@midialibre.org.br',
         subject  => "Libre - Confirmação de cadastro",
         template => get_data_section('register_confirmation.tt'),
         vars     => {
@@ -375,7 +375,7 @@ sub send_greetings_email {
 
     my $email = Libre::Mailer::Template->new(
         to       => $self->email,
-        from     => 'no-reply@midialibre.org',
+        from     => 'no-reply@midialibre.org.br',
         subject  => "Libre - Boas vindas",
         template => get_data_section('greetings.tt'),
         vars     => {
@@ -391,7 +391,7 @@ sub send_email_forgot_password {
 
     my $email = Libre::Mailer::Template->new(
         to       => $self->email,
-        from     => 'no-reply@midialibre.org',
+        from     => 'no-reply@midialibre.org.br',
         subject  => "Libre - Recuperação de senha",
         template => get_data_section('forgot_password.tt'),
         vars     => {
@@ -434,11 +434,10 @@ __DATA__
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
 <tbody>
 <tr>
-<a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá, [% name %]. </b><br>
-      <br></span></p>
-    <p> <strong> </strong>Recebemos a sua solicitação para uma nova senha de acesso ao Libre.
+<p style="text-align: center;"><a href="https://midialibre.org.br/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a></p>
+<p><b>Olá, [% name %]. </b></p>
+<p> <strong> </strong>Recebemos a sua solicitação para uma nova senha de acesso ao Libre.
 É muito simples, clique no botão abaixo para trocar sua senha.</p>
   </td>
 </tr>
@@ -450,7 +449,7 @@ __DATA__
 <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate; border-radius:7px; margin:0">
 <tbody>
 <tr>
-<td align="center" valign="middle"><a href="https://midialibre.org/account/redefinir-senha/?token=[% token %]" target="_blank" class="x_btn" style="background:#4ab957; border-radius:8px; color:#ffffff; font-family:'Montserrat',Arial,sans-serif; font-size:15px; padding:16px 24px 15px 24px; text-decoration:none; text-transform:uppercase"><strong>TROCAR MINHA SENHA</strong></a></td>
+<td align="center" valign="middle"><a href="https://midialibre.org.br/account/redefinir-senha/?token=[% token %]" target="_blank" class="x_btn" style="background:#4ab957; border-radius:8px; color:#ffffff; font-family:'Montserrat',Arial,sans-serif; font-size:15px; padding:16px 24px 15px 24px; text-decoration:none; text-transform:uppercase"><strong>TROCAR MINHA SENHA</strong></a></td>
 </tr>
 </tbody>
 </table>
@@ -462,8 +461,8 @@ __DATA__
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px"><strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
   <p>Caso você não tenha solicitado esta alteração de senha, por favor desconsidere esta mensagem, nenhuma alteração foi feita na sua conta.</p>
-  <p>Dúvidas? Acesse <a href="https://midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
-  Equipe Libre</strong><a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a></td>
+  <p>Dúvidas? Acesse <a href="https://midialibre.org.br/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+  Equipe Libre</strong><a href="mailto:contato@midialibre.org.br" target="_blank" style="color:#4ab957"></a></td>
 </tr>
 <tr>
 <td height="30"></td>
@@ -514,9 +513,9 @@ __DATA__
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
 <tbody>
 <tr>
-<a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá, [% name %]. </b><br>
+<p style="text-align: center;"><a href="https://midialibre.org.br/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a></p>
+<p><b>Olá, [% name %]. </b></p>
 <br></span>
 </p>
 <p> <strong> </strong>Agradecemos seu compromisso em valorizar a imprensa. Seu apoio é fundamental para que, juntos, jornalistas e o público criem uma mídia cada vez mais livre e democrática.</p>
@@ -533,10 +532,10 @@ __DATA__
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://midialibre.org/ajuda/" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://midialibre.org.br/ajuda/" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
-<a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a>
+<a href="mailto:contato@midialibre.org.br" target="_blank" style="color:#4ab957"></a>
 </td>
 </tr>
 <tr>

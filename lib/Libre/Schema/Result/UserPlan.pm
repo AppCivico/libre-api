@@ -328,7 +328,7 @@ sub cancel {
 
         my $email = Libre::Mailer::Template->new(
             to       => $self->user->email,
-            from     => 'no-reply@midialibre.org',
+            from     => 'no-reply@midialibre.org.br',
             subject  => "Libre - Cancelamento de assinatura",
             template => get_data_section('userplan-cancel.tt'),
             vars     => {
@@ -469,7 +469,7 @@ SQL_QUERY
 
         my $email = Libre::Mailer::Template->new(
             to       => $self->user->email,
-            from     => 'no-reply@midialibre.org',
+            from     => 'no-reply@midialibre.org.br',
             subject  => "Libre - Recibo de seu pagamento",
             template => get_data_section('donor-receipt.tt'),
             vars     => {
@@ -496,7 +496,7 @@ sub on_korduv_callback_fail {
 
     my $email = Libre::Mailer::Template->new(
         to       => $self->user->email,
-        from     => 'no-reply@midialibre.org',
+        from     => 'no-reply@midialibre.org.br',
         subject  => "Libre - Seu pagamento não foi bem sucedido",
         template => get_data_section('payment-fail.tt'),
         vars     => {
@@ -560,9 +560,9 @@ __DATA__
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
 <tbody>
 <tr>
-<a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá, [% name %]. </b><br>
+<p style="text-align: center;"><a href="https://midialibre.org.br/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a></p>
+<p><b>Olá, [% name %]. </b></p>
 <br></span>
 </p>
 <p> <strong> </strong>Recebemos a sinalização de que o seu pagamento falhou.<br><br>O pagamento tentará ser realizado novamente. Após 3 falhas o pagamento deverá ser realizado novamente manualmente.
@@ -575,10 +575,10 @@ __DATA__
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://www.midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://www.midialibre.org.br/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
-<a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a>
+<a href="mailto:contato@midialibre.org.br" target="_blank" style="color:#4ab957"></a>
 </td>
 </tr>
 <tr>
@@ -632,9 +632,9 @@ Equipe Libre
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
 <tbody>
 <tr>
-<a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá, [% name %]. </b><br>
+<p style="text-align: center;"><a href="https://midialibre.org.br/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a></p>
+<p><b>Olá, [% name %]. </b></p>
 <br></span>
 </p>
 <p> <strong>Recebemos a sinalização de que o seu pagamento foi efetuado com sucesso.</strong><br><br>Abaixo está o seu recibo
@@ -658,7 +658,7 @@ Libre
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://www.midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://www.midialibre.org.br/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
 <a href="mailto:contato@midialibre.com.br" target="_blank" style="color:#4ab957"></a>
@@ -715,9 +715,9 @@ Equipe Libre
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="84%" style="border-collapse:collapse">
 <tbody>
 <tr>
-<a href="https://midialibre.org/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
-<p><span><b>Olá, [% name %]. </b><br>
+<p style="text-align: center;"><a href="https://midialibre.org.br/"><img src="https://gallery.mailchimp.com/af2df78bcac96c77cfa3aae07/images/c75c64c5-c400-4c18-9564-16b4a7116b03.png" class="x_deviceWidth" style="border-radius:7px 7px 0 0; align: center"></a></p>
+<p><b>Olá, [% name %]. </b></p>
 <br></span>
 </p>
 <p> <strong>Sua assinatura conosco foi cancelada com sucesso.</strong><br><br>Agradecemos seu apoio até aqui.
@@ -743,10 +743,10 @@ Libre
 <tr>
 <td align="justify" style="color:#999999; font-size:13px; font-style:normal; font-weight:normal; line-height:16px">
 <strong id="docs-internal-guid-d5013b4e-a1b5-bf39-f677-7dd0712c841b">
-<p>Dúvidas? Acesse <a href="https://www.midialibre.org/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
+<p>Dúvidas? Acesse <a href="https://www.midialibre.org.br/ajuda" target="_blank" style="color:#4ab957">Perguntas frequentes</a>.</p>
 Equipe Libre
 </strong>
-<a href="mailto:contato@midialibre.org" target="_blank" style="color:#4ab957"></a>
+<a href="mailto:contato@midialibre.org.br" target="_blank" style="color:#4ab957"></a>
 </td>
 </tr>
 <tr>
