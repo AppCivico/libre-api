@@ -12,6 +12,8 @@ __PACKAGE__->config(
     no_user => 1,
 );
 
+use Libre::Utils qw(is_test);
+
 sub root :Chained('/api/register/base') :PathPart('') :CaptureArgs(0) { }
 
 sub base :Chained('root') :PathPart('journalist') :CaptureArgs(0) { }
@@ -32,6 +34,8 @@ sub register_POST {
         for   => 'create',
         with  => $c->req->params,
     );
+
+    $c->slack_notify("O usuário ${\($user->user->name)} se cadastrou na plataforma como jornalista.") unless is_test();
 
     return $self->status_created(
         $c,

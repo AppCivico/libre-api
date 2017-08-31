@@ -28,6 +28,10 @@ export LIBRE_MIN_AMOUNT="100"
 export LIBRE_PICPAY_API_KEY=""
 export LIBRE_PICPAY_CLIENT_ID=""
 
+export LIBRE_SLACK_WEBHOOK_URL=""
+export LIBRE_SLACK_CHANNEL="#libre"
+export LIBRE_SLACK_USERNAME="libre-bot"
+
 export FLOTUM_MERCHANT_API_KEY=""
 
 export SQITCH_DEPLOY=""

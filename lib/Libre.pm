@@ -4,17 +4,11 @@ use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
 
-# Set flags and add plugins for the application.
-#
-# Note that ORDERING IS IMPORTANT here as plugins are initialized in order,
-# therefore you almost certainly want to keep ConfigLoader at the head of the
-# list if you're using it.
-#
-#         -Debug: activates the debug mode for very useful log messages
-#   ConfigLoader: will load the configuration from a Config::General file in the
-#                 application's home directory
-# Static::Simple: will serve static files from the application's root
-#                 directory
+BEGIN {
+    for (qw/ LIBRE_SLACK_WEBHOOK_URL LIBRE_SLACK_CHANNEL LIBRE_SLACK_USERNAME /) {
+        defined($ENV{$_}) or die "missing env '$_'.";
+    }
+};
 
 use Catalyst qw/
     -Debug
@@ -28,23 +22,41 @@ extends 'Catalyst';
 
 our $VERSION = '0.01';
 
-# Configure the application.
-#
-# Note that settings in libre.conf (or other external
-# configuration file that you set up manually) take precedence
-# over this when using ConfigLoader. Thus configuration
-# details given here can function as a default configuration,
-# with an external configuration file acting as an override for
-# local deployment.
-
 __PACKAGE__->config(
     name     => 'Libre',
     encoding => "UTF-8",
 
-    # Disable deprecated behavior needed by old applications
     disable_component_resolution_regex_fallback => 1,
-    enable_catalyst_header => 0, # Send X-Catalyst header
+    enable_catalyst_header => 0,
 );
+
+use WebService::Slack::IncomingWebHook;
+
+has _slack_webhook => (
+    is      => "ro",
+    lazy    => 1,
+    default => sub {
+        WebService::Slack::IncomingWebHook->new(
+            webhook_url => $ENV{LIBRE_SLACK_WEBHOOK_URL},
+            channel     => "#" . $ENV{LIBRE_SLACK_CHANNEL},
+            username    => $ENV{LIBRE_SLACK_USERNAME},
+            icon_emoji  => ":robot_face:",
+        );
+    },
+    handles => { slack_notify => [ post => "text" ] }
+);
+
+around 'slack_notify' => sub {
+    my $orig = shift;
+    my $self = shift;
+    my $message = shift;
+
+    my $project = lc(__PACKAGE__);
+    chomp(my $hostname = `hostname`);
+
+    eval { $self->$orig("[$project] [$hostname] " . $message, @_) };
+    warn $@ if $@;
+};
 
 # Start the application
 __PACKAGE__->setup();

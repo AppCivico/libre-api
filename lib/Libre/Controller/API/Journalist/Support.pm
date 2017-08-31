@@ -2,6 +2,7 @@ package Libre::Controller::API::Journalist::Support;
 use common::sense;
 use Moose;
 use namespace::autoclean;
+use Libre::Utils qw(is_test);
 
 BEGIN { extends 'CatalystX::Eta::Controller::REST' }
 
@@ -25,6 +26,7 @@ __PACKAGE__->config(
         page_referer => "Str",
     },
 );
+
 
 sub root : Chained('/api/journalist/object') : PathPart('') : CaptureArgs(0) {
     my ($self, $c) = @_;
@@ -60,6 +62,12 @@ sub list_POST {
         for  => "create",
         with => $c->req->params,
     );
+
+    if (!is_test()) {
+        $c->slack_notify(
+            "O doador id '${\($c->user->id)}' apoiou o jornalista id '${\($c->stash->{journalist}->id)}'."
+        );
+    }
 
     return $self->status_created(
         $c,
