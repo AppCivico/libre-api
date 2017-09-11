@@ -30,8 +30,7 @@ sub add {
             }
             retry_if { shift() < 3 } catch { die $_; };
         };
-        return { error => $@ } if $@;
-        return { error => 'Cannot call http callback' } unless $res;
+        die $@ if $@;
 
         return decode_json( $res->decoded_content );
     }
