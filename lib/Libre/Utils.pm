@@ -36,6 +36,8 @@ sub get_libre_api_url_for {
     my $args = shift;
 
     $args = "/$args" unless $args =~ m{^\/};
+    my $libre_url = $ENV{LIBRE_URL};
+    $libre_url =~ s/\/$//;
 
     return ( ( is_test() ? "http://localhost" : $ENV{LIBRE_URL} ) . $args );
 }
