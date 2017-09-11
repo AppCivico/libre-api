@@ -644,7 +644,7 @@ Equipe Libre
 <tr>
 <td align="justify" style="color:#666666; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:300; line-height:23px; margin:0">
 <p>
-O Libre, inscrito no CNPJ sob o nº 19.131.243/0001-97, recebeu de [% name %] [% surname %], inscrito no CPF sob o nº [% cpf %], a importância de R$ [% amount %], concernete à venda de um plano de financiamento jornalístico.
+O Libre, inscrito no CNPJ sob o nº 19.131.243/0001-97, recebeu de [% name %] [% surname %], inscrito no CPF sob o nº [% cpf %], a importância de R$ [% amount %], concernente à venda de um plano de financiamento jornalístico.
 <br><br>
 São Paulo, [% day %] do [% month %] de [% year %].
 <br><br>
