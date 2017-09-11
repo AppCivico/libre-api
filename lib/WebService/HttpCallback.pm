@@ -25,7 +25,7 @@ sub add {
         my $res;
         eval {
             retry {
-                $res = $self->furl->post( $ENV{LIBRE_HTTP_CB_URL} . '/schedule', [], [%opts] );
+                $res = $self->furl->post( get_libre_httpcb_url_for('/schedule'), [], [%opts] );
                 die $res->decoded_content unless $res->is_success;
             }
             retry_if { shift() < 3 } catch { die $_; };

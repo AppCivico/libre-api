@@ -15,7 +15,7 @@ use Data::Section::Simple qw(get_data_section);
 use vars qw(@ISA @EXPORT);
 
 @ISA    = (qw(Exporter));
-@EXPORT = qw(is_test random_string get_data_section get_libre_api_url_for truncate_money);
+@EXPORT = qw(is_test random_string get_data_section get_libre_api_url_for truncate_money get_libre_httpcb_url_for);
 
 =head1 METHODS
 
@@ -39,7 +39,17 @@ sub get_libre_api_url_for {
     my $libre_url = $ENV{LIBRE_URL};
     $libre_url =~ s/\/$//;
 
-    return ( ( is_test() ? "http://localhost" : $ENV{LIBRE_URL} ) . $args );
+    return ( ( is_test() ? "http://localhost" : $libre_url ) . $args );
+}
+
+sub get_libre_httpcb_url_for {
+    my $args = shift;
+
+    $args = "/$args" unless $args =~ m{^\/};
+    my $libre_httpcb_url = $ENV{LIBRE_HTTP_CB_URL};
+    $libre_httpcb_url =~ s/\/$//;
+
+    return ( ( is_test() ? "http://localhost" : $libre_httpcb_url ) . $args );
 }
 
 sub truncate_money {
