@@ -8,6 +8,7 @@ mkdir -p /data/log/;
 cd /src;
 source envfile.sh
 
+cpanm -n . --installdeps
 sqitch deploy -t $SQITCH_DEPLOY
 
 start_server \
