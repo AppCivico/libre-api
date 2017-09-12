@@ -48,7 +48,6 @@ sub list_GET {
 
     my $libres = $c->model("DB::Libre")->search(
         {
-            user_plan_id => ref $user_plan ? [ $user_plan->id, undef ] : undef,
             invalid      => "false",
             donor_id     => $donor_id,
         }
