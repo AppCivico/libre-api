@@ -55,7 +55,7 @@ db_transaction {
     my $httpcb_rs = $schema->resultset("HttpCallbackToken");
 
     # Mockando um pagamento para simular o callback de compute donation.
-    ok (
+    ok(
         my $payment = $schema->resultset("Payment")->create(
             {
                 donor_id     => $donor_id,
@@ -67,7 +67,7 @@ db_transaction {
         "fake payment",
     );
 
-    ok (
+    ok(
         my $token = $httpcb_rs->create_for_action(
             "payment-success-renewal",
             {
@@ -84,8 +84,11 @@ db_transaction {
         code => 200,
     ;
 
+    ok( $user_plan->discard_changes, 'user_plan discard changes' );
+    ok( defined($user_plan->last_close_at), 'user_plan.last_close_at is defined' );
+
     # O jornalista 1 deve receber R$ 13,26.
-    is (
+    is(
         $schema->resultset("MoneyTransfer")->search(
             {
                 journalist_id => $journalist_ids[0],
@@ -98,7 +101,7 @@ db_transaction {
     );
 
     # E o jornalista 2 deve receber R$ 8,84.
-    is (
+    is(
         $schema->resultset("MoneyTransfer")->search(
             {
                 journalist_id => $journalist_ids[1],
@@ -108,6 +111,50 @@ db_transaction {
         )->count,
         "1",
         'journalist 2 will receive R$ 8,84',
+    );
+
+    # Se houver um novo callback do compute_donations, não deve criar mais nenhuma transferência pois nenhum libre
+    # será doado.
+    use_ok 'Libre::Worker::BankTeller';
+    my $worker = new_ok( 'Libre::Worker::BankTeller', [ schema => $schema, log => Libre->log ] );
+
+    is(
+        $schema->resultset("MoneyTransfer")->search( { 'me.transferred' => "false" } )->count,
+        2,
+        "money_transfer count=2",
+    );
+
+    ok( $worker->run_once(), 'run once' );
+    ok( $worker->run_once(), 'run once' );
+
+    is(
+        $schema->resultset("MoneyTransfer")->search( { 'me.transferred' => "false" } )->count,
+        0,
+        "money_transfer count=0",
+    );
+
+    undef $token;
+    ok(
+        $token = $httpcb_rs->create_for_action(
+            "payment-success-renewal",
+            {
+                user_id      => $donor_id,
+                user_plan_id => $user_plan_id,
+                payment_id   => $payment->id,
+            }
+        ),
+        "fake http callback of fake payment",
+    );
+
+    rest_post [ "callback-for-token", $token ],
+        name => "http callback triggered again",
+        code => 200,
+    ;
+
+    is(
+        $schema->resultset("MoneyTransfer")->search( { 'me.transferred' => "false" } )->count,
+        0,
+        "money_transfer count=0",
     );
 };
 
