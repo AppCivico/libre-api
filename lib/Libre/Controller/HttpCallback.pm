@@ -173,7 +173,7 @@ sub _compute_donations {
 
     if (ref $user_plan) {
         # Obtendo todos os likes pendentes.
-        my $last_close_at = $user_plan->last_close_at;
+        my $last_close_at = defined($user_plan->last_close_at) ? $user_plan->last_close_at->datetime() : undef;
 
         my $libre_rs = $c->model("DB::Libre")->search(
             {
@@ -188,6 +188,7 @@ sub _compute_donations {
             },
         );
 
+        use DDP; p $libre_rs->as_query;
 
         # Capturando o amount da tabela de payment.
         my $payment = $c->model("DB::Payment")->find($payment_id);
@@ -205,6 +206,7 @@ sub _compute_donations {
         $user_plan->update( { last_close_at => \"NOW()" } );
 
         for my $libre ($libre_rs->all()) {
+            #use DDP; p $libre;
             my $journalist_id = $libre->journalist_id;
             my $supports      = $libre->get_column("supports");
 
