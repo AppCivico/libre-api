@@ -135,6 +135,21 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
+=head2 money_transfers
+
+Type: has_many
+
+Related object: L<Libre::Schema::Result::MoneyTransfer>
+
+=cut
+
+__PACKAGE__->has_many(
+  "money_transfers",
+  "Libre::Schema::Result::MoneyTransfer",
+  { "foreign.from_payment_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user_plan
 
 Type: belongs_to
@@ -151,8 +166,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-05-29 17:47:32
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:20MfYWOSmvx7vnWx6z3YMQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-09-12 13:01:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:deTSgFd1/NXPteQuUPfEog
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

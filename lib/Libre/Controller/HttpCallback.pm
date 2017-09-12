@@ -177,9 +177,9 @@ sub _compute_donations {
 
         my $libre_rs = $c->model("DB::Libre")->search(
             {
-                donor_id     => $donor_id,
-                user_plan_id => $user_plan_id,
-                created_at   => { '<=' => \[ "COALESCE(?, NOW())", $last_close_at ] },
+               'me.donor_id'     => $donor_id,
+               'me.user_plan_id' => $user_plan_id,
+               'me.created_at'   => { '<=' => \[ "COALESCE(?, NOW())", $last_close_at ] },
             },
             {
                 'select' => [ { count => \1, '-as' => "supports" }, "journalist_id" ],
@@ -187,8 +187,6 @@ sub _compute_donations {
                 group_by  => [ "journalist_id" ],
             },
         );
-
-        use DDP; p $libre_rs->as_query;
 
         # Capturando o amount da tabela de payment.
         my $payment = $c->model("DB::Payment")->find($payment_id);
@@ -206,7 +204,6 @@ sub _compute_donations {
         $user_plan->update( { last_close_at => \"NOW()" } );
 
         for my $libre ($libre_rs->all()) {
-            #use DDP; p $libre;
             my $journalist_id = $libre->journalist_id;
             my $supports      = $libre->get_column("supports");
 
@@ -214,8 +211,12 @@ sub _compute_donations {
 
             $c->model("DB::MoneyTransfer")->create(
                 {
-                    journalist_id => $journalist_id,
-                    amount        => $amount_to_transfer,
+                    journalist_id            => $journalist_id,
+                    amount                   => $amount_to_transfer,
+                    from_donor_id            => $donor_id,
+                    from_payment_id          => $payment_id,
+                    supports_received        => $supports,
+                    donor_plan_last_close_at => $last_close_at,
                 }
             );
         }

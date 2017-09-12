@@ -28,6 +28,32 @@ db_transaction {
         rest_get [ "api", "journalist", $journalist_id, "authlink" ], name  => "get authlink";
     }
 
+    # Criando um doador.
+    create_donor;
+    my $donor_id = stash "donor.id";
+
+    # Criando um plano para o doador.
+    api_auth_as user_id => $donor_id;
+    rest_post "/api/donor/$donor_id/plan",
+        name   => "creating donor plan",
+        stash  => "user_plan",
+        params => { amount => 2000 },
+    ;
+
+    # Fake payment.
+    my $user_plan_id = (stash("user_plan")->{id});
+    ok(
+        my $payment = $schema->resultset("Payment")->create(
+            {
+                donor_id     => $donor_id,
+                user_plan_id => $user_plan_id,
+                amount       => 2000,
+                gateway_tax  => 11.5,
+            },
+        ),
+        "fake payment",
+    );
+
     my $money_transfer_rs = $schema->resultset("MoneyTransfer");
     ok(
         $money_transfer_rs->create(
@@ -35,6 +61,10 @@ db_transaction {
                 journalist_id => $journalist_ids[0],
                 amount        => 100,
                 created_at    => \"(NOW() - '30 days'::interval)",
+                from_donor_id            => $donor_id,
+                from_payment_id          => $payment->id,
+                supports_received        => fake_int(1, 10)->(),
+                donor_plan_last_close_at => fake_past_datetime()->(),
             },
         ),
         "transfer to the first journalist",
@@ -46,6 +76,10 @@ db_transaction {
                 journalist_id => $journalist_ids[1],
                 amount        => 100,
                 created_at    => \"(NOW() - '20 days'::interval)",
+                from_donor_id            => $donor_id,
+                from_payment_id          => $payment->id,
+                supports_received        => fake_int(1, 10)->(),
+                donor_plan_last_close_at => fake_past_datetime()->(),
             },
         ),
         "transfer to the second journalist",
@@ -57,6 +91,10 @@ db_transaction {
                 journalist_id => $journalist_ids[2],
                 amount        => 100,
                 created_at    => \"(NOW() - '15 days'::interval)",
+                from_donor_id            => $donor_id,
+                from_payment_id          => $payment->id,
+                supports_received        => fake_int(1, 10)->(),
+                donor_plan_last_close_at => fake_past_datetime()->(),
             },
         ),
         "transfer to the first journalist",

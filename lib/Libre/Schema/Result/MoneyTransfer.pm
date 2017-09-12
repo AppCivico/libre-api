@@ -88,6 +88,28 @@ __PACKAGE__->table("money_transfer");
   data_type: 'text'
   is_nullable: 1
 
+=head2 from_donor_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
+=head2 from_payment_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
+=head2 supports_received
+
+  data_type: 'integer'
+  is_nullable: 0
+
+=head2 donor_plan_last_close_at
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -117,6 +139,14 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 1 },
   "transfer_status",
   { data_type => "text", is_nullable => 1 },
+  "from_donor_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+  "from_payment_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+  "supports_received",
+  { data_type => "integer", is_nullable => 0 },
+  "donor_plan_last_close_at",
+  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -132,6 +162,46 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
+
+=head2 from_donor
+
+Type: belongs_to
+
+Related object: L<Libre::Schema::Result::User>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "from_donor",
+  "Libre::Schema::Result::User",
+  { id => "from_donor_id" },
+  {
+    is_deferrable => 0,
+    join_type     => "LEFT",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
+  },
+);
+
+=head2 from_payment
+
+Type: belongs_to
+
+Related object: L<Libre::Schema::Result::Payment>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "from_payment",
+  "Libre::Schema::Result::Payment",
+  { id => "from_payment_id" },
+  {
+    is_deferrable => 0,
+    join_type     => "LEFT",
+    on_delete     => "NO ACTION",
+    on_update     => "NO ACTION",
+  },
+);
 
 =head2 journalist
 
@@ -149,8 +219,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-07-14 11:36:33
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Hu/6z0gWiNwXTxWxfuUzXA
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-09-12 13:01:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:c6V5PrdqJcILHPvy/3VFXA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
