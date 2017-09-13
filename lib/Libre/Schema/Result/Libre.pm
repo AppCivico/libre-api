@@ -100,6 +100,16 @@ __PACKAGE__->table("libre");
   data_type: 'text'
   is_nullable: 0
 
+=head2 computed
+
+  data_type: 'boolean'
+  is_nullable: 0
+
+=head2 computed_at
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -133,6 +143,10 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 0 },
   "page_referer",
   { data_type => "text", is_nullable => 0 },
+  "computed",
+  { data_type => "boolean", is_nullable => 0 },
+  "computed_at",
+  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -215,8 +229,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-06-09 11:36:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uTmo/hqBvx+fE1Diav1urQ
+# Created by DBIx::Class::Schema::Loader v0.07046 @ 2017-09-13 10:39:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NICCiLY1CVXkqwpo/CLoaQ
 
 
 __PACKAGE__->meta->make_immutable;

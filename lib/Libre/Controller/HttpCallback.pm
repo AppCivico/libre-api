@@ -164,6 +164,10 @@ sub _compute_donations {
     my $user_plan_id = $extra_args->{user_plan_id};
     my $payment_id   = $extra_args->{payment_id};
 
+    my $now = $c->model('DB')->schema->storage->dbh_do(sub {
+        $_[1]->selectrow_array("SELECT CURRENT_TIMESTAMP;");
+    });
+
     my $user_plan = $c->model("DB::UserPlan")->search(
         {
             'me.id'      => $user_plan_id,
@@ -173,26 +177,34 @@ sub _compute_donations {
 
     if (ref $user_plan) {
         # Obtendo todos os likes pendentes.
-        my $last_close_at = defined($user_plan->last_close_at) ? $user_plan->last_close_at->datetime() : undef;
+        my $last_close_at = defined($user_plan->last_close_at) ? $user_plan->last_close_at->clone()->datetime() : undef;
 
         my $libre_rs = $c->model("DB::Libre")->search(
             {
                'me.donor_id'     => $donor_id,
                'me.user_plan_id' => $user_plan_id,
-               'me.created_at'   => { '<=' => \[ "COALESCE(?, NOW())", $last_close_at ] },
+               (
+                    defined($last_close_at)
+                    ? ( 'me.created_at' => { ">=", $last_close_at } )
+                    : ()
+               ),
             },
+        );
+
+        my $libre_distribution_rs = $libre_rs->search(
+            { 'me.computed' => "false" },
             {
-                'select' => [ { count => \1, '-as' => "supports" }, "journalist_id" ],
-                'as'     => [ "supports", "journalist_id" ],
-                group_by  => [ "journalist_id" ],
-            },
+                'select'   => [ { count => \1, '-as' => "supports" }, "journalist_id" ],
+                'as'       => [ "supports", "journalist_id" ],
+                 group_by  => [ "journalist_id" ],
+            }
         );
 
         # Capturando o amount da tabela de payment.
         my $payment = $c->model("DB::Payment")->find($payment_id);
         return unless ref $payment;
 
-        my $total_likes = $libre_rs->get_column("supports")->sum || 1;
+        my $total_likes = $libre_distribution_rs->get_column("supports")->sum || 1;
 
         my $amount    = int($payment->amount);
         my $libre_tax = ( $amount * ( $payment->gateway_tax / 100 ) );
@@ -201,11 +213,11 @@ sub _compute_donations {
         my $libre_price = int($amount_without_libre_tax / $total_likes);
 
         # Atualizando o last_close_at do plano.
-        $user_plan->update( { last_close_at => \"NOW()" } );
+        $user_plan->update( { last_close_at => $now } );
 
-        for my $libre ($libre_rs->all()) {
-            my $journalist_id = $libre->journalist_id;
-            my $supports      = $libre->get_column("supports");
+        for my $distribution ($libre_distribution_rs->all()) {
+            my $journalist_id = $distribution->journalist_id;
+            my $supports      = $distribution->get_column("supports");
 
             my $amount_to_transfer = $libre_price * $supports;
 
@@ -220,6 +232,9 @@ sub _compute_donations {
                 }
             );
         }
+
+        # Atualizando os libres computados para computed=true.
+        $libre_rs->update( { computed => "true", computed_at => \"NOW()" } );
     }
 }
 

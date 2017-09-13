@@ -54,7 +54,7 @@ db_transaction {
     my $user_plan = $schema->resultset("UserPlan")->find($user_plan_id);
     my $httpcb_rs = $schema->resultset("HttpCallbackToken");
 
-    # Mockando um pagamento para simular o callback de compute donation.
+    # Mockando um pagamento para simular o callback do compute donation.
     ok(
         my $payment = $schema->resultset("Payment")->create(
             {
@@ -133,6 +133,14 @@ db_transaction {
         "money_transfer count=0",
     );
 
+    rest_post "/api/journalist/$journalist_ids[0]/support",
+        name => "support journalist 1",
+        [
+            page_title   => fake_sentences(1)->(),
+            page_referer => fake_referer->(),
+        ],
+    ;
+
     undef $token;
     ok(
         $token = $httpcb_rs->create_for_action(
@@ -153,9 +161,22 @@ db_transaction {
 
     is(
         $schema->resultset("MoneyTransfer")->search( { 'me.transferred' => "false" } )->count,
-        0,
-        "money_transfer count=0",
+        1,
+        "money_transfer count=1",
     );
+
+    ok(
+        my $money_transfer = $schema->resultset("MoneyTransfer")->search( { 'me.transferred' => "false" } )->next,
+        "money_transfer",
+    );
+
+    is( $money_transfer->amount, 2212, "money_transfer_amount=2212" );
+    is( $money_transfer->from_donor_id, $donor_id, "from_donor_id=donor_id" );
+    is( $money_transfer->journalist_id, $journalist_ids[0], "journalist_id=journalist_id" );
+
+    # Não há mais nenhum Libre que não tenha sido computado.
+    is( $schema->resultset("Libre")->search( { 'me.computed' => "false" } )->count, 0, "no libres to compute" );
+
 };
 
 done_testing();
