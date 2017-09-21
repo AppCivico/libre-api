@@ -101,7 +101,6 @@ db_transaction {
     );
 
     ok( $worker->run_once(), 'run once' );
-
     # A doação mais antiga (do primeiro jornalista) deve estar com paid=true.
     is(
         $money_transfer_rs->search(
@@ -114,6 +113,8 @@ db_transaction {
         "1",
         'transferred the oldest order',
     );
+
+    is ($schema->resultset("EmailQueue")->count, 2, 'emails queued');
 
     is ($money_transfer_rs->search( { transferred => "false" } )->count, "2", "two pending transfers");
 };
