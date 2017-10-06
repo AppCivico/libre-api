@@ -50,23 +50,6 @@ sub http_callback_POST {
 
             $self->status_ok( $c, entity => { error => 1 } ), $c->detach;
         }
-
-        my ($epoch) = $token =~ /^([0-9]+)-/;
-        if ( time - $epoch > 7200 ) {
-            eval {
-                $c->log->error(
-                    join( ' ',
-                        "[libre] HttpCallbackToken expirado por ter mais de 7200 seconds",
-                        $hostname,
-                        $c->req->uri->as_string,
-                        ( $c->req->data   ? Dumper( $c->req->data )   : '' ) . " - ",
-                        ( $c->req->params ? Dumper( $c->req->params ) : '' ) ),
-                );
-            };
-            warn $@ if $@;
-
-            $self->status_ok( $c, entity => { error => 2 } ), $c->detach;
-        }
         $self->status_not_found( $c, message => 'Token not found' ), $c->detach;
     }
 
