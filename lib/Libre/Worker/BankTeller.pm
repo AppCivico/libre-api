@@ -33,10 +33,11 @@ sub listen_queue {
     $self->logger->debug("Buscando itens na fila...") if $self->logger;
 
     my @items = $self->schema->resultset("MoneyTransfer")->search(
-        { transferred => "false" },
+        { 'me.transferred' => "false" },
         {
-            rows => 20,
-            for  => "update",
+            prefetch => [ qw/ journalist / ],
+            rows     => 20,
+            for      => "update",
         },
     )->all();
 
@@ -95,7 +96,17 @@ sub exec_item {
 
     my $transfer_id = $item->id;
 
-    $self->logger->debug("Processando transferência id '${\($item->id)}'...") if $self->logger;
+    $self->logger->info("Processando transferência id '${\($item->id)}'...") if $self->logger;
+
+    $self->logger->info("Verificando se o journalist id '${\($item->journalist->id)}' realizou authlink...") if $self->logger;
+    if ($item->journalist->is_authlinked()) {
+        $self->logger->info("Ok, o jornalista id '${\($item->journalist->id)}' realizou authlink!") if $self->logger;
+    }
+    else {
+        $self->logger->info("O jornalista id '${\($item->journalist->id)}' NÃO realizou o authlink.") if $self->logger;
+        $self->logger->debug("Esta transferência não será realizada por enquanto.") if $self->logger;
+        return 0;
+    }
 
     my $transfer = $self->_picpay->transfer(
         value       => $item->amount,

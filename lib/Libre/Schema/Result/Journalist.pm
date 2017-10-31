@@ -388,6 +388,8 @@ sub get_authlink {
 sub is_authlinked {
     my ($self) = @_;
 
+    return 0 unless $self->customer_key;
+
     local $@ = undef;
     eval { $self->_picpay->userdata(customer_key => $self->customer_key) };
     if ($@) {
