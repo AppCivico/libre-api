@@ -41,7 +41,7 @@ db_transaction {
         is ($res->{address_state}, "São Paulo", 'address_state');
         is ($res->{address_street}, "Rua Florival de Toledo", 'address_street');
         is ($res->{address_residence_number}, "1", 'address_residence_number');
-        is ($res->{is_authlinked}, 1, 'is authlinked');
+        is ($res->{is_authlinked}, 0, 'not authlinked');
     };
 
     rest_put "/api/journalist/$journalist_id",

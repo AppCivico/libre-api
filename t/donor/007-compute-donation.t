@@ -67,6 +67,16 @@ db_transaction {
         "fake payment",
     );
 
+    # Fakeando o authlink do PicPay.
+    ok(
+        $schema->resultset('Journalist')->update(
+            {
+                customer_id  => random_string(8),
+                customer_key => random_string(32),
+            },
+        ),
+    );
+
     ok(
         my $token = $httpcb_rs->create_for_action(
             "payment-success-renewal",
