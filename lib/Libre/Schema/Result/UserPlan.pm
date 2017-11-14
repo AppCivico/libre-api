@@ -458,11 +458,14 @@ SQL_QUERY
             }
         )->next;
 
+        my $wait_until_epoch = $wait_until->get_column("wait_until_epoch");
+        $wait_until_epoch =~ s/\..+$//;
+
         # Agendando o callback.
         $self->_httpcb->add(
             url        => get_libre_api_url_for("/callback-for-token/" . $token),
             method     => "post",
-            wait_until => $wait_until->get_column("wait_until_epoch"),
+            wait_until => $wait_until_epoch,
         );
 
         my $email_queue_rs = $self->result_source->schema->resultset("EmailQueue");
