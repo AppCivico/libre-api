@@ -133,8 +133,16 @@ __PACKAGE__->belongs_to(
 use Libre::Utils;
 use Libre::Types qw(EmailAddress PhoneNumber CPF);
 
+use WebService::Korduv;
+
 with 'Libre::Role::Verification';
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
+
+has _korduv => (
+    is         => "ro",
+    isa        => "WebService::Korduv",
+    lazy_build => 1,
+);
 
 sub verifiers_specs {
     my $self = shift;
@@ -189,17 +197,15 @@ sub has_plan {
     my $plan = $self->user->user_plans->search(
         {
             user_id      => $self->user_id,
-            canceled     => 0,
+            canceled     => 'false',
             invalided_at => undef,
         }
     )->next;
 
-    if ($plan) {
+    if (ref $plan) {
         return 1;
     }
-    else {
-        return 0;
-    }
+    return 0;
 }
 
 sub has_credit_card {
@@ -208,9 +214,7 @@ sub has_credit_card {
     if ($self->flotum_preferred_credit_card) {
         return 1;
     }
-    else {
-        return 0;
-    }
+    return 0;
 }
 
 =head2 get_current_plan()
@@ -282,6 +286,46 @@ sub get_price_of_next_libre {
 
     return int($amount_without_libre_tax / $libres_count);
 }
+
+sub get_real_balance {
+    my ($self) = @_;
+
+    my $user_plan = $self->get_last_plan();
+
+    if (ref($user_plan)) {
+        if ($user_plan->get_column('canceled')) {
+            my $subscription = $self->_korduv->get_subscription(
+                remote_subscription_id => 'user:' . $self->get_column('user_id'),
+                api_key                => $ENV{LIBRE_KORDUV_API_KEY},
+            );
+
+            if ($subscription->{status}->{status} eq 'active') {
+                return $user_plan->get_column('amount');
+            }
+            else {
+                my $last_payment_received_at = $subscription->{status}->{last_payment_received_at};
+                my $payment_interval_value   = $subscription->{subscription}->{payment_interval_value} . ' days';
+
+                my $is_current_cycle_payment = $self->result_source->schema->storage->dbh_do(sub {
+                    $_[1]->selectrow_array("SELECT ( '$last_payment_received_at'::timestamp + '30 days'::interval ) > NOW()");
+                });
+
+                if ($is_current_cycle_payment) {
+                    return $user_plan->get_column('amount');
+                }
+                else {
+                    return 0;
+                }
+            }
+        }
+        else {
+            return $user_plan->get_column('amount');
+        }
+    }
+    return 0;
+}
+
+sub _build__korduv { WebService::Korduv->instance }
 
 __PACKAGE__->meta->make_immutable;
 1;
