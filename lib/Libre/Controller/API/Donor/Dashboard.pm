@@ -40,29 +40,26 @@ sub list : Chained('base') : PathPart('') : Args(0) : ActionClass('REST') { }
 sub list_GET {
     my ($self, $c) = @_;
 
-    my $donor     = $c->stash->{donor};
-    my $donor_id  = $donor->id;
-    my $donor_rs  = $c->stash->{collection};
-
-    my $user_plan  = $donor->get_current_plan();
+    my $donor = $c->stash->{donor};
 
     my $libres = $c->model("DB::Libre")->search(
         {
-            invalid      => "false",
-            donor_id     => $donor_id,
+            'me.invalid'  => 'false',
+            'me.donor_id' => $donor->get_column('user_id'),
         }
     )->count;
 
-    # TODO mostrar next_billing_at
-    # if (is_test()) {
-    #     $next_billing_at = DateTime->now(),
-    # }
+    my $user_plan = $donor->get_current_plan();
+
+    my $subscription = $donor->get_korduv_subscription();
 
     return $self->status_ok(
         $c,
         entity => {
             user_plan_amount => ref $user_plan ? $user_plan->amount : undef,
+            next_billing_at  => ref $subscription ? $subscription->{status}->{next_billing_at} : undef,
             libres_donated   => $libres,
+            balance          => $donor->get_balance(),
         },
     );
 }

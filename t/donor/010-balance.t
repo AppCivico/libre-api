@@ -13,7 +13,7 @@ db_transaction {
     my $donor_id = stash "donor.id";
 
     ok( my $donor = $schema->resultset('Donor')->find($donor_id), 'get donor' );
-    is( $donor->get_real_balance(), 0, 'balance=0' );
+    is( $donor->get_balance(), 0, 'balance=0' );
 
     # Mockando cartão de crédito para fazer a subscription no korduv.
     ok(
@@ -34,7 +34,7 @@ db_transaction {
         },
     ;
 
-    is( $donor->get_real_balance(), 2000, 'balance=2000' );
+    is( $donor->get_balance(), 2000, 'balance=2000' );
 
     my $plan_id = stash "user_plan.id";
 
@@ -44,7 +44,7 @@ db_transaction {
         code => 200,
     ;
 
-    is( $donor->get_real_balance(), 0, 'balance=0' );
+    is( $donor->get_balance(), 0, 'balance=0' );
 };
 
 done_testing();

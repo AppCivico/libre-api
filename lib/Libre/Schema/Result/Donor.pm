@@ -287,27 +287,24 @@ sub get_price_of_next_libre {
     return int($amount_without_libre_tax / $libres_count);
 }
 
-sub get_real_balance {
+sub get_balance {
     my ($self) = @_;
 
     my $user_plan = $self->get_last_plan();
 
     if (ref($user_plan)) {
         if ($user_plan->get_column('canceled')) {
-            my $subscription = $self->_korduv->get_subscription(
-                remote_subscription_id => 'user:' . $self->get_column('user_id'),
-                api_key                => $ENV{LIBRE_KORDUV_API_KEY},
-            );
+            my $subscription = $self->get_korduv_subscription();
 
             if ($subscription->{status}->{status} eq 'active') {
                 return $user_plan->get_column('amount');
             }
             else {
                 my $last_payment_received_at = $subscription->{status}->{last_payment_received_at};
-                my $payment_interval_value   = $subscription->{subscription}->{payment_interval_value} . ' days';
+                my $payment_interval_value   = int($subscription->{subscription}->{payment_interval_value});
 
                 my $is_current_cycle_payment = $self->result_source->schema->storage->dbh_do(sub {
-                    $_[1]->selectrow_array("SELECT ( '$last_payment_received_at'::timestamp + '30 days'::interval ) > NOW()");
+                    $_[1]->selectrow_array("SELECT ( '$last_payment_received_at'::timestamp + '$payment_interval_value days'::interval ) > NOW()");
                 });
 
                 if ($is_current_cycle_payment) {
@@ -323,6 +320,15 @@ sub get_real_balance {
         }
     }
     return 0;
+}
+
+sub get_korduv_subscription {
+    my ($self) = @_;
+
+    return $self->_korduv->get_subscription(
+        api_key => $ENV{LIBRE_KORDUV_API_KEY},
+        remote_subscription_id => 'user:' . $self->get_column('user_id'),
+    );
 }
 
 sub _build__korduv { WebService::Korduv->instance }

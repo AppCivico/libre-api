@@ -14,7 +14,7 @@ db_transaction {
 
     my $journalist_id = stash "journalist.id";
     my $donor_id      = stash "donor.id";
-    my $amount        = fake_int(2001, 100000)->();
+    my $amount        = 2000;
 
     rest_post "/api/donor/$donor_id/plan",
         name   => "create first donor plan",
@@ -60,6 +60,8 @@ db_transaction {
         {
             libres_donated   => 3,
             user_plan_amount => $amount,
+            balance          => 2000,
+            next_billing_at  => undef,
         },
         'Donor dashboard'
     );
@@ -108,6 +110,8 @@ db_transaction {
         {
             libres_donated   => 3,
             user_plan_amount => undef,
+            next_billing_at  => undef,
+            balance          => 0,
         },
         'Donor dashboard'
     );

@@ -83,7 +83,7 @@ sub get_subscription {
                 base_price         => 2000,
                 charge_time        => "09:00:00",
                 minimum_charge_amount => 100,
-                merchant_payment_account_id => 13,
+                merchant_payment_account_id => 1,
                 payment_interval_value => 30,
                 remote_subscription_id => "user:1",
                 pricing_schema         => "linear",
