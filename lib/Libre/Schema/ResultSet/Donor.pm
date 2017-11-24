@@ -8,7 +8,7 @@ extends "DBIx::Class::ResultSet";
 with "Libre::Role::Verification";
 with 'Libre::Role::Verification::TransactionalActions::DBIC';
 
-use Libre::Types qw(EmailAddress PhoneNumber CPF);
+use Libre::Types qw/ EmailAddress PhoneNumber CPF PositiveInt /;
 
 use Data::Verifier;
 use Number::Phone::BR;
@@ -48,6 +48,20 @@ sub verifiers_specs {
                     required => 1,
                     type     => CPF,
                 },
+                amount => {
+                    required    => 0,
+                    type        => PositiveInt,
+                    post_check  => sub {
+                        my $r = shift;
+
+                        my $amount = $r->get_value('amount');
+
+                        if ($amount < 2000 || $amount > 20000000) {
+                            return 0;
+                        }
+                        return 1;
+                    }
+                },
             },
         ),
     };
@@ -64,12 +78,12 @@ sub action_specs {
             not defined $values{$_} and delete $values{$_} for keys %values;
 
             if (length $values{password} < 6) {
-                die \["password", "must have at least 6 characters"];
+                die \['password', "must have at least 6 characters"];
             }
 
-            my $user = $self->result_source->schema->resultset("User")->create(
+            my $user = $self->result_source->schema->resultset('User')->create(
                 {
-                    ( map { $_ => $values{$_} } qw(name surname email password) ),
+                    ( map { $_ => $values{$_} } qw/ name surname email password / ),
                     verified    => 1,
                     verified_at => \"NOW()",
                 }
@@ -77,13 +91,22 @@ sub action_specs {
 
             $user->add_to_roles( { id => 3 } );
 
-            # TODO adicionar envio de e-mail de confirmação de cadastro
             $user->send_greetings_email();
 
-            return $self->create({
-                ( map { $_ => $values{$_} } qw(phone cpf) ),
-                user_id => $user->id,
-            });
+            my $donor = $self->create(
+                {
+                    phone   => $values{phone},
+                    cpf     => $values{cpf},
+                    user_id => $user->id,
+                }
+            );
+
+            if (defined($values{amount})) {
+                my $user_plan = $user->user_plans->create( { amount => $values{amount} } );
+                $user_plan->update_on_korduv();
+            }
+
+            return $donor;
         },
     };
 }
