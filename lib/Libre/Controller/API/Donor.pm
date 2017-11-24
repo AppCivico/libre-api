@@ -52,6 +52,7 @@ sub result_GET {
 
             has_plan        => $has_plan,
             has_credit_card => $credit_card,
+            has_active_cycle => $c->stash->{donor}->has_active_cycle(),
         },
     );
 }

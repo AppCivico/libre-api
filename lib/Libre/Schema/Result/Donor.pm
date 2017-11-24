@@ -322,6 +322,17 @@ sub get_balance {
     return 0;
 }
 
+sub has_active_cycle {
+    my ($self) = @_;
+
+    my $balance = $self->get_balance();
+
+    if ($balance > 0) {
+        return 1;
+    }
+    return 0;
+}
+
 sub get_korduv_subscription {
     my ($self) = @_;
 
