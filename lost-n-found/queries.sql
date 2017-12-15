@@ -1,0 +1,2 @@
+-- donors com cartao
+select u.name, u.email, flotum_preferred_credit_card, up.* from donor a left join  user_plan up on up.user_id= a.user_id join "user" u on u.id = a.user_id where  not (u.email ilike '%ansei%' or u.email ilike '%test%' or u.name ilike '%test%' or u.name ilike '%vizz%' or u.name ilike '%vince%' or u.name ilike '%fvox%' or u.email ilike '%fvox%' or u.email like '%@eokoe.com%' or u.email ilike '%gfvizzotto%' or name ilike '%fjdksl%' or u.email ilike '%.cron%' or u.email like '%lala%' or u.email like '%dsfasdf%')  and flotum_preferred_credit_card is not null;
